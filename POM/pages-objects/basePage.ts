@@ -1,6 +1,6 @@
-import { test, expect, chromium, type BrowserContext, FileChooser  } from '@playwright/test';
+import {  expect, chromium, type BrowserContext, FileChooser  } from '@playwright/test';
 import path from 'path';
-import { EXTENSION, URLS } from '../data/constates';
+import { EXTENSION, URLS, FUNCION } from '../data/constates';
 
 export class BasePage {
 
@@ -10,8 +10,7 @@ export class BasePage {
       EXTENSION.EXTENSION
     );
     // Ruta a un directorio temporal para datos de usuario (para no interferir con tu perfil de Chrome personal)
-    const userDataDir = path.join(__dirname, EXTENSION.USERDATA);
-    const browserContext = await chromium.launchPersistentContext(userDataDir, {
+    const browserContext = await chromium.launchPersistentContext("", {
       headless: false,
       ignoreHTTPSErrors: true,
       args: [
@@ -37,8 +36,9 @@ export class BasePage {
   }
   //!----------------------Segunda pagina------------------------------------------------
   async abrirExtension (browserContext) {
+    const extensionID = await FUNCION.ObtenerIdExtencion(browserContext);
     const pageExtension = await browserContext.newPage();
-    await pageExtension.goto(URLS.EXTENSION);
+    await FUNCION.AbreExtension(pageExtension, extensionID);
   
     pageExtension.on("dialog", async (dialog) => {
       //Aquí muestra cualquier alerta de tipo confirm

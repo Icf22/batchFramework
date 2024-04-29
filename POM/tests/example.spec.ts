@@ -1,5 +1,4 @@
 import { test, expect, chromium, type BrowserContext, FileChooser  } from '@playwright/test';
-import path from 'path';
 import { BasePage } from '../pages-objects/basePage';
 
 test('has title', async ({ browser }) => {
