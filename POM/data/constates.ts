@@ -5,7 +5,8 @@ export const EXTENSION = {
 
 export const URLS = {
     INICIOSESION: 'https://172.29.40.129:444/test_tivoli/servlet/wpinicio',
-    REPORTEPRPCONCILIA: 'https://172.29.40.129:444/PRPConcilia/servlet/wpinicio'
+    REPORTEPRPCONCILIA: 'https://172.29.40.129:444/PRPConcilia/servlet/wpinicio',
+    POSBMR: 'https://172.29.40.129:444/POSBMR/servlet/wpinicio'
 }
 
 
@@ -19,7 +20,6 @@ export const FUNCION = {
         await button?.click();
         const currentURL = pageExten.url();
         const extensionID = currentURL.split('=')[1];
-        console.log(extensionID);
         await pageExten.waitForTimeout(2000);
         await pageExten.close();
         return extensionID;
@@ -29,3 +29,12 @@ export const FUNCION = {
         pageExtension.goto(`chrome-extension://${extensionID}/popup/config.html`)
 }
 
+
+export const NUMBERAPP = {
+     POSBANCOMER:30,
+     PRPCONCILIA: 34
+}
+
+export const ARCHIVOS = {
+    CABECERA: 'archivoConfig/SimpleModifyHeader (24).conf'
+}
