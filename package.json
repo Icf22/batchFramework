@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test:TransAceptadas": "npx playwright test posBancomer.spec.ts -g 1TotalTransaccionesAceptadas --headed",
+    "test:DetallTransAceptadas": "npx playwright test posBancomer.spec.ts -g 2DetaTranAcep --headed",
+    "test:TotalTransRechazadas": "npx playwright test posBancomer.spec.ts -g 3TotalTranRech --headed",
+    "test:DetallTransRechazadas": "npx playwright test posBancomer.spec.ts -g 4DetallTranRech --headed"
+
+   },
   "keywords": [],
   "author": "",
   "license": "ISC",
