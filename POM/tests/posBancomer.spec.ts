@@ -3,6 +3,18 @@ import { BasePage } from '../pages-objects/basePage';
 import { PosBMRPage } from '../pages-objects/posBMRPage';
 import { NUMBERAPP } from '../data/constates';
 
+test('TodasLasTransaccionesPosBanc', async ({ browser }) => {
+  const basePage = new BasePage(await browser.newContext())
+  const browserContext = await basePage.inicializarExtension()
+  const posBMRPage = new PosBMRPage(browserContext);
+  
+    await basePage.iniciarSesion(browserContext)
+    await basePage.abrirExtension (browserContext,NUMBERAPP.POSBANCOMER)
+    await posBMRPage.revisarReporte(0)
+    await basePage.limpiarCookies (browserContext, browser)
+});
+
+
 test('1TotalTransaccionesAceptadas', async ({ browser }) => {
 const basePage = new BasePage(await browser.newContext())
 const browserContext = await basePage.inicializarExtension()
@@ -46,3 +58,4 @@ test('4DetallTranRech', async ({ browser }) => {
         await posBMRPage.revisarReporte(4)
         await basePage.limpiarCookies (browserContext, browser)
 });  
+

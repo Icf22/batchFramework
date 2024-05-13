@@ -1,4 +1,4 @@
-import {  expect, chromium, type BrowserContext, FileChooser, Page  } from '@playwright/test';
+import {  expect, chromium, type BrowserContext, FileChooser, Page, Locator  } from '@playwright/test';
 import path from 'path';
 import { EXTENSION, URLS, FUNCION, ARCHIVOS } from '../data/constates';
 
@@ -94,17 +94,23 @@ async limpiarCookies(browserContext, browser){
     
   }
 
-  async validarDescarga(pageExtension:Page|undefined, btnDownload:string){
+  async validarDescarga(pageExtension:Page|undefined, btnDownload:string, nameReport:string){
     if (pageExtension) {
       // Crea una promesa que espera el evento download
       const downloadPromise = pageExtension.waitForEvent("download");
       // Clic sobre el botón que desencadenará el evento download
+      //await pageExtension.waitForTimeout(2000)
+      await pageExtension.waitForLoadState('load');
+      const loc = await pageExtension.locator(btnDownload)
+      this.elementoVisible(loc)
       await pageExtension.locator(btnDownload).click();
+      console.log("Se dio clic en descargar")
       const download = await downloadPromise;
-
+      
       // Espera a que el proceso de descarga se complete y guarda el archivo descargado en algún lugar.
+      const reportName = await this.obtenerTexto(pageExtension,nameReport)
       await download.saveAs(
-        "./test-results/report downloaded" + download.suggestedFilename()
+        "./test-results/"+reportName+".pdf"
       );
     } else {
       console.error(
@@ -113,4 +119,20 @@ async limpiarCookies(browserContext, browser){
     }
   }
 
+  async obtenerTexto(pageExtension:Page,locator:string){
+    // Ubica el elemento usando un selector
+    const element = await pageExtension.$(locator);
+
+    if (element) {
+      // Obtiene el texto del elemento
+      const texto = await element.innerText();
+      return texto
+    } else {
+      console.error('No se encontró el elemento con el selector especificado.');
+    }
+  }
+
+  async elementoVisible (locator:Locator){
+    await expect(locator).toBeVisible()
+  }
 }
