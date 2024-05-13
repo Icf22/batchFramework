@@ -68,21 +68,34 @@ export class PosBMRPage extends BasePage {
     const pageReporte = await this.inicializarPage(URLS.POSBMR);
 
     switch (reporteARevisar) {
+      case 0:
+        await pageReporte.locator(this.op1TotalTranAcep).click();
+        await this.validarDescarga(pageReporte, this.btnReporte,this.op1TotalTranAcep);
+        
+        await pageReporte.locator(this.op2DetaTranAcep).click();
+        await this.validarDescarga(pageReporte, this.btnReporte,this.op2DetaTranAcep);
+
+        await pageReporte.locator(this.op3TotalTranRech).click();
+        await this.validarDescarga(pageReporte, this.btnReporte, this.op3TotalTranRech);
+  
+        await pageReporte.locator(this.op4DetallTranRech).click();
+        await this.validarDescarga(pageReporte, this.btnReporte, this.op4DetallTranRech);
+        break;
       case 1:
         await pageReporte.locator(this.op1TotalTranAcep).click();
-        await this.validarDescarga(this.pageReporte, this.btnReporte);
+        await this.validarDescarga(this.pageReporte, this.btnReporte,this.op1TotalTranAcep);
         break;
       case 2:
         await pageReporte.locator(this.op2DetaTranAcep).click();
-        await this.validarDescarga(this.pageReporte, this.btnReporte);
+        await this.validarDescarga(this.pageReporte, this.btnReporte,this.op2DetaTranAcep);
         break;
       case 3:
         await pageReporte.locator(this.op3TotalTranRech).click();
-        await this.validarDescarga(this.pageReporte, this.btnReporte);
+        await this.validarDescarga(this.pageReporte, this.btnReporte, this.op3TotalTranRech);
         break;
       case 4:
         await pageReporte.locator(this.op4DetallTranRech).click();
-        await this.validarDescarga(this.pageReporte, this.btnReporte);
+        await this.validarDescarga(this.pageReporte, this.btnReporte, this.op4DetallTranRech);
         break;
     }
   }

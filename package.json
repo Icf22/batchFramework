@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test:TodasTranscPosBanc": "npx playwright test posBancomer.spec.ts -g TodasLasTransaccionesPosBanc --headed",
     "test:TransAceptadas": "npx playwright test posBancomer.spec.ts -g 1TotalTransaccionesAceptadas --headed",
     "test:DetallTransAceptadas": "npx playwright test posBancomer.spec.ts -g 2DetaTranAcep --headed",
     "test:TotalTransRechazadas": "npx playwright test posBancomer.spec.ts -g 3TotalTranRech --headed",
