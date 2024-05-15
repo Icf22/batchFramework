@@ -3,6 +3,7 @@ import { BasePage } from '../pages-objects/basePage';
 import { PosBMRPage } from '../pages-objects/posBMRPage';
 import { NUMBERAPP } from '../data/constates';
 
+//npm run test:TodasTranscPosBanc
 test('TodasLasTransaccionesPosBanc', async ({ browser }) => {
   const basePage = new BasePage(await browser.newContext())
   const browserContext = await basePage.inicializarExtension()
@@ -14,7 +15,7 @@ test('TodasLasTransaccionesPosBanc', async ({ browser }) => {
     await basePage.limpiarCookies (browserContext, browser)
 });
 
-
+//npm run test:TransAceptadas
 test('1TotalTransaccionesAceptadas', async ({ browser }) => {
 const basePage = new BasePage(await browser.newContext())
 const browserContext = await basePage.inicializarExtension()
@@ -26,6 +27,7 @@ const posBMRPage = new PosBMRPage(browserContext);
   await basePage.limpiarCookies (browserContext, browser)
 });
 
+//npm run test:DetallTransAceptadas
 test('2DetaTranAcep', async ({ browser }) => {
   const basePage = new BasePage(await browser.newContext())
   const browserContext = await basePage.inicializarExtension()
@@ -37,6 +39,7 @@ test('2DetaTranAcep', async ({ browser }) => {
     await basePage.limpiarCookies (browserContext, browser)
 });
 
+//npm run test:TotalTransRechazadas
 test('3TotalTranRech', async ({ browser }) => {
     const basePage = new BasePage(await browser.newContext())
     const browserContext = await basePage.inicializarExtension()
@@ -47,7 +50,8 @@ test('3TotalTranRech', async ({ browser }) => {
       await posBMRPage.revisarReporte(3)
       await basePage.limpiarCookies (browserContext, browser)
 });
-    
+
+//npm run test:DetallTransRechazadas
 test('4DetallTranRech', async ({ browser }) => {
       const basePage = new BasePage(await browser.newContext())
       const browserContext = await basePage.inicializarExtension()
