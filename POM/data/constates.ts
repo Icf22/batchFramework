@@ -1,3 +1,5 @@
+import { PrpConcilia } from "../pages-objects/prpConcilia";
+
 export const EXTENSION = {
      EXTENSION:  '../../POM/tests/SimpleModifyHeaders-master',
      USERDATA: '../../POM/tests/datos_usuario_dir'
@@ -37,4 +39,9 @@ export const NUMBERAPP = {
 
 export const ARCHIVOS = {
     CABECERA: 'archivoConfig/SimpleModifyHeader (24).conf'
+}
+
+
+export const NOMBRE_REPORTES = {
+    PRP_CONCILIA: 'liquidación'
 }
