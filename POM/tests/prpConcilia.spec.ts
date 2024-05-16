@@ -3,7 +3,8 @@ import { BasePage } from '../pages-objects/basePage';
 import { NUMBERAPP } from '../data/constates';
 import { PrpConcilia } from '../pages-objects/prpConcilia';
 
-//npm run test:TodasTranscPosBanc
+//Comando para ejecutar el test: 
+//npm run test:Liquidacion
 test('Liquidacion', async ({ browser }) => {
   const basePage = new BasePage(await browser.newContext())
   const browserContext = await basePage.inicializarExtension()
