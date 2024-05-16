@@ -3,6 +3,7 @@ import { BasePage } from '../pages-objects/basePage';
 import { PosBMRPage } from '../pages-objects/posBMRPage';
 import { NUMBERAPP } from '../data/constates';
 
+//Comando para ejecutar el test:
 //npm run test:TodasTranscPosBanc
 test('TodasLasTransaccionesPosBanc', async ({ browser }) => {
   const basePage = new BasePage(await browser.newContext())
@@ -15,6 +16,7 @@ test('TodasLasTransaccionesPosBanc', async ({ browser }) => {
     await basePage.limpiarCookies (browserContext, browser)
 });
 
+//Comando para ejecutar el test:
 //npm run test:TransAceptadas
 test('1TotalTransaccionesAceptadas', async ({ browser }) => {
 const basePage = new BasePage(await browser.newContext())
@@ -27,6 +29,7 @@ const posBMRPage = new PosBMRPage(browserContext);
   await basePage.limpiarCookies (browserContext, browser)
 });
 
+//Comando para ejecutar el test:
 //npm run test:DetallTransAceptadas
 test('2DetaTranAcep', async ({ browser }) => {
   const basePage = new BasePage(await browser.newContext())
@@ -39,6 +42,7 @@ test('2DetaTranAcep', async ({ browser }) => {
     await basePage.limpiarCookies (browserContext, browser)
 });
 
+//Comando para ejecutar el test:
 //npm run test:TotalTransRechazadas
 test('3TotalTranRech', async ({ browser }) => {
     const basePage = new BasePage(await browser.newContext())
@@ -51,6 +55,7 @@ test('3TotalTranRech', async ({ browser }) => {
       await basePage.limpiarCookies (browserContext, browser)
 });
 
+//Comando para ejecutar el test:
 //npm run test:DetallTransRechazadas
 test('4DetallTranRech', async ({ browser }) => {
       const basePage = new BasePage(await browser.newContext())
