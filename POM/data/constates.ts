@@ -1,4 +1,4 @@
-import { PrpConcilia } from "../pages-objects/prpConcilia";
+import { PrpConcilia } from "../pages-objects/prpConciliaPage";
 
 export const EXTENSION = {
      EXTENSION:  '../../POM/tests/SimpleModifyHeaders-master',
@@ -8,7 +8,8 @@ export const EXTENSION = {
 export const URLS = {
     INICIOSESION: 'https://172.29.40.129:444/test_tivoli/servlet/wpinicio',
     REPORTEPRPCONCILIA: 'https://172.29.40.129:444/PRPConcilia/servlet/wpinicio',
-    POSBMR: 'https://172.29.40.129:444/POSBMR/servlet/wpinicio'
+    POSBMR: 'https://172.29.40.129:444/POSBMR/servlet/wpinicio',
+    DSSREPORT: 'https://172.29.40.129:444/DSSReport/servlet/wpinicio'
 }
 
 
@@ -34,7 +35,8 @@ export const FUNCION = {
 
 export const NUMBERAPP = {
      POSBANCOMER:30,
-     PRPCONCILIA: 34
+     PRPCONCILIA:34,
+     DSSREPORT:14
 }
 
 export const ARCHIVOS = {
@@ -43,5 +45,6 @@ export const ARCHIVOS = {
 
 
 export const NOMBRE_REPORTES = {
-    PRP_CONCILIA: 'liquidación'
+    PRP_CONCILIA: 'liquidación',
+    DSS_REPORT: 'Reporte_De_Intercambio'
 }
