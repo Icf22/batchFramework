@@ -10,7 +10,9 @@
     "test:TotalTransRechazadas": "npx playwright test posBancomer.spec.ts -g 3TotalTranRech --headed",
     "test:DetallTransRechazadas": "npx playwright test posBancomer.spec.ts -g 4DetallTranRech --headed",
 
-    "test:Liquidacion": "npx playwright test prpConcilia.spec.ts -g Liquidacion --headed"
+    "test:Liquidacion": "npx playwright test prpConcilia.spec.ts -g Liquidacion --headed",
+
+    "test:ReportesIntercambio": "npx playwright test dSSReport.spec.ts -g Reporte de intercambio --headed"
 
    },
   "keywords": [],
