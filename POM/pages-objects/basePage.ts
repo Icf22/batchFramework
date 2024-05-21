@@ -172,8 +172,9 @@ export class BasePage {
         .then(() => true)
         .catch(() => false);
       
-      //Assertion para validar que se realizo la descarga de manera correcta
+      //Assertion para validar que se realizo la descarga de manera correcta 
       await expect.soft(archivoExiste).toBeTruthy();
+      
       console.log("El archivo PDF se descargó correctamente en:", filePath);
 
     } else {

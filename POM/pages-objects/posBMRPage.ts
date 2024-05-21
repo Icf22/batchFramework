@@ -92,8 +92,13 @@ export class PosBMRPage extends BasePage {
     this.pageReporte = await this.browserContext.newPage();
     await this.pageReporte.goto(url);
     await this.pageReporte.waitForTimeout(3000);
-    await this.pageReporte.goto(url);
-    return this.pageReporte;
+    const accesoNoPermitido="//span[text()='Acceso no permitido.']"
+    if(await this.pageReporte.isVisible(accesoNoPermitido)){
+      await this.pageReporte.goto(url);
+      return this.pageReporte;
+    }else{
+      return this.pageReporte;
+    }
   }
 
   async revisarReporte(reporteARevisar: number) {
@@ -103,28 +108,28 @@ export class PosBMRPage extends BasePage {
       //Validar mas usados (1-4)
       case 0:
         await pageReporte.locator(this.op1TotalTranAcep).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           pageReporte,
           this.btnReporte,
           this.op1TotalTranAcep
         );
 
         await pageReporte.locator(this.op2DetaTranAcep).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           pageReporte,
           this.btnReporte,
           this.op2DetaTranAcep
         );
 
         await pageReporte.locator(this.op3TotalTranRech).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           pageReporte,
           this.btnReporte,
           this.op3TotalTranRech
         );
 
         await pageReporte.locator(this.op4DetallTranRech).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           pageReporte,
           this.btnReporte,
           this.op4DetallTranRech
@@ -133,7 +138,7 @@ export class PosBMRPage extends BasePage {
       //1 Total de Transacciones Aceptadas
       case 1:
         await pageReporte.locator(this.op1TotalTranAcep).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.op1TotalTranAcep
@@ -142,7 +147,7 @@ export class PosBMRPage extends BasePage {
       //2 Detalle de Transacciones Aceptadas  
       case 2:
         await pageReporte.locator(this.op2DetaTranAcep).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.op2DetaTranAcep
@@ -151,7 +156,7 @@ export class PosBMRPage extends BasePage {
       //3 Total de Transacciones Rechazadas
       case 3:
         await pageReporte.locator(this.op3TotalTranRech).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.op3TotalTranRech
@@ -160,7 +165,7 @@ export class PosBMRPage extends BasePage {
       //4 Detalle de Transacciones Rechazadas
       case 4:
         await pageReporte.locator(this.op4DetallTranRech).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.op4DetallTranRech
@@ -169,7 +174,7 @@ export class PosBMRPage extends BasePage {
       //5 Rechazadas no procesadas
       case 5:
         await pageReporte.locator(this.op5RechNoProce).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.op5RechNoProce
@@ -178,7 +183,7 @@ export class PosBMRPage extends BasePage {
       //6 Consolidado de Rechazos por Fecha
       case 6:
         await pageReporte.locator(this.op6ConsoRechXFech).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.op6ConsoRechXFech
@@ -187,7 +192,7 @@ export class PosBMRPage extends BasePage {
       //7 Totales Emisor
       case 7:
         await pageReporte.locator(this.op7TotalesEmisor).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.op7TotalesEmisor
@@ -196,7 +201,7 @@ export class PosBMRPage extends BasePage {
       //8 Detalle Emisor
       case 8:
         await pageReporte.locator(this.op8DetalleEmisor).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.op8DetalleEmisor
@@ -205,7 +210,7 @@ export class PosBMRPage extends BasePage {
       //9 Consolidado Emisor
       case 9:
         await pageReporte.locator(this.op9ConsolidadoEmisor).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.op9ConsolidadoEmisor
@@ -214,7 +219,7 @@ export class PosBMRPage extends BasePage {
       //A Consolidado Plataforma
       case 10:
         await pageReporte.locator(this.opAConsolidadoPlataforma).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.opAConsolidadoPlataforma
@@ -223,7 +228,7 @@ export class PosBMRPage extends BasePage {
       //B Retención Riesgo
       case 11:
         await pageReporte.locator(this.opBRetencionRiesgo).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.opBRetencionRiesgo
@@ -232,7 +237,7 @@ export class PosBMRPage extends BasePage {
       //C Liberación Riesgo
       case 12:
         await pageReporte.locator(this.opCConsolidadoRiesgoInt).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.opCConsolidadoRiesgoInt
@@ -241,7 +246,7 @@ export class PosBMRPage extends BasePage {
       //D Consolidado Riesgo Int.
       case 13:
         await pageReporte.locator(this.opDConsolidadoRiestoInt).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.opDConsolidadoRiestoInt
@@ -250,7 +255,7 @@ export class PosBMRPage extends BasePage {
       //E Det. Riesgo Int.
       case 14:
         await pageReporte.locator(this.opEDetRiesgoInt).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.opEDetRiesgoInt
@@ -259,7 +264,7 @@ export class PosBMRPage extends BasePage {
       //F Txn. Sistema de Captura
       case 15:
         await pageReporte.locator(this.opFTxnSistemaCapturas).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.opFTxnSistemaCapturas
@@ -268,7 +273,7 @@ export class PosBMRPage extends BasePage {
       //G Rech. Lotes a Captura
       case 16:
         await pageReporte.locator(this.opGRechLotesCaptura).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.opGRechLotesCaptura
@@ -277,7 +282,7 @@ export class PosBMRPage extends BasePage {
       //H Tot. Txn. Promociones
       case 17:
         await pageReporte.locator(this.opHTotTxnPromociones).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.opHTotTxnPromociones
@@ -286,7 +291,7 @@ export class PosBMRPage extends BasePage {
       //I Det. Txn. Promociones
       case 18:
         await pageReporte.locator(this.opIDetTxnPromociones).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.opIDetTxnPromociones
@@ -295,7 +300,7 @@ export class PosBMRPage extends BasePage {
       //J Det. Txn. Rech. Promociones
       case 19:
         await pageReporte.locator(this.opJDetTxnRechPromociones).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.opJDetTxnRechPromociones
@@ -304,7 +309,7 @@ export class PosBMRPage extends BasePage {
       //K Tot. Txn. Acep.Grupo Cadena
       case 20:
         await pageReporte.locator(this.opKTotTxnAcepGrupoCadena).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.opKTotTxnAcepGrupoCadena
@@ -313,7 +318,7 @@ export class PosBMRPage extends BasePage {
       //L Tot. Txn. Rech.Grupo Cadena
       case 21:
         await pageReporte.locator(this.opLTotTxnRechGrupoCadena).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.opLTotTxnRechGrupoCadena
@@ -322,7 +327,7 @@ export class PosBMRPage extends BasePage {
       //M Consolidado de Promociones
       case 22:
         await pageReporte.locator(this.opMConsolidadoPromociones).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.opMConsolidadoPromociones
@@ -331,7 +336,7 @@ export class PosBMRPage extends BasePage {
       //N Sumario de Promociones Banamex
       case 23:
         await pageReporte.locator(this.opNSumPromocionesBanamex).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.opNSumPromocionesBanamex
@@ -340,7 +345,7 @@ export class PosBMRPage extends BasePage {
       //P Reporte de Wal-Mart
       case 24:
         await pageReporte.locator(this.opPRreporteWalmart).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.opPRreporteWalmart
@@ -349,7 +354,7 @@ export class PosBMRPage extends BasePage {
       //Q Transacciones Cash
       case 25:
         await pageReporte.locator(this.opQTransaccionesCash).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.opQTransaccionesCash
@@ -358,7 +363,7 @@ export class PosBMRPage extends BasePage {
       //R Reporte Pagos y Cash
       case 26:
         await pageReporte.locator(this.opRReportePagosCash).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.opRReportePagosCash
@@ -367,7 +372,7 @@ export class PosBMRPage extends BasePage {
       //S Reporte Rechazos
       case 27:
         await pageReporte.locator(this.opSReporteRechazados).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.opSReporteRechazados
@@ -376,7 +381,7 @@ export class PosBMRPage extends BasePage {
       //V Puntos BBVA
       case 28:
         await pageReporte.locator(this.opVPuntosBBVA).click();
-        await this.validarDescarga(
+        await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
           this.opVPuntosBBVA
