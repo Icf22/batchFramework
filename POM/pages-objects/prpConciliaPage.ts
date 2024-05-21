@@ -55,8 +55,13 @@ export class PrpConcilia extends BasePage {
     this.pageReporte = await this.browserContext.newPage();
     await this.pageReporte.goto(url);
     await this.pageReporte.waitForTimeout(3000);
-    await this.pageReporte.goto(url);
-    return this.pageReporte;
+    const accesoNoPermitido="//span[text()='Acceso no permitido.']"
+    if(await this.pageReporte.isVisible(accesoNoPermitido)){
+      await this.pageReporte.goto(url);
+      return this.pageReporte;
+    }else{
+      return this.pageReporte;
+    }
   }
 
   async revisarReportePRPConciliaLiquidacion(fechaIni: string, fechaFin:string, adquriente:string, emisor:string) {

@@ -37,8 +37,10 @@ export class BasePage {
       await dialog.accept();
     });
 
-    this.cargarArchivo(pageExtension, ARCHIVOS.CABECERA);
-    this.activarHeader(pageExtension, numberApp);
+    await this.cargarArchivo(pageExtension, ARCHIVOS.CABECERA);
+    
+    await this.activarHeader(pageExtension, numberApp);
+
   }
 
   //?Metodos que se utilizan mas de una vez
