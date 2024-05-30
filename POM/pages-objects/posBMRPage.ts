@@ -122,6 +122,7 @@ export class PosBMRPage extends BasePage {
       case 0:
         esIndividual = false;
         await pageReporte.locator(this.op1TotalTranAcep).click();
+        await this.ingresarDatosReporte(pageReporte,1)
         await this.validarDescargaPOSBMR(
           pageReporte,
           this.btnReporte,
@@ -129,25 +130,31 @@ export class PosBMRPage extends BasePage {
         );
 
         await pageReporte.locator(this.op2DetaTranAcep).click();
+        await this.ingresarDatosReporte(pageReporte,2)
         await this.validarDescargaPOSBMR(
           pageReporte,
           this.btnReporte,
           this.op2DetaTranAcep
         );
-
+        
+        await pageReporte.waitForTimeout(2000)
         await pageReporte.locator(this.op3TotalTranRech).click();
+        await this.ingresarDatosReporte(pageReporte,3)
         await this.validarDescargaPOSBMR(
           pageReporte,
           this.btnReporte,
           this.op3TotalTranRech
         );
-
+        
+        await pageReporte.waitForTimeout(2000)
         await pageReporte.locator(this.op4DetallTranRech).click();
+        await this.ingresarDatosReporte(pageReporte,4)
         await this.validarDescargaPOSBMR(
           pageReporte,
           this.btnReporte,
           this.op4DetallTranRech
         );
+         
         break;
       //1 Total de Transacciones Aceptadas
       case 1:
