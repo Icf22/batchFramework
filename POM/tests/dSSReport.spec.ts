@@ -12,7 +12,7 @@ test('Reporte de intercambio', async ({ browser }) => {
   
     await basePage.iniciarSesion(browserContext)
     await basePage.abrirExtension (browserContext,NUMBERAPP.DSSREPORT)
-    await dSSReportPage.revisarReporteDSSReportDesplegar("10/05/2024", "10/05/2024",'1','2','2')
+    await dSSReportPage.revisarReporteDSSReportDesplegar("10/05/2024", "10/05/2024",'1 Lectura del archivo','2 Crédito','2 Bancomer-Banamex')
     await basePage.limpiarCookies (browserContext, browser)
 });
 

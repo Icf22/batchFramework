@@ -1,6 +1,8 @@
 import { BrowserContext, Locator, Page } from "@playwright/test";
 import { BasePage } from "./basePage";
 import { URLS } from "../data/constates";
+import { DATOS_POR_DEFECTO_POSBMR } from "../data/constantesPosBMRDefecto";
+import { REPORTE_POSBMR } from "../data/constantesPosBMR";
 
 export class PosBMRPage extends BasePage {
   pageReporte?: Page;
@@ -41,7 +43,7 @@ export class PosBMRPage extends BasePage {
   readonly checkDolares: string;
   readonly selectPlataforma: string;
   readonly txtAfiliacion: string;
-  readonly checkVentana: string;
+  readonly selectVentana: string;
   readonly txtTarjeta: string;
   readonly selectTipoTransaccion: string;
   readonly checkSubtotales: string;
@@ -84,7 +86,17 @@ export class PosBMRPage extends BasePage {
     this.opRReportePagosCash = "//a[text()='R Reporte Pagos y Cash']";
     this.opSReporteRechazados = "//a[text()='S Reporte Rechazos']";
     this.opVPuntosBBVA = "//a[text()='V Puntos BBVA']";
+    this.txtFechaProceso = "//input[@name='vFECHA_PROCESO']"
+    this.checkPesos = "//input[@value='P']"
+    this.checkDolares = "//input[@value='D']"
+    this.selectPlataforma = "//select[@name='vPLATAFORMA']"
+    this.txtAfiliacion = "//input[@name='vAFILIACION']"
+    this.selectVentana = "//select[@name='vVENTANA']"
+    this.txtTarjeta = "//input[@name='vTARJETA']"
+    this.selectTipoTransaccion = "//select[@name='vT_TRANSACCION']"
+    this.checkSubtotales = "//input[@name='vSUBTOTALES']"
     this.btnReporte = "//input[@value='Reporte']";
+
     this.pageReporte = undefined;
   }
 
@@ -138,6 +150,9 @@ export class PosBMRPage extends BasePage {
       //1 Total de Transacciones Aceptadas
       case 1:
         await pageReporte.locator(this.op1TotalTranAcep).click();
+        await this.ingresarDatosReporte(
+          pageReporte,reporteARevisar
+          )
         await this.validarDescargaPOSBMR(
           this.pageReporte,
           this.btnReporte,
@@ -390,5 +405,44 @@ export class PosBMRPage extends BasePage {
     }
   }
 
-  
+  async ingresarDatosReporte(
+    pageR:Page,
+    numeroReporte:number){
+     const fechaProceso = REPORTE_POSBMR.FECHA
+      const moneda = REPORTE_POSBMR.MONEDA 
+      const plataforma = REPORTE_POSBMR.PLATAFORMA 
+      const afiliacion = REPORTE_POSBMR.AFILIACION
+      const ventana = REPORTE_POSBMR.VENTANA
+      const tarjeta = REPORTE_POSBMR.TARJETA
+      const tipoTransaccion = REPORTE_POSBMR.TRANSACCION
+      const subTotales = REPORTE_POSBMR.SUBTOTALES
+       
+    if(moneda === 'P'){
+      await pageR.locator(this.checkPesos).click()
+    }else if(moneda === 'D'){
+      await pageR.locator(this.checkDolares).click()
+    }
+    await pageR.locator(this.txtFechaProceso).fill("")
+    await pageR.locator(this.txtFechaProceso).fill(fechaProceso)
+    await pageR.locator(this.selectPlataforma).click()
+    await pageR.selectOption(this.selectPlataforma, plataforma??DATOS_POR_DEFECTO_POSBMR.PLATAFORMA)
+    await pageR.locator(this.txtAfiliacion).fill(afiliacion)
+    await pageR.selectOption(this.selectVentana, ventana??DATOS_POR_DEFECTO_POSBMR.VENTANA)
+    await pageR.locator(this.txtTarjeta).fill(tarjeta)
+    if(numeroReporte === 1 || numeroReporte === 2){
+      await pageR.selectOption(this.selectTipoTransaccion,tipoTransaccion??DATOS_POR_DEFECTO_POSBMR.TRANSACCION)
+    }
+    if(subTotales){
+      await pageR.locator(this.checkSubtotales).getAttribute('value')==='N'?
+      await pageR.locator(this.checkSubtotales).click():
+      await pageR.locator(this.checkSubtotales).getAttribute('value');
+    }else{
+      await pageR.locator(this.checkSubtotales).getAttribute('value')==='S'?
+      await pageR.locator(this.checkSubtotales).click():
+      await pageR.locator(this.checkSubtotales).getAttribute('value');
+    }
+
+
+
+ }
 }
