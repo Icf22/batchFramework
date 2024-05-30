@@ -115,10 +115,12 @@ export class PosBMRPage extends BasePage {
 
   async revisarReporte(reporteARevisar: number) {
     const pageReporte = await this.inicializarPage(URLS.POSBMR);
-
+    let btnTipoReporte = this.op1TotalTranAcep;
+    let esIndividual = true;
     switch (reporteARevisar) {
       //Validar mas usados (1-4)
       case 0:
+        esIndividual = false;
         await pageReporte.locator(this.op1TotalTranAcep).click();
         await this.validarDescargaPOSBMR(
           pageReporte,
@@ -149,259 +151,121 @@ export class PosBMRPage extends BasePage {
         break;
       //1 Total de Transacciones Aceptadas
       case 1:
-        await pageReporte.locator(this.op1TotalTranAcep).click();
-        await this.ingresarDatosReporte(
-          pageReporte,reporteARevisar
-          )
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.op1TotalTranAcep
-        );
+        btnTipoReporte = this.op1TotalTranAcep;
         break;
       //2 Detalle de Transacciones Aceptadas  
       case 2:
-        await pageReporte.locator(this.op2DetaTranAcep).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.op2DetaTranAcep
-        );
+        btnTipoReporte = this.op2DetaTranAcep;
         break;
       //3 Total de Transacciones Rechazadas
       case 3:
-        await pageReporte.locator(this.op3TotalTranRech).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.op3TotalTranRech
-        );
+        btnTipoReporte = this.op3TotalTranRech;
         break;
       //4 Detalle de Transacciones Rechazadas
       case 4:
-        await pageReporte.locator(this.op4DetallTranRech).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.op4DetallTranRech
-        );
+        btnTipoReporte = this.op4DetallTranRech;
         break;
       //5 Rechazadas no procesadas
       case 5:
-        await pageReporte.locator(this.op5RechNoProce).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.op5RechNoProce
-        );
+        btnTipoReporte = this.op5RechNoProce;
         break;
       //6 Consolidado de Rechazos por Fecha
       case 6:
-        await pageReporte.locator(this.op6ConsoRechXFech).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.op6ConsoRechXFech
-        );
+        btnTipoReporte = this.op6ConsoRechXFech;
         break;
       //7 Totales Emisor
       case 7:
-        await pageReporte.locator(this.op7TotalesEmisor).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.op7TotalesEmisor
-        );
+        btnTipoReporte = this.op7TotalesEmisor;
         break;
       //8 Detalle Emisor
       case 8:
-        await pageReporte.locator(this.op8DetalleEmisor).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.op8DetalleEmisor
-        );
+        btnTipoReporte = this.op8DetalleEmisor;
         break;
       //9 Consolidado Emisor
       case 9:
-        await pageReporte.locator(this.op9ConsolidadoEmisor).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.op9ConsolidadoEmisor
-        );
+        btnTipoReporte = this.op9ConsolidadoEmisor;
         break;
       //A Consolidado Plataforma
       case 10:
-        await pageReporte.locator(this.opAConsolidadoPlataforma).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.opAConsolidadoPlataforma
-        );
+        btnTipoReporte = this.opAConsolidadoPlataforma;
         break;
       //B Retención Riesgo
       case 11:
-        await pageReporte.locator(this.opBRetencionRiesgo).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.opBRetencionRiesgo
-        );
+        btnTipoReporte = this.opBRetencionRiesgo;
         break;
       //C Liberación Riesgo
       case 12:
-        await pageReporte.locator(this.opCConsolidadoRiesgoInt).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.opCConsolidadoRiesgoInt
-        );
+        btnTipoReporte = this.opCConsolidadoRiesgoInt;
         break;
       //D Consolidado Riesgo Int.
       case 13:
-        await pageReporte.locator(this.opDConsolidadoRiestoInt).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.opDConsolidadoRiestoInt
-        );
+        btnTipoReporte = this.opDConsolidadoRiestoInt;
         break;
       //E Det. Riesgo Int.
       case 14:
-        await pageReporte.locator(this.opEDetRiesgoInt).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.opEDetRiesgoInt
-        );
+        btnTipoReporte = this.opEDetRiesgoInt;
         break;
       //F Txn. Sistema de Captura
       case 15:
-        await pageReporte.locator(this.opFTxnSistemaCapturas).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.opFTxnSistemaCapturas
-        );
+        btnTipoReporte = this.opFTxnSistemaCapturas;
         break;
       //G Rech. Lotes a Captura
       case 16:
-        await pageReporte.locator(this.opGRechLotesCaptura).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.opGRechLotesCaptura
-        );
+        btnTipoReporte = this.opGRechLotesCaptura;
         break;
       //H Tot. Txn. Promociones
       case 17:
-        await pageReporte.locator(this.opHTotTxnPromociones).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.opHTotTxnPromociones
-        );
+        btnTipoReporte = this.opHTotTxnPromociones;
         break;
       //I Det. Txn. Promociones
       case 18:
-        await pageReporte.locator(this.opIDetTxnPromociones).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.opIDetTxnPromociones
-        );
+        btnTipoReporte = this.opIDetTxnPromociones;
         break;
       //J Det. Txn. Rech. Promociones
       case 19:
-        await pageReporte.locator(this.opJDetTxnRechPromociones).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.opJDetTxnRechPromociones
-        );
+        btnTipoReporte = this.opJDetTxnRechPromociones;
         break;
       //K Tot. Txn. Acep.Grupo Cadena
       case 20:
-        await pageReporte.locator(this.opKTotTxnAcepGrupoCadena).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.opKTotTxnAcepGrupoCadena
-        );
+        btnTipoReporte = this.opKTotTxnAcepGrupoCadena;
         break;
       //L Tot. Txn. Rech.Grupo Cadena
       case 21:
-        await pageReporte.locator(this.opLTotTxnRechGrupoCadena).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.opLTotTxnRechGrupoCadena
-        );
+        btnTipoReporte = this.opLTotTxnRechGrupoCadena;
         break;
       //M Consolidado de Promociones
       case 22:
-        await pageReporte.locator(this.opMConsolidadoPromociones).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.opMConsolidadoPromociones
-        );
+        btnTipoReporte = this.opMConsolidadoPromociones;
         break;
       //N Sumario de Promociones Banamex
       case 23:
-        await pageReporte.locator(this.opNSumPromocionesBanamex).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.opNSumPromocionesBanamex
-        );
+        btnTipoReporte = this.opNSumPromocionesBanamex;
         break;
       //P Reporte de Wal-Mart
       case 24:
-        await pageReporte.locator(this.opPRreporteWalmart).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.opPRreporteWalmart
-        );
+        btnTipoReporte = this.opPRreporteWalmart;
         break;
       //Q Transacciones Cash
       case 25:
-        await pageReporte.locator(this.opQTransaccionesCash).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.opQTransaccionesCash
-        );
+        btnTipoReporte = this.opQTransaccionesCash;
         break;
       //R Reporte Pagos y Cash
       case 26:
-        await pageReporte.locator(this.opRReportePagosCash).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.opRReportePagosCash
-        );
+        btnTipoReporte = this.opRReportePagosCash;
         break;
       //S Reporte Rechazos
       case 27:
-        await pageReporte.locator(this.opSReporteRechazados).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.opSReporteRechazados
-        );
+        btnTipoReporte = this.opSReporteRechazados;
         break;
       //V Puntos BBVA
       case 28:
-        await pageReporte.locator(this.opVPuntosBBVA).click();
-        await this.validarDescargaPOSBMR(
-          this.pageReporte,
-          this.btnReporte,
-          this.opVPuntosBBVA
-        );
+        btnTipoReporte = this.opVPuntosBBVA;
         break;
+    }
+    if(esIndividual){
+      await pageReporte.locator(btnTipoReporte).click();
+      await this.ingresarDatosReporte(pageReporte,reporteARevisar)
+      await this.validarDescargaPOSBMR(this.pageReporte,this.btnReporte,btnTipoReporte);
     }
   }
 
@@ -425,12 +289,12 @@ export class PosBMRPage extends BasePage {
     await pageR.locator(this.txtFechaProceso).fill("")
     await pageR.locator(this.txtFechaProceso).fill(fechaProceso)
     await pageR.locator(this.selectPlataforma).click()
-    await pageR.selectOption(this.selectPlataforma, plataforma??DATOS_POR_DEFECTO_POSBMR.PLATAFORMA)
+    await pageR.selectOption(this.selectPlataforma, plataforma ?? DATOS_POR_DEFECTO_POSBMR.PLATAFORMA)
     await pageR.locator(this.txtAfiliacion).fill(afiliacion)
-    await pageR.selectOption(this.selectVentana, ventana??DATOS_POR_DEFECTO_POSBMR.VENTANA)
+    await pageR.selectOption(this.selectVentana, ventana ?? DATOS_POR_DEFECTO_POSBMR.VENTANA)
     await pageR.locator(this.txtTarjeta).fill(tarjeta)
     if(numeroReporte === 1 || numeroReporte === 2){
-      await pageR.selectOption(this.selectTipoTransaccion,tipoTransaccion??DATOS_POR_DEFECTO_POSBMR.TRANSACCION)
+      await pageR.selectOption(this.selectTipoTransaccion,tipoTransaccion ?? DATOS_POR_DEFECTO_POSBMR.TRANSACCION)
     }
     if(subTotales){
       await pageR.locator(this.checkSubtotales).getAttribute('value')==='N'?
@@ -441,8 +305,5 @@ export class PosBMRPage extends BasePage {
       await pageR.locator(this.checkSubtotales).click():
       await pageR.locator(this.checkSubtotales).getAttribute('value');
     }
-
-
-
  }
 }
