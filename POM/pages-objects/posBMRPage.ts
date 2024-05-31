@@ -121,7 +121,11 @@ export class PosBMRPage extends BasePage {
       //Validar mas usados (1-4)
       case 0:
         esIndividual = false;
-        await pageReporte.locator(this.op1TotalTranAcep).click();
+        //await pageReporte.locator(this.op1TotalTranAcep).click();
+        await Promise.all([
+          pageReporte.locator(this.op1TotalTranAcep).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
         await this.ingresarDatosReporte(pageReporte,1)
         await this.validarDescargaPOSBMR(
           pageReporte,
@@ -129,7 +133,11 @@ export class PosBMRPage extends BasePage {
           this.op1TotalTranAcep
         );
 
-        await pageReporte.locator(this.op2DetaTranAcep).click();
+        //await pageReporte.locator(this.op2DetaTranAcep).click();
+        await Promise.all([
+          pageReporte.locator(this.op2DetaTranAcep).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
         await this.ingresarDatosReporte(pageReporte,2)
         await this.validarDescargaPOSBMR(
           pageReporte,
@@ -137,8 +145,12 @@ export class PosBMRPage extends BasePage {
           this.op2DetaTranAcep
         );
         
-        await pageReporte.waitForTimeout(2000)
-        await pageReporte.locator(this.op3TotalTranRech).click();
+        //await pageReporte.waitForTimeout(2000)
+        //await pageReporte.locator(this.op3TotalTranRech).click();
+        await Promise.all([
+          pageReporte.locator(this.op3TotalTranRech).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
         await this.ingresarDatosReporte(pageReporte,3)
         await this.validarDescargaPOSBMR(
           pageReporte,
@@ -146,8 +158,12 @@ export class PosBMRPage extends BasePage {
           this.op3TotalTranRech
         );
         
-        await pageReporte.waitForTimeout(2000)
-        await pageReporte.locator(this.op4DetallTranRech).click();
+        //await pageReporte.waitForTimeout(2000)
+        //await pageReporte.locator(this.op4DetallTranRech).click();
+        await Promise.all([
+          pageReporte.locator(this.op4DetallTranRech).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
         await this.ingresarDatosReporte(pageReporte,4)
         await this.validarDescargaPOSBMR(
           pageReporte,
@@ -287,12 +303,15 @@ export class PosBMRPage extends BasePage {
       const tarjeta = REPORTE_POSBMR.TARJETA
       const tipoTransaccion = REPORTE_POSBMR.TRANSACCION
       const subTotales = REPORTE_POSBMR.SUBTOTALES
-       
+      await pageR.waitForTimeout(1000)
     if(moneda === 'P'){
+      await pageR.waitForSelector(this.checkPesos);
       await pageR.locator(this.checkPesos).click()
     }else if(moneda === 'D'){
+      await pageR.waitForSelector(this.checkDolares);
       await pageR.locator(this.checkDolares).click()
     }
+    await pageR.waitForSelector(this.txtFechaProceso);
     await pageR.locator(this.txtFechaProceso).fill("")
     await pageR.locator(this.txtFechaProceso).fill(fechaProceso)
     await pageR.locator(this.selectPlataforma).click()

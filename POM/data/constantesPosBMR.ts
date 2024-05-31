@@ -10,10 +10,10 @@ export const REPORTE_POSBMR = {
     FECHA:'10052024',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
-    MONEDA: 'P',
+    MONEDA: 'D',
     
     //Escribir tal cual viene en el select
-    PLATAFORMA: '7Eleven',
+    PLATAFORMA: 'ADQMPOS2DOL',
     
     //Escribir num afiliacion
     AFILIACION: '1111',
@@ -28,6 +28,6 @@ export const REPORTE_POSBMR = {
     TRANSACCION: 'Aceptadas Sin Warning',
     
     //
-    SUBTOTALES: 'false'
+    SUBTOTALES: false
 
 }
