@@ -45,6 +45,7 @@ export class BasePage {
 
   //?Metodos que se utilizan mas de una vez
 
+
   async inicializarExtension() {
     const pathToExtension = path.join(__dirname, EXTENSION.EXTENSION);
     // Ruta a un directorio temporal para datos de usuario (para no interferir con tu perfil de Chrome personal)
@@ -201,4 +202,7 @@ export class BasePage {
     await expect(locator).toBeVisible();
   }
 
+
+
+  
 }

@@ -34,10 +34,11 @@ export const FUNCION = {
 
 
 export const NUMBERAPP = {
-     POSBANCOMER:30,
-     PRPCONCILIA:34,
+     POSBANCOMER:30, 
+     PRPCONCILIA:34, 
      DSSREPORT:14
 }
+
 
 export const ARCHIVOS = {
     CABECERA: 'archivoConfig/SimpleModifyHeader (24).conf'
@@ -48,3 +49,4 @@ export const NOMBRE_REPORTES = {
     PRP_CONCILIA: 'liquidación',
     DSS_REPORT: 'Reporte_De_Intercambio'
 }
+

@@ -48,7 +48,12 @@ export class DSSReportPage extends BasePage {
     }
   }
 
-  async revisarReporteDSSReportDesplegar(fechaIni: string, fechaFin:string, tipo:string, categoria:string, subCategoria:string){
+  async revisarReporteDSSReportDesplegar(
+    fechaIni: string,  
+    fechaFin:string, 
+    tipo:string, 
+    categoria:string, 
+    subCategoria:string){
     const pageReporte = await this.inicializarPage(URLS.DSSREPORT);
     await pageReporte.waitForLoadState('networkidle')
     await pageReporte.locator(this.fechaInicial).fill("")
@@ -57,12 +62,12 @@ export class DSSReportPage extends BasePage {
     await pageReporte.locator(this.fechaFinal).fill(fechaFin)
     await pageReporte.locator(this.selectTipo).click()
     await pageReporte.waitForTimeout(1500)
-    await pageReporte.selectOption(this.selectTipo, { value: tipo })
+    await pageReporte.selectOption(this.selectTipo, { label: tipo })
     await pageReporte.locator(this.selectCategoria).click()
-    await pageReporte.selectOption(this.selectCategoria, { value: categoria });
+    await pageReporte.selectOption(this.selectCategoria, { label: categoria });
     await pageReporte.waitForTimeout(1500)
     await pageReporte.locator(this.selectSubCategoria).click()
-    await pageReporte.selectOption(this.selectSubCategoria, { value: subCategoria });
+    await pageReporte.selectOption(this.selectSubCategoria, { label: subCategoria });
     await this.validarDescarga(pageReporte,this.btnDesplegar,NOMBRE_REPORTES.DSS_REPORT)
     await pageReporte.waitForTimeout(5000)
   }
