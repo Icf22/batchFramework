@@ -38,7 +38,9 @@ export class PosBMRPage extends BasePage {
   //Reportes
   readonly btnReporte: string;
   readonly btnExportar: string;
-  //Formulario
+  readonly btnVistaPrevia: string;
+  readonly btnGuardar:string;
+  readonly btnPreliminar: string;
   readonly checkPesos: string;
   readonly checkDolares: string;
   readonly selectPlataforma: string;
@@ -46,8 +48,22 @@ export class PosBMRPage extends BasePage {
   readonly selectVentana: string;
   readonly txtTarjeta: string;
   readonly selectTipoTransaccion: string;
+  readonly selectInternacional: string;
+  readonly selectEmisor: string;
+  readonly txtGrupoCadena: string;
   readonly checkSubtotales: string;
   readonly txtFechaProceso: string;
+  readonly selectCodigoRechazo: string;
+  readonly fechaInicio: string;
+  readonly fechaFin:string;
+  readonly checkSalidaExcel: string;
+  //Tipo de Transaccion
+  readonly radiobtnTodas:string;
+  readonly radiobtnCompras:string;
+  readonly radiobtnDevoluciones:string;
+  //Tipo de Reporte
+  readonly radiobtnReporteOriginal:string;
+  readonly radiobtnDesgloceComprasDevoluciones:string;
 
   constructor(browserContext) {
     super(browserContext);
@@ -94,9 +110,326 @@ export class PosBMRPage extends BasePage {
     this.selectVentana = "//select[@name='vVENTANA']"
     this.txtTarjeta = "//input[@name='vTARJETA']"
     this.selectTipoTransaccion = "//select[@name='vT_TRANSACCION']"
+    this.selectInternacional = "//select[@name='vCBINTERNACIONAL']"
+    this.selectEmisor = "//select[@name='vEMISOR']";
+    this.txtGrupoCadena = "//input[@name='vGPO_CADENA']"
     this.checkSubtotales = "//input[@name='vSUBTOTALES']"
     this.btnReporte = "//input[@value='Reporte']";
+    this.btnExportar = "//input[@value='Exportar']";
+    this.btnPreliminar = "//input[@value='Preliminar']"
+    this.btnVistaPrevia = "//input[@value='Vista Previa']"
+    this.radiobtnTodas = "//input[@value='T']"
+    this.radiobtnCompras = "//input[@value='C']"
+    this.radiobtnDevoluciones = "//input[@value='D']"
+    this.radiobtnReporteOriginal = "//input[@value='O']"
+    this.radiobtnDesgloceComprasDevoluciones = "//input[@name='vT_REPORTE' and @value='D']"
+    this.selectCodigoRechazo = "//select[@name='vTIPO_REPORTE']"
+    this.fechaInicio = "//input[@name='vFECHAINICIAL']"
+    this.fechaFin = "//input[@name='vFECHAFINAL']"
+    this.checkSalidaExcel = "//input[@name='vVL_EXCEL']"
 
+    
+    //----------1 Total de Transacciones Aceptadas---------- 
+    /*
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares
+    this.selectPlataforma
+    this.txtAfiliacion
+    this.selectVentana
+    this.txtTarjeta
+    this.selectTipoTransaccion
+    this.checkSubtotales
+    this.btnReporte
+    this.btnExportar*/
+
+    //----------2 Detalle de Transacciones Aceptadas---------- 
+
+    /*
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares
+    this.selectPlataforma
+    this.txtAfiliacion
+    this.selectVentana
+    this.txtTarjeta
+    this.selectTipoTransaccion
+    this.checkSubtotales
+    this.btnReporte
+    this.btnExportar*/
+
+    //----------3 Total de Transacciones Rechazadas---------- 
+    /*
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares
+    this.selectPlataforma
+    this.txtAfiliacion
+    this.selectVentana
+    this.txtTarjeta
+    this.checkSubtotales
+    this.btnReporte
+    this.btnExportar*/
+
+    //----------4 Detalle de Transacciones Rechazadas---------- 
+    /*
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares
+    this.selectPlataforma
+    this.txtAfiliacion
+    this.selectVentana
+    this.txtTarjeta
+    this.checkSubtotales
+    this.btnReporte
+    this.btnExportar*/
+
+    //----------5 Rechazadas no procesadas---------- 
+    /*
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares
+    this.selectPlataforma
+    this.selectVentana
+    this.checkSubtotales
+    this.btnReporte
+    this.btnExportar*/
+
+    //----------6 Consolidado de Rechazos por Fecha---------- 
+    /*
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares
+    this.selectPlataforma
+    this.selectVentana
+    this.btnReporte
+    this.btnExportar*/    
+
+    //----------7 Totales Emisor---------- 
+    /*
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares
+    this.selectPlataforma
+    this.txtAfiliacion
+    this.selectVentana
+    this.txtTarjeta
+    this.btnReporte
+    this.btnExportar*/
+
+    //----------8 Detalle Emisor---------- 
+    /*
+    this.btnReporte
+    this.btnExportar
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares
+    this.selectPlataforma
+    this.txtAfiliacion
+    this.selectVentana
+    this.txtTarjeta*/
+
+    //----------9 Consolidado Emisor---------- 
+    /*
+    this.btnReporte
+    this.btnExportar
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares
+    this.selectPlataforma
+    this.txtAfiliacion
+    this.selectVentana
+    this.txtTarjeta*/
+
+    //----------A Consolidado Plataforma---------- 
+    /*
+    this.btnReporte
+    this.btnExportar
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares
+    this.selectPlataforma
+    this.txtAfiliacion
+    this.selectVentana
+    this.txtTarjeta*/    
+
+   //----------B Retención Riesgo---------- 
+    /*this.btnReporte
+    this.btnExportar
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares
+    this.selectPlataforma
+    this.txtAfiliacion
+    this.selectVentana
+    this.txtTarjeta
+    this.selectInternacional*/    
+
+
+   //----------C Liberación Riesgo---------- 
+    /*this.btnReporte
+    this.btnExportar
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares
+    this.selectEmisor
+    this.txtAfiliacion*/
+
+   //----------D Consolidado Riesgo Int.---------- 
+    /*this.btnReporte
+    this.btnExportar
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares
+    this.selectEmisor*/
+
+   //----------E Det. Riesgo Int.---------- 
+    /*this.btnReporte
+    this.btnExportar
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares
+    this.selectEmisor*/
+
+   //----------F Txn. Sistema de Captura---------- 
+    /*this.btnReporte
+    this.btnExportar
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares*/    
+ 
+   //----------G Rech. Lotes a Captura---------- 
+    /*this.btnReporte
+    this.btnExportar
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares
+    this.selectPlataforma
+    this.txtAfiliacion
+    this.selectVentana
+    this.txtTarjeta
+    this.checkSubtotales*/    
+
+   //----------H Tot. Txn. Promociones---------- 
+    /*this.btnReporte
+    this.btnExportar
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares
+    this.selectPlataforma
+    this.txtAfiliacion
+    this.selectVentana
+    this.txtTarjeta
+    this.checkSubtotales*/
+
+   //----------I Det. Txn. Promociones---------- 
+    /*this.btnReporte
+    this.btnExportar
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares
+    this.selectPlataforma
+    this.txtAfiliacion
+    this.selectVentana
+    this.txtTarjeta
+    this.checkSubtotales*/    
+    
+   //----------J Det. Txn. Rech. Promociones---------- 
+    /*this.btnReporte
+    this.btnExportar
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares
+    this.selectPlataforma
+    this.txtAfiliacion
+    this.selectVentana
+    this.txtTarjeta
+    this.selectTipoTransaccion
+    this.txtGrupoCadena
+    this.checkSubtotales*/ 
+    
+    //----------K Tot. Txn. Acep.Grupo Cadena---------- 
+    /*this.btnReporte
+    this.btnExportar
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares
+    this.selectPlataforma
+    this.txtAfiliacion
+    this.selectVentana
+    this.txtTarjeta
+    this.selectTipoTransaccion
+    this.txtGrupoCadena
+    this.checkSubtotales*/ 
+    
+    //----------L Tot. Txn. Rech.Grupo Cadena---------- 
+    /*this.btnReporte
+    this.btnExportar
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares
+    this.selectPlataforma
+    this.txtAfiliacion
+    this.selectVentana
+    this.txtTarjeta
+    this.txtGrupoCadena
+    this.checkSubtotales*/ 
+
+    //----------M Consolidado de Promociones---------- 
+    /*this.btnVistaPrevia
+    this.btnGuardar
+    this.txtFechaProceso
+    this.selectPlataforma*/ 
+
+
+   //---------- N Sumario de Promociones Banamex---------- 
+    /*this.btnPreliminar
+    this.btnExportar
+    this.txtFechaProceso
+    this.selectPlataforma
+    this.radiobtnTodas 
+    this.radiobtnCompras 
+    this.radiobtnDevoluciones 
+    this.radiobtnReporteOriginal 
+    this.radiobtnDesgloceComprasDevoluciones */
+
+    //----------P Reporte de Wal-Mart---------- 
+    /*this.btnPreliminar
+    this.btnExportar
+    this.txtFechaProceso
+    this.selectPlataforma
+    this.txtAfiliacion
+    this.selectVentana
+    this.txtTarjeta*/ 
+
+    //----------Q Transacciones Cash---------- 
+    /*this.btnPreliminar
+    this.btnExportar
+    this.txtFechaProceso
+    this.selectPlataforma
+    this.txtAfiliacion
+    this.checkSubtotales*/
+    
+    //----------R Reporte Pagos y Cash---------- 
+    /*this.btnPreliminar
+    this.btnExportar
+    this.txtFechaProceso
+    this.selectPlataforma
+    this.txtAfiliacion
+    this.txtTarjeta
+    this.checkSubtotales*/
+
+    //----------S Reporte Rechazos---------- 
+    /*this.txtFechaProceso
+    this.selectCodigoRechazo
+    this.btnReporte*/
+
+    //----------V Puntos BBVA---------- 
+    /*this.fechaInicio
+    this.fechaFin
+    this.checkSalidaExcel
+    this.btnReporte*/
+    
     this.pageReporte = undefined;
   }
 
@@ -316,9 +649,9 @@ export class PosBMRPage extends BasePage {
     await pageR.locator(this.txtFechaProceso).fill(fechaProceso)
     await pageR.locator(this.selectPlataforma).click()
     await pageR.selectOption(this.selectPlataforma, plataforma ?? DATOS_POR_DEFECTO_POSBMR.PLATAFORMA)
-    await pageR.locator(this.txtAfiliacion).fill(afiliacion)
+    await pageR.locator(this.txtAfiliacion).fill(afiliacion ?? "")
     await pageR.selectOption(this.selectVentana, ventana ?? DATOS_POR_DEFECTO_POSBMR.VENTANA)
-    await pageR.locator(this.txtTarjeta).fill(tarjeta)
+    await pageR.locator(this.txtTarjeta).fill(tarjeta ?? "")
     if(numeroReporte === 1 || numeroReporte === 2){
       await pageR.selectOption(this.selectTipoTransaccion,tipoTransaccion ?? DATOS_POR_DEFECTO_POSBMR.TRANSACCION)
     }
