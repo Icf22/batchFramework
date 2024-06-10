@@ -22,6 +22,10 @@ export const REPORTE_POSBMR = {
     TRANSACCION: null,
     
     //true=se activa el check | false = se desactiva el check
-    SUBTOTALES: false
+    SUBTOTALES: false,
+
+    INTERNACIONAL: '',
+
+    EMISOR: ''
 
 }

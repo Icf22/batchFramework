@@ -39,7 +39,7 @@ export class PosBMRPage extends BasePage {
   readonly btnReporte: string;
   readonly btnExportar: string;
   readonly btnVistaPrevia: string;
-  readonly btnGuardar:string;
+  readonly btnGuardar: string;
   readonly btnPreliminar: string;
   readonly checkPesos: string;
   readonly checkDolares: string;
@@ -55,15 +55,15 @@ export class PosBMRPage extends BasePage {
   readonly txtFechaProceso: string;
   readonly selectCodigoRechazo: string;
   readonly fechaInicio: string;
-  readonly fechaFin:string;
+  readonly fechaFin: string;
   readonly checkSalidaExcel: string;
   //Tipo de Transaccion
-  readonly radiobtnTodas:string;
-  readonly radiobtnCompras:string;
-  readonly radiobtnDevoluciones:string;
+  readonly radiobtnTodas: string;
+  readonly radiobtnCompras: string;
+  readonly radiobtnDevoluciones: string;
   //Tipo de Reporte
-  readonly radiobtnReporteOriginal:string;
-  readonly radiobtnDesgloceComprasDevoluciones:string;
+  readonly radiobtnReporteOriginal: string;
+  readonly radiobtnDesgloceComprasDevoluciones: string;
 
   constructor(browserContext) {
     super(browserContext);
@@ -128,7 +128,7 @@ export class PosBMRPage extends BasePage {
     this.fechaFin = "//input[@name='vFECHAFINAL']"
     this.checkSalidaExcel = "//input[@name='vVL_EXCEL']"
 
-    
+
     //----------1 Total de Transacciones Aceptadas---------- 
     /*
     this.txtFechaProceso
@@ -203,7 +203,7 @@ export class PosBMRPage extends BasePage {
     this.selectPlataforma
     this.selectVentana
     this.btnReporte
-    this.btnExportar*/    
+    this.btnExportar*/
 
     //----------7 Totales Emisor---------- 
     /*
@@ -251,9 +251,9 @@ export class PosBMRPage extends BasePage {
     this.selectPlataforma
     this.txtAfiliacion
     this.selectVentana
-    this.txtTarjeta*/    
+    this.txtTarjeta*/
 
-   //----------B Retención Riesgo---------- 
+    //----------B Retención Riesgo---------- 
     /*this.btnReporte
     this.btnExportar
     this.txtFechaProceso
@@ -263,10 +263,10 @@ export class PosBMRPage extends BasePage {
     this.txtAfiliacion
     this.selectVentana
     this.txtTarjeta
-    this.selectInternacional*/    
+    this.selectInternacional*/
 
 
-   //----------C Liberación Riesgo---------- 
+    //----------C Liberación Riesgo---------- 
     /*this.btnReporte
     this.btnExportar
     this.txtFechaProceso
@@ -275,7 +275,7 @@ export class PosBMRPage extends BasePage {
     this.selectEmisor
     this.txtAfiliacion*/
 
-   //----------D Consolidado Riesgo Int.---------- 
+    //----------D Consolidado Riesgo Int.---------- 
     /*this.btnReporte
     this.btnExportar
     this.txtFechaProceso
@@ -283,7 +283,7 @@ export class PosBMRPage extends BasePage {
     this.checkDolares
     this.selectEmisor*/
 
-   //----------E Det. Riesgo Int.---------- 
+    //----------E Det. Riesgo Int.---------- 
     /*this.btnReporte
     this.btnExportar
     this.txtFechaProceso
@@ -291,26 +291,14 @@ export class PosBMRPage extends BasePage {
     this.checkDolares
     this.selectEmisor*/
 
-   //----------F Txn. Sistema de Captura---------- 
+    //----------F Txn. Sistema de Captura---------- 
     /*this.btnReporte
     this.btnExportar
     this.txtFechaProceso
     this.checkPesos
-    this.checkDolares*/    
- 
-   //----------G Rech. Lotes a Captura---------- 
-    /*this.btnReporte
-    this.btnExportar
-    this.txtFechaProceso
-    this.checkPesos
-    this.checkDolares
-    this.selectPlataforma
-    this.txtAfiliacion
-    this.selectVentana
-    this.txtTarjeta
-    this.checkSubtotales*/    
+    this.checkDolares*/
 
-   //----------H Tot. Txn. Promociones---------- 
+    //----------G Rech. Lotes a Captura---------- 
     /*this.btnReporte
     this.btnExportar
     this.txtFechaProceso
@@ -322,7 +310,7 @@ export class PosBMRPage extends BasePage {
     this.txtTarjeta
     this.checkSubtotales*/
 
-   //----------I Det. Txn. Promociones---------- 
+    //----------H Tot. Txn. Promociones---------- 
     /*this.btnReporte
     this.btnExportar
     this.txtFechaProceso
@@ -332,9 +320,21 @@ export class PosBMRPage extends BasePage {
     this.txtAfiliacion
     this.selectVentana
     this.txtTarjeta
-    this.checkSubtotales*/    
-    
-   //----------J Det. Txn. Rech. Promociones---------- 
+    this.checkSubtotales*/
+
+    //----------I Det. Txn. Promociones---------- 
+    /*this.btnReporte
+    this.btnExportar
+    this.txtFechaProceso
+    this.checkPesos
+    this.checkDolares
+    this.selectPlataforma
+    this.txtAfiliacion
+    this.selectVentana
+    this.txtTarjeta
+    this.checkSubtotales*/
+
+    //----------J Det. Txn. Rech. Promociones---------- 
     /*this.btnReporte
     this.btnExportar
     this.txtFechaProceso
@@ -346,8 +346,8 @@ export class PosBMRPage extends BasePage {
     this.txtTarjeta
     this.selectTipoTransaccion
     this.txtGrupoCadena
-    this.checkSubtotales*/ 
-    
+    this.checkSubtotales*/
+
     //----------K Tot. Txn. Acep.Grupo Cadena---------- 
     /*this.btnReporte
     this.btnExportar
@@ -360,8 +360,8 @@ export class PosBMRPage extends BasePage {
     this.txtTarjeta
     this.selectTipoTransaccion
     this.txtGrupoCadena
-    this.checkSubtotales*/ 
-    
+    this.checkSubtotales*/
+
     //----------L Tot. Txn. Rech.Grupo Cadena---------- 
     /*this.btnReporte
     this.btnExportar
@@ -373,16 +373,16 @@ export class PosBMRPage extends BasePage {
     this.selectVentana
     this.txtTarjeta
     this.txtGrupoCadena
-    this.checkSubtotales*/ 
+    this.checkSubtotales*/
 
     //----------M Consolidado de Promociones---------- 
     /*this.btnVistaPrevia
     this.btnGuardar
     this.txtFechaProceso
-    this.selectPlataforma*/ 
+    this.selectPlataforma*/
 
 
-   //---------- N Sumario de Promociones Banamex---------- 
+    //---------- N Sumario de Promociones Banamex---------- 
     /*this.btnPreliminar
     this.btnExportar
     this.txtFechaProceso
@@ -400,7 +400,7 @@ export class PosBMRPage extends BasePage {
     this.selectPlataforma
     this.txtAfiliacion
     this.selectVentana
-    this.txtTarjeta*/ 
+    this.txtTarjeta*/
 
     //----------Q Transacciones Cash---------- 
     /*this.btnPreliminar
@@ -409,7 +409,7 @@ export class PosBMRPage extends BasePage {
     this.selectPlataforma
     this.txtAfiliacion
     this.checkSubtotales*/
-    
+
     //----------R Reporte Pagos y Cash---------- 
     /*this.btnPreliminar
     this.btnExportar
@@ -429,7 +429,7 @@ export class PosBMRPage extends BasePage {
     this.fechaFin
     this.checkSalidaExcel
     this.btnReporte*/
-    
+
     this.pageReporte = undefined;
   }
 
@@ -437,11 +437,11 @@ export class PosBMRPage extends BasePage {
     this.pageReporte = await this.browserContext.newPage();
     await this.pageReporte.goto(url);
     await this.pageReporte.waitForTimeout(3000);
-    const accesoNoPermitido="//span[text()='Acceso no permitido.']"
-    if(await this.pageReporte.isVisible(accesoNoPermitido)){
+    const accesoNoPermitido = "//span[text()='Acceso no permitido.']"
+    if (await this.pageReporte.isVisible(accesoNoPermitido)) {
       await this.pageReporte.goto(url);
       return this.pageReporte;
-    }else{
+    } else {
       return this.pageReporte;
     }
   }
@@ -459,7 +459,7 @@ export class PosBMRPage extends BasePage {
           pageReporte.locator(this.op1TotalTranAcep).click(),
           pageReporte.waitForLoadState('networkidle')
         ]);
-        await this.ingresarDatosReporte(pageReporte,1)
+        await this.ingresarDatosReporte(pageReporte, 1)
         await this.validarDescargaPOSBMR(
           pageReporte,
           this.btnReporte,
@@ -471,39 +471,39 @@ export class PosBMRPage extends BasePage {
           pageReporte.locator(this.op2DetaTranAcep).click(),
           pageReporte.waitForLoadState('networkidle')
         ]);
-        await this.ingresarDatosReporte(pageReporte,2)
+        await this.ingresarDatosReporte(pageReporte, 2)
         await this.validarDescargaPOSBMR(
           pageReporte,
           this.btnReporte,
           this.op2DetaTranAcep
         );
-        
+
         //await pageReporte.waitForTimeout(2000)
         //await pageReporte.locator(this.op3TotalTranRech).click();
         await Promise.all([
           pageReporte.locator(this.op3TotalTranRech).click(),
           pageReporte.waitForLoadState('networkidle')
         ]);
-        await this.ingresarDatosReporte(pageReporte,3)
+        await this.ingresarDatosReporte(pageReporte, 3)
         await this.validarDescargaPOSBMR(
           pageReporte,
           this.btnReporte,
           this.op3TotalTranRech
         );
-        
+
         //await pageReporte.waitForTimeout(2000)
         //await pageReporte.locator(this.op4DetallTranRech).click();
         await Promise.all([
           pageReporte.locator(this.op4DetallTranRech).click(),
           pageReporte.waitForLoadState('networkidle')
         ]);
-        await this.ingresarDatosReporte(pageReporte,4)
+        await this.ingresarDatosReporte(pageReporte, 4)
         await this.validarDescargaPOSBMR(
           pageReporte,
           this.btnReporte,
           this.op4DetallTranRech
         );
-         
+
         break;
       //1 Total de Transacciones Aceptadas
       case 1:
@@ -618,51 +618,193 @@ export class PosBMRPage extends BasePage {
         btnTipoReporte = this.opVPuntosBBVA;
         break;
     }
-    if(esIndividual){
+    if (esIndividual) {
       await pageReporte.locator(btnTipoReporte).click();
-      await this.ingresarDatosReporte(pageReporte,reporteARevisar)
-      await this.validarDescargaPOSBMR(this.pageReporte,this.btnReporte,btnTipoReporte);
+      await this.ingresarDatosReporte(pageReporte, reporteARevisar)
+      await this.validarDescargaPOSBMR(this.pageReporte, this.btnReporte, btnTipoReporte);
     }
   }
 
   async ingresarDatosReporte(
-    pageR:Page,
-    numeroReporte:number){
-     const fechaProceso = REPORTE_POSBMR.FECHA
-      const moneda = REPORTE_POSBMR.MONEDA 
-      const plataforma = REPORTE_POSBMR.PLATAFORMA 
-      const afiliacion = REPORTE_POSBMR.AFILIACION
-      const ventana = REPORTE_POSBMR.VENTANA
-      const tarjeta = REPORTE_POSBMR.TARJETA
-      const tipoTransaccion = REPORTE_POSBMR.TRANSACCION
-      const subTotales = REPORTE_POSBMR.SUBTOTALES
-      await pageR.waitForTimeout(1000)
-    if(moneda === 'P'){
-      await pageR.waitForSelector(this.checkPesos);
-      await pageR.locator(this.checkPesos).click()
-    }else if(moneda === 'D'){
-      await pageR.waitForSelector(this.checkDolares);
-      await pageR.locator(this.checkDolares).click()
+    pageR: Page,
+    numeroReporte: number) {
+    const fechaProceso = REPORTE_POSBMR.FECHA
+    const moneda = REPORTE_POSBMR.MONEDA
+    const plataforma = REPORTE_POSBMR.PLATAFORMA
+    const afiliacion = REPORTE_POSBMR.AFILIACION
+    const ventana = REPORTE_POSBMR.VENTANA
+    const tarjeta = REPORTE_POSBMR.TARJETA
+    const tipoTransaccion = REPORTE_POSBMR.TRANSACCION
+    const subTotales = REPORTE_POSBMR.SUBTOTALES
+    const internacional = REPORTE_POSBMR.INTERNACIONAL
+    const selectEmisor = REPORTE_POSBMR.EMISOR
+    await pageR.waitForTimeout(1000)
+    switch (numeroReporte) {
+      case 1://TRANSACCIONES ACEPTADAS
+      case 2://DETALLE DE TRANSACCIONES ACEPTADAS
+      case 3://TRANSACCIONES RECHAZADAS
+      case 4://DETALLE DE TRANSACCIONES RECHAZADAS
+        if (moneda === 'P') {
+          await pageR.waitForSelector(this.checkPesos);
+          await pageR.locator(this.checkPesos).click()
+        } else if (moneda === 'D') {
+          await pageR.waitForSelector(this.checkDolares);
+          await pageR.locator(this.checkDolares).click()
+        }
+        await pageR.waitForSelector(this.txtFechaProceso);
+        await pageR.locator(this.txtFechaProceso).fill("")
+        await pageR.locator(this.txtFechaProceso).fill(fechaProceso)
+        await pageR.locator(this.selectPlataforma).click()
+        await pageR.selectOption(this.selectPlataforma, plataforma ?? DATOS_POR_DEFECTO_POSBMR.PLATAFORMA)
+        await pageR.locator(this.txtAfiliacion).fill(afiliacion ?? "")
+        await pageR.selectOption(this.selectVentana, ventana ?? DATOS_POR_DEFECTO_POSBMR.VENTANA)
+        await pageR.locator(this.txtTarjeta).fill(tarjeta ?? "")
+        if (numeroReporte === 1 || numeroReporte === 2) {
+          await pageR.selectOption(this.selectTipoTransaccion, tipoTransaccion ?? DATOS_POR_DEFECTO_POSBMR.TRANSACCION)
+        }
+        if (subTotales) {
+          await pageR.locator(this.checkSubtotales).getAttribute('value') === 'N' ?
+            await pageR.locator(this.checkSubtotales).click() :
+            await pageR.locator(this.checkSubtotales).getAttribute('value');
+        } else {
+          await pageR.locator(this.checkSubtotales).getAttribute('value') === 'S' ?
+            await pageR.locator(this.checkSubtotales).click() :
+            await pageR.locator(this.checkSubtotales).getAttribute('value');
+        }
+        break;
+      case 5: //RECHAZADAS NO PROCESADAS
+        if (moneda === 'P') {
+          await pageR.waitForSelector(this.checkPesos);
+          await pageR.locator(this.checkPesos).click()
+        } else if (moneda === 'D') {
+          await pageR.waitForSelector(this.checkDolares);
+          await pageR.locator(this.checkDolares).click()
+        }
+        await pageR.waitForSelector(this.txtFechaProceso);
+        await pageR.locator(this.txtFechaProceso).fill("")
+        await pageR.locator(this.txtFechaProceso).fill(fechaProceso)
+        await pageR.locator(this.selectPlataforma).click()
+        await pageR.selectOption(this.selectPlataforma, plataforma ?? DATOS_POR_DEFECTO_POSBMR.PLATAFORMA)
+        await pageR.selectOption(this.selectVentana, ventana ?? DATOS_POR_DEFECTO_POSBMR.VENTANA)
+        break;
+      case 6: //CONSOLIDADO DE RECHAZADOS
+      case 7: //TOTALES EMISOR
+      case 8: //DETALLE EMISOR
+      case 9: //CONSOLIDADO EMISOR
+      case 10://CONSOLIDADO PLATAFORMA
+        if (moneda === 'P') {
+          await pageR.waitForSelector(this.checkPesos);
+          await pageR.locator(this.checkPesos).click()
+        } else if (moneda === 'D') {
+          await pageR.waitForSelector(this.checkDolares);
+          await pageR.locator(this.checkDolares).click()
+        }
+        await pageR.waitForSelector(this.txtFechaProceso);
+        await pageR.locator(this.txtFechaProceso).fill("")
+        await pageR.locator(this.txtFechaProceso).fill(fechaProceso)
+        await pageR.locator(this.selectPlataforma).click()
+        await pageR.selectOption(this.selectPlataforma, plataforma ?? DATOS_POR_DEFECTO_POSBMR.PLATAFORMA)
+        await pageR.locator(this.txtAfiliacion).fill(afiliacion ?? "")
+        await pageR.selectOption(this.selectVentana, ventana ?? DATOS_POR_DEFECTO_POSBMR.VENTANA)
+        await pageR.locator(this.txtTarjeta).fill(tarjeta ?? "")
+        break;
+      case 11://RETENCIONES POR RIESGO
+        if (moneda === 'P') {
+          await pageR.waitForSelector(this.checkPesos);
+          await pageR.locator(this.checkPesos).click()
+        } else if (moneda === 'D') {
+          await pageR.waitForSelector(this.checkDolares);
+          await pageR.locator(this.checkDolares).click()
+        }
+        await pageR.waitForSelector(this.txtFechaProceso);
+        await pageR.locator(this.txtFechaProceso).fill("")
+        await pageR.locator(this.txtFechaProceso).fill(fechaProceso)
+        await pageR.locator(this.selectPlataforma).click()
+        await pageR.selectOption(this.selectPlataforma, plataforma ?? DATOS_POR_DEFECTO_POSBMR.PLATAFORMA)
+        await pageR.locator(this.txtAfiliacion).fill(afiliacion ?? "")
+        await pageR.selectOption(this.selectVentana, ventana ?? DATOS_POR_DEFECTO_POSBMR.VENTANA)
+        await pageR.locator(this.txtTarjeta).fill(tarjeta ?? "")
+        await pageR.locator(this.selectInternacional).fill(internacional ?? "")
+        break;
+      case 12://LIBERACION RIESGO
+        await pageR.waitForSelector(this.txtFechaProceso);
+        await pageR.locator(this.txtFechaProceso).fill("")
+        await pageR.locator(this.txtFechaProceso).fill(fechaProceso)
+        await pageR.locator(this.selectEmisor).click()
+        await pageR.selectOption(this.selectEmisor, selectEmisor ?? DATOS_POR_DEFECTO_POSBMR.EMISOR)
+        await pageR.locator(this.txtAfiliacion).fill(afiliacion ?? "")
+        break;
+      case 13://CONSOLIDADO RIESGO INTERNACIONAL
+      case 14://DETALLE RIESGO INTERNACIONAL
+        if (moneda === 'P') {
+          await pageR.waitForSelector(this.checkPesos);
+          await pageR.locator(this.checkPesos).click()
+        } else if (moneda === 'D') {
+          await pageR.waitForSelector(this.checkDolares);
+          await pageR.locator(this.checkDolares).click()
+        }
+        await pageR.waitForSelector(this.txtFechaProceso);
+        await pageR.locator(this.txtFechaProceso).fill("")
+        await pageR.locator(this.txtFechaProceso).fill(fechaProceso)
+        await pageR.locator(this.selectEmisor).click()
+        await pageR.selectOption(this.selectEmisor, selectEmisor ?? DATOS_POR_DEFECTO_POSBMR.EMISOR)
+        break;
+      case 15://SISTEMA DE CAPTURA
+        if (moneda === 'P') {
+          await pageR.waitForSelector(this.checkPesos);
+          await pageR.locator(this.checkPesos).click()
+        } else if (moneda === 'D') {
+          await pageR.waitForSelector(this.checkDolares);
+          await pageR.locator(this.checkDolares).click()
+        }
+        await pageR.waitForSelector(this.txtFechaProceso);
+        await pageR.locator(this.txtFechaProceso).fill("")
+        await pageR.locator(this.txtFechaProceso).fill(fechaProceso)
+        break;
+      case 16://RECH LOTES A CAPTURA
+      case 17://TOTAL TRANSACCIONES PROMOCIONES
+      case 18://DETALLE TRANSACCIONES PROMOCIONES
+      case 19://DETALLE TRANSACCIONES RECHAZADAS PROMOCIONES
+        if (moneda === 'P') {
+          await pageR.waitForSelector(this.checkPesos);
+          await pageR.locator(this.checkPesos).click()
+        } else if (moneda === 'D') {
+          await pageR.waitForSelector(this.checkDolares);
+          await pageR.locator(this.checkDolares).click()
+        }
+        await pageR.waitForSelector(this.txtFechaProceso);
+        await pageR.locator(this.txtFechaProceso).fill("")
+        await pageR.locator(this.txtFechaProceso).fill(fechaProceso)
+        await pageR.locator(this.selectPlataforma).click()
+        await pageR.selectOption(this.selectPlataforma, plataforma ?? DATOS_POR_DEFECTO_POSBMR.PLATAFORMA)
+        await pageR.locator(this.txtAfiliacion).fill(afiliacion ?? "")
+        await pageR.selectOption(this.selectVentana, ventana ?? DATOS_POR_DEFECTO_POSBMR.VENTANA)
+        await pageR.locator(this.txtTarjeta).fill(tarjeta ?? "")
+        if (subTotales) {
+          await pageR.locator(this.checkSubtotales).getAttribute('value') === 'N' ?
+            await pageR.locator(this.checkSubtotales).click() :
+            await pageR.locator(this.checkSubtotales).getAttribute('value');
+        } else {
+          await pageR.locator(this.checkSubtotales).getAttribute('value') === 'S' ?
+            await pageR.locator(this.checkSubtotales).click() :
+            await pageR.locator(this.checkSubtotales).getAttribute('value');
+        }
+      case 20:
+        break;
+      case 21:
+        break;
+      case 22:
+        break;
+      case 23:
+        break;
+      case 24:
+        break;
+      case 25:
+        break;
+      case 26:
+        break;
+      case 27:
+        break;
     }
-    await pageR.waitForSelector(this.txtFechaProceso);
-    await pageR.locator(this.txtFechaProceso).fill("")
-    await pageR.locator(this.txtFechaProceso).fill(fechaProceso)
-    await pageR.locator(this.selectPlataforma).click()
-    await pageR.selectOption(this.selectPlataforma, plataforma ?? DATOS_POR_DEFECTO_POSBMR.PLATAFORMA)
-    await pageR.locator(this.txtAfiliacion).fill(afiliacion ?? "")
-    await pageR.selectOption(this.selectVentana, ventana ?? DATOS_POR_DEFECTO_POSBMR.VENTANA)
-    await pageR.locator(this.txtTarjeta).fill(tarjeta ?? "")
-    if(numeroReporte === 1 || numeroReporte === 2){
-      await pageR.selectOption(this.selectTipoTransaccion,tipoTransaccion ?? DATOS_POR_DEFECTO_POSBMR.TRANSACCION)
-    }
-    if(subTotales){
-      await pageR.locator(this.checkSubtotales).getAttribute('value')==='N'?
-      await pageR.locator(this.checkSubtotales).click():
-      await pageR.locator(this.checkSubtotales).getAttribute('value');
-    }else{
-      await pageR.locator(this.checkSubtotales).getAttribute('value')==='S'?
-      await pageR.locator(this.checkSubtotales).click():
-      await pageR.locator(this.checkSubtotales).getAttribute('value');
-    }
- }
+  }
 }
