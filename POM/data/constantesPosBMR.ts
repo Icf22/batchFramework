@@ -26,6 +26,19 @@ export const REPORTE_POSBMR = {
 
     INTERNACIONAL: '',
 
-    EMISOR: ''
+    EMISOR: '',
+    
+    GRUPO_CADENA: '',
 
+    TIPO_TRANSACCION: '',
+
+    TIPO_REPORTE: 'D',
+
+    CODIGO_RECHAZO: '',
+
+    FECHA_INICIO:'' ,
+
+    FECHA_FIN: '',
+
+    
 }
