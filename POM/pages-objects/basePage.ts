@@ -9,6 +9,7 @@ import {
 import path from "path";
 import fs from "fs/promises";
 import { EXTENSION, URLS, FUNCION, ARCHIVOS } from "../data/constates";
+import { REPORTE_POSBMR } from "../data/constantesPosBMR";
 
 export class BasePage {
   browserContext: BrowserContext;
@@ -141,7 +142,8 @@ export class BasePage {
   async validarDescargaPOSBMR(
     pageExtension: Page | undefined,
     btnDownload: string,
-    nameReport: string
+    nameReport: string,
+    esExcel : boolean
   ) {
     if (pageExtension) {
       // Crea una promesa que espera el evento download
@@ -155,9 +157,17 @@ export class BasePage {
 
       // Espera a que el proceso de descarga se complete y guarda el archivo descargado en algún lugar.
       const reportName = await this.obtenerTexto(pageExtension, nameReport);
-      await download.saveAs(
-        "./test-results/reportes-posBancomer/" + reportName + ".pdf"
-      );
+      if(esExcel){
+        await download.saveAs(
+          "./test-results/reportes-posBancomer/" + reportName + ".xlsx"
+        );
+      }
+      else{
+        await download.saveAs(
+          "./test-results/reportes-posBancomer/" + reportName + ".pdf"
+        );
+      }
+      
 
       // Validación de la existencia del archivo descargado
       const path = require("path");
