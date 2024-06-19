@@ -9,7 +9,7 @@ import {
 import path from "path";
 import fs from "fs/promises";
 import { EXTENSION, URLS, FUNCION, ARCHIVOS } from "../data/constates";
-import { REPORTE_POSBMR } from "../data/constantesPosBMR";
+import { REPORTE_POSBMR } from "../data/posBMR/constantesPosBMR";
 
 export class BasePage {
   browserContext: BrowserContext;
@@ -143,8 +143,9 @@ export class BasePage {
     pageExtension: Page | undefined,
     btnDownload: string,
     nameReport: string,
-    esExcel : boolean
+    esExcel: boolean
   ) {
+    let filePath;
     if (pageExtension) {
       // Crea una promesa que espera el evento download
       const downloadPromise = pageExtension.waitForEvent("download");
@@ -157,25 +158,29 @@ export class BasePage {
 
       // Espera a que el proceso de descarga se complete y guarda el archivo descargado en algún lugar.
       const reportName = await this.obtenerTexto(pageExtension, nameReport);
-      if(esExcel){
+
+      const path = require("path");
+      if (esExcel) {
         await download.saveAs(
           "./test-results/reportes-posBancomer/" + reportName + ".xlsx"
         );
-      }
-      else{
+        filePath = path.resolve(
+          process.cwd(),
+          "./test-results/reportes-posBancomer/",
+          `${reportName}.xlsx`
+        );
+      } else {
         await download.saveAs(
           "./test-results/reportes-posBancomer/" + reportName + ".pdf"
         );
+        filePath = path.resolve(
+          process.cwd(),
+          "./test-results/reportes-posBancomer/",
+          `${reportName}.pdf`
+        );
       }
-      
 
       // Validación de la existencia del archivo descargado
-      const path = require("path");
-      const filePath = path.resolve(
-        process.cwd(),
-        "./test-results/reportes-posBancomer/",
-        `${reportName}.pdf`
-      );
       const archivoExiste = await fs
         .access(filePath)
         .then(() => true)
