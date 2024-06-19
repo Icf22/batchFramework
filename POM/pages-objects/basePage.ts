@@ -9,6 +9,7 @@ import {
 import path from "path";
 import fs from "fs/promises";
 import { EXTENSION, URLS, FUNCION, ARCHIVOS } from "../data/constates";
+import { REPORTE_POSBMR } from "../data/posBMR/constantesPosBMR";
 
 export class BasePage {
   browserContext: BrowserContext;
@@ -38,13 +39,11 @@ export class BasePage {
     });
 
     await this.cargarArchivo(pageExtension, ARCHIVOS.CABECERA);
-    
-    await this.activarHeader(pageExtension, numberApp);
 
+    await this.activarHeader(pageExtension, numberApp);
   }
 
   //?Metodos que se utilizan mas de una vez
-
 
   async inicializarExtension() {
     const pathToExtension = path.join(__dirname, EXTENSION.EXTENSION);
@@ -115,9 +114,9 @@ export class BasePage {
       await pageExtension.locator(btnDownload).click();
       const download = await downloadPromise;
 
-      // Espera a que el proceso de descarga se complete y guarda el archivo descargado en algún lugar. 
+      // Espera a que el proceso de descarga se complete y guarda el archivo descargado en algún lugar.
       await download.saveAs("./test-results/" + nameReport + ".pdf");
-      
+
       // Validación de la existencia del archivo descargado
       const path = require("path");
       const filePath = path.resolve(
@@ -129,11 +128,10 @@ export class BasePage {
         .access(filePath)
         .then(() => true)
         .catch(() => false);
-      
+
       //Assertion para validar que se realizo la descarga de manera correcta
       await expect.soft(archivoExiste).toBeTruthy();
       console.log("El archivo PDF se descargó correctamente en:", filePath);
-
     } else {
       console.error(
         "pageExtension is undefined. Unable to perform download validation."
@@ -141,12 +139,13 @@ export class BasePage {
     }
   }
 
-
   async validarDescargaPOSBMR(
     pageExtension: Page | undefined,
     btnDownload: string,
-    nameReport: string
+    nameReport: string,
+    esExcel: boolean
   ) {
+    let filePath;
     if (pageExtension) {
       // Crea una promesa que espera el evento download
       const downloadPromise = pageExtension.waitForEvent("download");
@@ -159,25 +158,40 @@ export class BasePage {
 
       // Espera a que el proceso de descarga se complete y guarda el archivo descargado en algún lugar.
       const reportName = await this.obtenerTexto(pageExtension, nameReport);
-      await download.saveAs("./test-results/" + reportName + ".pdf");
-      
-      // Validación de la existencia del archivo descargado
+
       const path = require("path");
-      const filePath = path.resolve(
-        process.cwd(),
-        "./test-results/",
-        `${reportName}.pdf`
-      );
+      if (esExcel) {
+        await download.saveAs(
+          "./test-results/reportes-posBancomer/" + reportName + ".xlsx"
+        );
+        filePath = path.resolve(
+          process.cwd(),
+          "./test-results/reportes-posBancomer/",
+          `${reportName}.xlsx`
+        );
+      } else {
+        await download.saveAs(
+          "./test-results/reportes-posBancomer/" + reportName + ".pdf"
+        );
+        filePath = path.resolve(
+          process.cwd(),
+          "./test-results/reportes-posBancomer/",
+          `${reportName}.pdf`
+        );
+      }
+
+      // Validación de la existencia del archivo descargado
       const archivoExiste = await fs
         .access(filePath)
         .then(() => true)
         .catch(() => false);
-      
-      //Assertion para validar que se realizo la descarga de manera correcta 
-      await expect.soft(archivoExiste).toBeTruthy();
-      
-      console.log("El archivo PDF se descargó correctamente en:", filePath);
 
+      //Assertion para validar que se realizo la descarga de manera correcta
+
+      await expect.soft(archivoExiste).toBeTruthy();
+      archivoExiste
+        ? console.log("El archivo PDF se descargó correctamente en:", filePath)
+        : console.error("El archivo PDF no se descargo en: " + filePath);
     } else {
       console.error(
         "pageExtension is undefined. Unable to perform download validation."
@@ -201,8 +215,4 @@ export class BasePage {
   async elementoVisible(locator: Locator) {
     await expect(locator).toBeVisible();
   }
-
-
-
-  
 }
