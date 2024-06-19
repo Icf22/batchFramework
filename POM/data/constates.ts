@@ -8,8 +8,8 @@ export const EXTENSION = {
 export const URLS = {
     INICIOSESION: 'https://172.29.40.129:444/test_tivoli/servlet/wpinicio',
     REPORTEPRPCONCILIA: 'https://172.29.40.129:444/PRPConcilia/servlet/wpinicio',
-    POSBMR: 'https://172.29.40.129:444/POSBMR/servlet/wpinicio',
-    DSSREPORT: 'https://172.29.40.129:444/DSSReport/servlet/wpinicio'
+    POSBMR: 'https://172.29.40.129:443/POSBMR/servlet/wpinicio',
+    DSSREPORT: 'https://172.29.40.129:44/DSSReport/servlet/wpinicio'
 }
 
 
