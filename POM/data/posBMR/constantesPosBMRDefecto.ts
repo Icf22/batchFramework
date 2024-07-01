@@ -10,3 +10,4 @@ export const DATOS_POR_DEFECTO_POSBMR = {
     EMISOR: '00 Todas',
     EMISOR2: '0 Master y Visa',
 }
+

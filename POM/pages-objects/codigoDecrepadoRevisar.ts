@@ -163,99 +163,474 @@ export class PosBMRPage extends BasePage {
   async revisarReporte(reporteARevisar: number) {
     const pageReporte = await this.inicializarPage(URLS.POSBMR);
     let btnTipoReporte = this.op1TotalTranAcep;
-  
-    // Definir array de opciones a ejecutar cuando reporteARevisar es 0
-    const opcionesAEjecutar = {
-      1:this.op1TotalTranAcep,
-      2:this.op2DetaTranAcep,
-      3:this.op3TotalTranRech,
-      4:this.op4DetallTranRech,
-      5:this.op5RechNoProce,
-      6:this.op6ConsoRechXFech,
-      7:this.op7TotalesEmisor,
-      8:this.op8DetalleEmisor,
-      9:this.op9ConsolidadoEmisor,
-      10:this.opAConsolidadoPlataforma,
-      11:this.opBRetencionRiesgo,
-      12:this.opCConsolidadoRiesgoInt,
-      13:this.opDConsolidadoRiestoInt,
-      14:this.opEDetRiesgoInt,
-      15:this.opFTxnSistemaCapturas,
-      16:this.opGRechLotesCaptura,
-      17:this.opHTotTxnPromociones,
-      18:this.opIDetTxnPromociones,
-      19:this.opJDetTxnRechPromociones,
-      20:this.opKTotTxnAcepGrupoCadena,
-      21:this.opLTotTxnRechGrupoCadena,
-      22:this.opMConsolidadoPromociones,
-      23:this.opNSumPromocionesBanamex,
-      24:this.opPRreporteWalmart,
-      25:this.opQTransaccionesCash,
-      26:this.opRReportePagosCash,
-      27:this.opSReporteRechazados,
-      28:this.opVPuntosBBVA,
-    };
-  
-    // Definir array de botones correspondientes a cada opción
-    const botonesAEjecutar = {
-      1:this.btnReporte,   
-      2:this.btnReporte,   
-      3:this.btnReporte,   
-      4:this.btnReporte,  
-      5:this.btnReporte,  
-      6:this.btnReporte,    
-      7:this.btnReporte,   
-      8:this.btnReporte,       
-      9:this.btnReporte,    
-      10:this.btnReporte,    
-      11:this.btnReporte,  
-      12:this.btnReporte,   
-      13:this.btnReporte,   
-      14:this.btnReporte, 
-      15:this.btnReporte,  
-      16:this.btnReporte,   
-      17:this.btnReporte,   
-      18:this.btnReporte,    
-      19:this.btnReporte,    
-      20:this.btnReporte,    
-      21:this.btnReporte,    
-      22:this.btnVistaPrevia,    
-      23:this.btnPreliminar,   
-      24:this.btnPreliminar,    
-      25:this.btnPreliminar,    
-      26:this.btnPreliminar,    
-      27:this.btnReporte,   
-      28:this.btnReporte     
-    };
-  
-    // Si reporteARevisar es 0, ejecutar todas las opciones
-    if (reporteARevisar === 0) 
-    {
-      for (let i = 1; i < Object.keys(opcionesAEjecutar).length; i++) {
-        const opcion = opcionesAEjecutar[i];
-        const boton = botonesAEjecutar[i];
-  
-        // Saltar las opciones que no se deben ejecutar cuando reporteARevisar es 0
-        if ([15, 20, 21, 22, 23, 27].includes(i)) {
-          continue;
-        }
-  
+    let esIndividual = true;
+    switch (reporteARevisar) {
+      //Validar mas usados (1-4)
+      case 0:
+        esIndividual = false;
+        //1
         await Promise.all([
-          pageReporte.locator(opcion).click(),
+          pageReporte.locator(this.op1TotalTranAcep).click(),
           pageReporte.waitForLoadState('networkidle')
         ]);
-        await this.ingresarDatosReporte(pageReporte, i);
-        await this.validarDescargaPOSBMR(pageReporte, boton, opcion, false);
-      }
-    } 
-    else 
-    {
-      btnTipoReporte = opcionesAEjecutar[reporteARevisar]
+        await this.ingresarDatosReporte(pageReporte, 1)
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnReporte,
+          this.op1TotalTranAcep,
+          false
+        );
+
+        //2
+        await Promise.all([
+          pageReporte.locator(this.op2DetaTranAcep).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 2)
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnReporte,
+          this.op2DetaTranAcep,
+          false
+        );
+
+        //3
+        await Promise.all([
+          pageReporte.locator(this.op3TotalTranRech).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 3)
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnReporte,
+          this.op3TotalTranRech,
+          false
+        );
+
+        //4
+        await Promise.all([
+          pageReporte.locator(this.op4DetallTranRech).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 4)
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnReporte,
+          this.op4DetallTranRech,
+          false
+        );
+        //5
+        await Promise.all([
+          pageReporte.locator(this.op5RechNoProce).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 5)
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnReporte,
+          this.op5RechNoProce,
+          false
+        );
+        //6
+        await Promise.all([
+          pageReporte.locator(this.op6ConsoRechXFech).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 6)
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnReporte,
+          this.op6ConsoRechXFech,
+          false
+        );
+
+        //7
+        await Promise.all([
+          pageReporte.locator(this.op7TotalesEmisor).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 7)
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnReporte,
+          this.op7TotalesEmisor,
+          false
+        );
+        //8
+        await Promise.all([
+          pageReporte.locator(this.op8DetalleEmisor).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 8)
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnReporte,
+          this.op8DetalleEmisor,
+          false
+        );
+        //9
+        await Promise.all([
+          pageReporte.locator(this.op9ConsolidadoEmisor).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 9)
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnReporte,
+          this.op9ConsolidadoEmisor,
+          false
+        );
+        //10
+        await Promise.all([
+          pageReporte.locator(this.opAConsolidadoPlataforma).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 10)
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnReporte,
+          this.opAConsolidadoPlataforma,
+          false
+        );
+        //11
+        await Promise.all([
+          pageReporte.locator(this.opBRetencionRiesgo).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 11)
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnReporte,
+          this.opBRetencionRiesgo,
+          false
+        );
+        //12
+        await Promise.all([
+          pageReporte.locator(this.opCConsolidadoRiesgoInt).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 12)
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnReporte,
+          this.opCConsolidadoRiesgoInt,
+          false
+        );
+        //13
+        await Promise.all([
+          pageReporte.locator(this.opDConsolidadoRiestoInt).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 13)
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnReporte,
+          this.opDConsolidadoRiestoInt,
+          false
+        );
+        //14
+        await Promise.all([
+          pageReporte.locator(this.opEDetRiesgoInt).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 14)
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnReporte,
+          this.opEDetRiesgoInt,
+          false
+        );
+        
+         //15
+        //NO VALIDAR DESCARGA
+        /*await Promise.all([
+          pageReporte.locator(this.opFTxnSistemaCapturas).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 15)
+        await this.validarDescargaPOSBMR(
+           pageReporte,
+           this.btnReporte,
+           this.opFTxnSistemaCapturas
+         );
+        */
+        //16
+        await Promise.all([
+          pageReporte.locator(this.opGRechLotesCaptura).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 16)
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnReporte,
+          this.opGRechLotesCaptura,
+          false
+        );
+        //17
+        await Promise.all([
+          pageReporte.locator(this.opHTotTxnPromociones).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 17)
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnReporte,
+          this.opHTotTxnPromociones,
+          false
+        );
+        //18
+        await Promise.all([
+          pageReporte.locator(this.opIDetTxnPromociones).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 18)
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnReporte,
+          this.opIDetTxnPromociones,
+          false
+        );
+        //19
+        await Promise.all([
+          pageReporte.locator(this.opJDetTxnRechPromociones).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 19)
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnReporte,
+          this.opJDetTxnRechPromociones,
+          false
+        );
+        //20
+        // await Promise.all([
+        //   pageReporte.locator(this.opKTotTxnAcepGrupoCadena).click(),
+        //   pageReporte.waitForLoadState('networkidle')
+        // ]);
+        // await this.ingresarDatosReporte(pageReporte, 20)
+        //NO VALIDA LA DESCARGA EL BTN NO DESCARGA PROBLEMA EN EL SISTEMA WEB
+        // await this.validarDescargaPOSBMR(
+        //   pageReporte,
+        //   this.btnReporte,
+        //   this.opKTotTxnAcepGrupoCadena
+        // );
+
+        //21
+        // 
+        // await Promise.all([
+        //   pageReporte.locator(this.opLTotTxnRechGrupoCadena).click(),
+        //   pageReporte.waitForLoadState('networkidle')
+        // ]);
+        // await this.ingresarDatosReporte(pageReporte, 21)
+        // NO VALIDA LA DESCARGA EL BTN NO DESCARGA PROBLEMA EN EL SISTEMA WEB
+        //  await this.validarDescargaPOSBMR(
+        //    pageReporte,
+        //    this.btnReporte,
+        //    this.opLTotTxnRechGrupoCadena
+        //  );
+         //22
+        // await Promise.all([
+        //   pageReporte.locator(this.opMConsolidadoPromociones).click(),
+        //   pageReporte.waitForLoadState('networkidle')
+        // ]);
+        // await this.ingresarDatosReporte(pageReporte, 22)
+        // await this.validarDescargaPOSBMR(
+        //   pageReporte,
+        //   this.btnVistaPrevia,
+        //   this.opMConsolidadoPromociones,
+        //   false
+        // );
+         //23
+        // await Promise.all([
+        //   pageReporte.locator(this.opNSumPromocionesBanamex).click(),
+        //   pageReporte.waitForLoadState('networkidle')
+        // ]);
+        // await this.ingresarDatosReporte(pageReporte, 23)
+        // await this.validarDescargaPOSBMR(
+        //   pageReporte,
+        //   this.btnPreliminar,
+        //   this.opNSumPromocionesBanamex,
+        //   false
+        // );
+        //24
+        await Promise.all([
+          pageReporte.locator(this.opPRreporteWalmart).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 24)
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnPreliminar,
+          this.opPRreporteWalmart,
+          false
+        );
+        //25
+        await Promise.all([
+          pageReporte.locator(this.opQTransaccionesCash).click(),
+          pageReporte.waitForLoadState('networkidle')
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 25)
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnPreliminar,
+          this.opQTransaccionesCash,
+          false
+        );
+        //26
+        await Promise.all([
+          pageReporte.locator(this.opRReportePagosCash).click(),
+          pageReporte.waitForLoadState("networkidle"),
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 26);
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnPreliminar,
+          this.opRReportePagosCash,
+          false
+        );
+        
+        //27
+        // await Promise.all([
+        //   pageReporte.locator(this.opSReporteRechazados).click(),
+        //   pageReporte.waitForLoadState('networkidle')
+        // ]);
+        // await this.ingresarDatosReporte(pageReporte, 27)
+        // NO VALIDAR RECHAZOS HASTA QUE TENGA REGISTROS
+        // await this.validarDescargaPOSBMR(
+        //   pageReporte,
+        //   this.btnReporte,
+        //   this.opSReporteRechazados
+        // );
+        //28
+        await Promise.all([
+          pageReporte.locator(this.opVPuntosBBVA).click(),
+          pageReporte.waitForLoadState("networkidle"),
+        ]);
+        await this.ingresarDatosReporte(pageReporte, 28);
+        await this.validarDescargaPOSBMR(
+          pageReporte,
+          this.btnReporte,
+          this.opVPuntosBBVA,
+          REPORTE_POSBMR.SALIDA_EXCEL
+        );
+        break;
+      //1 Total de Transacciones Aceptadas
+      case 1:
+        btnTipoReporte = this.op1TotalTranAcep;
+        break;
+      //2 Detalle de Transacciones Aceptadas
+      case 2:
+        btnTipoReporte = this.op2DetaTranAcep;
+        break;
+      //3 Total de Transacciones Rechazadas
+      case 3:
+        btnTipoReporte = this.op3TotalTranRech;
+        break;
+      //4 Detalle de Transacciones Rechazadas
+      case 4:
+        btnTipoReporte = this.op4DetallTranRech;
+        break;
+      //5 Rechazadas no procesadas
+      case 5:
+        btnTipoReporte = this.op5RechNoProce;
+        break;
+      //6 Consolidado de Rechazos por Fecha
+      case 6:
+        btnTipoReporte = this.op6ConsoRechXFech;
+        break;
+      //7 Totales Emisor
+      case 7:
+        btnTipoReporte = this.op7TotalesEmisor;
+        break;
+      //8 Detalle Emisor
+      case 8:
+        btnTipoReporte = this.op8DetalleEmisor;
+        break;
+      //9 Consolidado Emisor
+      case 9:
+        btnTipoReporte = this.op9ConsolidadoEmisor;
+        break;
+      //A Consolidado Plataforma
+      case 10:
+        btnTipoReporte = this.opAConsolidadoPlataforma;
+        break;
+      //B Retención Riesgo
+      case 11:
+        btnTipoReporte = this.opBRetencionRiesgo;
+        break;
+      //C Liberación Riesgo
+      case 12:
+        btnTipoReporte = this.opCConsolidadoRiesgoInt;
+        break;
+      //D Consolidado Riesgo Int.
+      case 13:
+        btnTipoReporte = this.opDConsolidadoRiestoInt;
+        break;
+      //E Det. Riesgo Int.
+      case 14:
+        btnTipoReporte = this.opEDetRiesgoInt;
+        break;
+      //F Txn. Sistema de Captura
+      case 15:
+        btnTipoReporte = this.opFTxnSistemaCapturas;
+        break;
+      //G Rech. Lotes a Captura
+      case 16:
+        btnTipoReporte = this.opGRechLotesCaptura;
+        break;
+      //H Tot. Txn. Promociones
+      case 17:
+        btnTipoReporte = this.opHTotTxnPromociones;
+        break;
+      //I Det. Txn. Promociones
+      case 18:
+        btnTipoReporte = this.opIDetTxnPromociones;
+        break;
+      //J Det. Txn. Rech. Promociones
+      case 19:
+        btnTipoReporte = this.opJDetTxnRechPromociones;
+        break;
+      //K Tot. Txn. Acep.Grupo Cadena
+      case 20:
+        btnTipoReporte = this.opKTotTxnAcepGrupoCadena;
+        break;
+      //L Tot. Txn. Rech.Grupo Cadena
+      case 21:
+        btnTipoReporte = this.opLTotTxnRechGrupoCadena;
+        break;
+      //M Consolidado de Promociones
+      case 22:
+        btnTipoReporte = this.opMConsolidadoPromociones;
+        break;
+      //N Sumario de Promociones Banamex
+      case 23:
+        btnTipoReporte = this.opNSumPromocionesBanamex;
+        break;
+      //P Reporte de Wal-Mart
+      case 24:
+        btnTipoReporte = this.opPRreporteWalmart;
+        break;
+      //Q Transacciones Cash
+      case 25:
+        btnTipoReporte = this.opQTransaccionesCash;
+        break;
+      //R Reporte Pagos y Cash
+      case 26:
+        btnTipoReporte = this.opRReportePagosCash;
+        break;
+      //S Reporte Rechazos
+      case 27:
+        btnTipoReporte = this.opSReporteRechazados;
+        break;
+      //V Puntos BBVA
+      case 28:
+        btnTipoReporte = this.opVPuntosBBVA;
+        break;
+    }
+    if (esIndividual) {
       await pageReporte.locator(btnTipoReporte).click();
-      await this.ingresarDatosReporte(pageReporte, reporteARevisar);
-      // Obtener el botón correcto para la opción seleccionada
-      const boton = botonesAEjecutar[reporteARevisar];
-      await this.validarDescargaPOSBMR(pageReporte, boton, btnTipoReporte, false);
+      await this.ingresarDatosReporte(pageReporte, reporteARevisar)
+      await this.validarDescargaPOSBMR(this.pageReporte, this.btnReporte, btnTipoReporte, false);
     }
   }
 
@@ -590,7 +965,4 @@ export class PosBMRPage extends BasePage {
         break;
     }
   }
-
-  
-  
 }
