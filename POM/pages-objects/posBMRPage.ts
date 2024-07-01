@@ -164,7 +164,7 @@ export class PosBMRPage extends BasePage {
     const pageReporte = await this.inicializarPage(URLS.POSBMR);
     let btnTipoReporte = this.op1TotalTranAcep;
   
-    // Definir array de opciones a ejecutar cuando reporteARevisar es 0
+    //DEFINIMOS EL OBJETO PARA LOS DIFERENTES APARTADOS DE CADA REPORTE
     const opcionesAEjecutar = {
       1:this.op1TotalTranAcep,
       2:this.op2DetaTranAcep,
@@ -196,7 +196,7 @@ export class PosBMRPage extends BasePage {
       28:this.opVPuntosBBVA,
     };
   
-    // Definir array de botones correspondientes a cada opción
+    // DEFINIMOS EL OBJETO PARA LOS BOTONES DE DESCARGA QUE CORRESPONDEN A CADA REPORTE
     const botonesAEjecutar = {
       1:this.btnReporte,   
       2:this.btnReporte,   
@@ -228,14 +228,14 @@ export class PosBMRPage extends BasePage {
       28:this.btnReporte     
     };
   
-    // Si reporteARevisar es 0, ejecutar todas las opciones
+    // SI EL REPORTE A REVISAR ES 0 (TODOS) ENTRA EN ESTE CASO
     if (reporteARevisar === 0) 
     {
       for (let i = 1; i < Object.keys(opcionesAEjecutar).length; i++) {
         const opcion = opcionesAEjecutar[i];
         const boton = botonesAEjecutar[i];
   
-        // Saltar las opciones que no se deben ejecutar cuando reporteARevisar es 0
+        // CUANDO I SEA IGUAL A UNO DE ESOS NUMEROS ENTRA AL IF Y CON EL CONTINUE TERMINA ESA ITERACION Y CONTINUA CON LA PROXIMA
         if ([15, 20, 21, 22, 23, 27].includes(i)) {
           continue;
         }
@@ -253,7 +253,6 @@ export class PosBMRPage extends BasePage {
       btnTipoReporte = opcionesAEjecutar[reporteARevisar]
       await pageReporte.locator(btnTipoReporte).click();
       await this.ingresarDatosReporte(pageReporte, reporteARevisar);
-      // Obtener el botón correcto para la opción seleccionada
       const boton = botonesAEjecutar[reporteARevisar];
       await this.validarDescargaPOSBMR(pageReporte, boton, btnTipoReporte, false);
     }
