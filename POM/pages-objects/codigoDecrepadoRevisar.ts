@@ -1,7 +1,7 @@
 import { BrowserContext, Locator, Page } from "@playwright/test";
 import { BasePage } from "./basePage";
 import { URLS } from "../data/constates";
-import { DATOS_POR_DEFECTO_POSBMR } from "../data/posBMR/constantesPosBMRDefecto";
+import { DEFECTO_POSBMR } from "../data/posBMR/constantesPosBMRDefecto";
 import { REPORTE_4DETALLE_TRANC_RECHAZADAS, 
   REPORTE_5RECHAZAS_NO_PROCESADAS,
   REPORTE_6CONSOLIDADOS_RECHAZADOS_X_FECHA,
@@ -656,10 +656,10 @@ export class PosBMRPage extends BasePage {
         await pageR.locator(this.selectPlataforma).click()
         await pageR.selectOption(this.selectPlataforma, REPORTE_4DETALLE_TRANC_RECHAZADAS.PLATAFORMA ?? REPORTE_4DETALLE_TRANC_RECHAZADAS.PLATAFORMA)
         await pageR.locator(this.txtAfiliacion).fill(REPORTE_4DETALLE_TRANC_RECHAZADAS.AFILIACION ?? "")
-        await pageR.selectOption(this.selectVentana, REPORTE_4DETALLE_TRANC_RECHAZADAS.VENTANA ?? DATOS_POR_DEFECTO_POSBMR.VENTANA)
+        await pageR.selectOption(this.selectVentana, REPORTE_4DETALLE_TRANC_RECHAZADAS.VENTANA ?? DEFECTO_POSBMR.VENTANA)
         await pageR.locator(this.txtTarjeta).fill(REPORTE_4DETALLE_TRANC_RECHAZADAS.TARJETA ?? "")
         if (numeroReporte === 1 || numeroReporte === 2) {
-          await pageR.selectOption(this.selectTipoTransaccion, REPORTE_4DETALLE_TRANC_RECHAZADAS.TRANSACCION ?? DATOS_POR_DEFECTO_POSBMR.TRANSACCION)
+          await pageR.selectOption(this.selectTipoTransaccion, REPORTE_4DETALLE_TRANC_RECHAZADAS.TRANSACCION ?? DEFECTO_POSBMR.TRANSACCION)
         }
         if (REPORTE_4DETALLE_TRANC_RECHAZADAS.SUBTOTALES) {
           await pageR.locator(this.checkSubtotales).getAttribute('value') === 'N' ?
@@ -683,8 +683,8 @@ export class PosBMRPage extends BasePage {
         await pageR.locator(this.txtFechaProceso).fill("")
         await pageR.locator(this.txtFechaProceso).fill(REPORTE_5RECHAZAS_NO_PROCESADAS.FECHA)
         await pageR.locator(this.selectPlataforma).click()
-        await pageR.selectOption(this.selectPlataforma, REPORTE_5RECHAZAS_NO_PROCESADAS.PLATAFORMA ?? DATOS_POR_DEFECTO_POSBMR.PLATAFORMA)
-        await pageR.selectOption(this.selectVentana, REPORTE_5RECHAZAS_NO_PROCESADAS.VENTANA ?? DATOS_POR_DEFECTO_POSBMR.VENTANA)
+        await pageR.selectOption(this.selectPlataforma, REPORTE_5RECHAZAS_NO_PROCESADAS.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA)
+        await pageR.selectOption(this.selectVentana, REPORTE_5RECHAZAS_NO_PROCESADAS.VENTANA ?? DEFECTO_POSBMR.VENTANA)
         break;
       case 6: //CONSOLIDADO DE RECHAZADOS
         if (REPORTE_6CONSOLIDADOS_RECHAZADOS_X_FECHA.MONEDA === 'P') {
@@ -698,8 +698,8 @@ export class PosBMRPage extends BasePage {
         await pageR.locator(this.txtFechaProceso).fill("")
         await pageR.locator(this.txtFechaProceso).fill(REPORTE_6CONSOLIDADOS_RECHAZADOS_X_FECHA.FECHA)
         await pageR.locator(this.selectPlataforma).click()
-        await pageR.selectOption(this.selectPlataforma, REPORTE_6CONSOLIDADOS_RECHAZADOS_X_FECHA.PLATAFORMA ?? DATOS_POR_DEFECTO_POSBMR.PLATAFORMA)
-        await pageR.selectOption(this.selectVentana, REPORTE_6CONSOLIDADOS_RECHAZADOS_X_FECHA.VENTANA ?? DATOS_POR_DEFECTO_POSBMR.VENTANA)
+        await pageR.selectOption(this.selectPlataforma, REPORTE_6CONSOLIDADOS_RECHAZADOS_X_FECHA.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA)
+        await pageR.selectOption(this.selectVentana, REPORTE_6CONSOLIDADOS_RECHAZADOS_X_FECHA.VENTANA ?? DEFECTO_POSBMR.VENTANA)
         break;
       case 7: //TOTALES EMISOR
       case 8: //DETALLE EMISOR
@@ -716,9 +716,9 @@ export class PosBMRPage extends BasePage {
         await pageR.locator(this.txtFechaProceso).fill("")
         await pageR.locator(this.txtFechaProceso).fill(REPORTE_ACONSOLIDADO_PLATAFORMA.FECHA)
         await pageR.locator(this.selectPlataforma).click()
-        await pageR.selectOption(this.selectPlataforma, REPORTE_ACONSOLIDADO_PLATAFORMA.PLATAFORMA ?? DATOS_POR_DEFECTO_POSBMR.PLATAFORMA)
+        await pageR.selectOption(this.selectPlataforma, REPORTE_ACONSOLIDADO_PLATAFORMA.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA)
         await pageR.locator(this.txtAfiliacion).fill(REPORTE_ACONSOLIDADO_PLATAFORMA.AFILIACION ?? "")
-        await pageR.selectOption(this.selectVentana, REPORTE_ACONSOLIDADO_PLATAFORMA.VENTANA ?? DATOS_POR_DEFECTO_POSBMR.VENTANA)
+        await pageR.selectOption(this.selectVentana, REPORTE_ACONSOLIDADO_PLATAFORMA.VENTANA ?? DEFECTO_POSBMR.VENTANA)
         await pageR.locator(this.txtTarjeta).fill(REPORTE_ACONSOLIDADO_PLATAFORMA.TARJETA ?? "")
         break;
       case 11://RETENCIONES POR RIESGO
@@ -733,9 +733,9 @@ export class PosBMRPage extends BasePage {
         await pageR.locator(this.txtFechaProceso).fill("")
         await pageR.locator(this.txtFechaProceso).fill(REPORTE_BRETENCION_RIESGO.FECHA)
         await pageR.locator(this.selectPlataforma).click()
-        await pageR.selectOption(this.selectPlataforma, REPORTE_BRETENCION_RIESGO.PLATAFORMA ?? DATOS_POR_DEFECTO_POSBMR.PLATAFORMA)
+        await pageR.selectOption(this.selectPlataforma, REPORTE_BRETENCION_RIESGO.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA)
         await pageR.locator(this.txtAfiliacion).fill(REPORTE_BRETENCION_RIESGO.AFILIACION ?? "")
-        await pageR.selectOption(this.selectVentana, REPORTE_BRETENCION_RIESGO.VENTANA ?? DATOS_POR_DEFECTO_POSBMR.VENTANA)
+        await pageR.selectOption(this.selectVentana, REPORTE_BRETENCION_RIESGO.VENTANA ?? DEFECTO_POSBMR.VENTANA)
         await pageR.locator(this.txtTarjeta).fill(REPORTE_BRETENCION_RIESGO.VENTANA ?? "")
         await pageR.locator(this.selectInternacional).click()
         await pageR.selectOption(this.selectInternacional, REPORTE_BRETENCION_RIESGO.INTERNACIONAL ?? "0 Domestico")
@@ -745,7 +745,7 @@ export class PosBMRPage extends BasePage {
         await pageR.locator(this.txtFechaProceso).fill("")
         await pageR.locator(this.txtFechaProceso).fill(REPORTE_CLIBERACION_RIESGO.FECHA)
         await pageR.locator(this.selectEmisor).click()
-        await pageR.selectOption(this.selectEmisor, REPORTE_CLIBERACION_RIESGO.EMISOR ?? DATOS_POR_DEFECTO_POSBMR.EMISOR)
+        await pageR.selectOption(this.selectEmisor, REPORTE_CLIBERACION_RIESGO.EMISOR ?? DEFECTO_POSBMR.EMISOR)
         await pageR.locator(this.txtAfiliacion).fill(REPORTE_CLIBERACION_RIESGO.AFILIACION ?? "")
         break;
       case 13://CONSOLIDADO RIESGO INTERNACIONAL
@@ -761,7 +761,7 @@ export class PosBMRPage extends BasePage {
         await pageR.locator(this.txtFechaProceso).fill("")
         await pageR.locator(this.txtFechaProceso).fill(REPORTE_EDET_RIESGO_INT.FECHA)
         await pageR.locator(this.selectEmisor2).click()
-        await pageR.selectOption(this.selectEmisor2, REPORTE_EDET_RIESGO_INT.EMISOR2 ?? DATOS_POR_DEFECTO_POSBMR.EMISOR2)
+        await pageR.selectOption(this.selectEmisor2, REPORTE_EDET_RIESGO_INT.EMISOR2 ?? DEFECTO_POSBMR.EMISOR2)
         break;
       case 15://SISTEMA DE CAPTURA BOTON DESACTIVADO NO DEJA DESCARGAR
        /* if (moneda === 'P') {
@@ -788,9 +788,9 @@ export class PosBMRPage extends BasePage {
         await pageR.locator(this.txtFechaProceso).fill("")
         await pageR.locator(this.txtFechaProceso).fill(REPORTE_GRECH_LOTES_CAPTURA.FECHA)
         await pageR.locator(this.selectPlataforma).click()
-        await pageR.selectOption(this.selectPlataforma, REPORTE_GRECH_LOTES_CAPTURA.PLATAFORMA2 ?? DATOS_POR_DEFECTO_POSBMR.PLATAFORMA2)
+        await pageR.selectOption(this.selectPlataforma, REPORTE_GRECH_LOTES_CAPTURA.PLATAFORMA2 ?? DEFECTO_POSBMR.PLATAFORMA2)
         await pageR.locator(this.txtAfiliacion).fill(REPORTE_GRECH_LOTES_CAPTURA.AFILIACION ?? "")
-        await pageR.selectOption(this.selectVentana, REPORTE_GRECH_LOTES_CAPTURA.VENTANA ?? DATOS_POR_DEFECTO_POSBMR.VENTANA)
+        await pageR.selectOption(this.selectVentana, REPORTE_GRECH_LOTES_CAPTURA.VENTANA ?? DEFECTO_POSBMR.VENTANA)
         await pageR.locator(this.txtTarjeta).fill(REPORTE_GRECH_LOTES_CAPTURA.TARJETA ?? "")
         if (REPORTE_GRECH_LOTES_CAPTURA.SUBTOTALES) {
           await pageR.locator(this.checkSubtotales).getAttribute('value') === 'N' ?
@@ -816,9 +816,9 @@ export class PosBMRPage extends BasePage {
         await pageR.locator(this.txtFechaProceso).fill("")
         await pageR.locator(this.txtFechaProceso).fill(REPORTE_JDET_TXN_RECH_PROMOCIONES.FECHA)
         await pageR.locator(this.selectPlataforma).click()
-        await pageR.selectOption(this.selectPlataforma, REPORTE_JDET_TXN_RECH_PROMOCIONES.PLATAFORMA2 ?? DATOS_POR_DEFECTO_POSBMR.PLATAFORMA2)
+        await pageR.selectOption(this.selectPlataforma, REPORTE_JDET_TXN_RECH_PROMOCIONES.PLATAFORMA2 ?? DEFECTO_POSBMR.PLATAFORMA2)
         await pageR.locator(this.txtAfiliacion).fill(REPORTE_JDET_TXN_RECH_PROMOCIONES.AFILIACION ?? "")
-        await pageR.selectOption(this.selectVentana, REPORTE_JDET_TXN_RECH_PROMOCIONES.VENTANA ?? DATOS_POR_DEFECTO_POSBMR.VENTANA)
+        await pageR.selectOption(this.selectVentana, REPORTE_JDET_TXN_RECH_PROMOCIONES.VENTANA ?? DEFECTO_POSBMR.VENTANA)
         await pageR.locator(this.txtTarjeta).fill(REPORTE_JDET_TXN_RECH_PROMOCIONES.TARJETA ?? "")
         if (REPORTE_JDET_TXN_RECH_PROMOCIONES.SUBTOTALES) {
           await pageR.locator(this.checkSubtotales).getAttribute('value') === 'N' ?
@@ -842,11 +842,11 @@ export class PosBMRPage extends BasePage {
         await pageR.locator(this.txtFechaProceso).fill("")
         await pageR.locator(this.txtFechaProceso).fill(REPORTE_KTOT_TXN_ACEP_GRUPO_CADENA.FECHA)
         await pageR.locator(this.selectPlataforma).click()
-        await pageR.selectOption(this.selectPlataforma, REPORTE_KTOT_TXN_ACEP_GRUPO_CADENA.PLATAFORMA ?? DATOS_POR_DEFECTO_POSBMR.PLATAFORMA)
+        await pageR.selectOption(this.selectPlataforma, REPORTE_KTOT_TXN_ACEP_GRUPO_CADENA.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA)
         await pageR.locator(this.txtAfiliacion).fill(REPORTE_KTOT_TXN_ACEP_GRUPO_CADENA.AFILIACION ?? "")
-        await pageR.selectOption(this.selectVentana, REPORTE_KTOT_TXN_ACEP_GRUPO_CADENA.VENTANA ?? DATOS_POR_DEFECTO_POSBMR.VENTANA)
+        await pageR.selectOption(this.selectVentana, REPORTE_KTOT_TXN_ACEP_GRUPO_CADENA.VENTANA ?? DEFECTO_POSBMR.VENTANA)
         await pageR.locator(this.txtTarjeta).fill(REPORTE_KTOT_TXN_ACEP_GRUPO_CADENA.TARJETA ?? "")
-        await pageR.selectOption(this.selectTipoTransaccion, REPORTE_KTOT_TXN_ACEP_GRUPO_CADENA.VENTANA ?? DATOS_POR_DEFECTO_POSBMR.TRANSACCION)
+        await pageR.selectOption(this.selectTipoTransaccion, REPORTE_KTOT_TXN_ACEP_GRUPO_CADENA.VENTANA ?? DEFECTO_POSBMR.TRANSACCION)
         await pageR.locator(this.txtGrupoCadena).fill(REPORTE_KTOT_TXN_ACEP_GRUPO_CADENA.GRUPO_CADENA ?? "")
         if (REPORTE_KTOT_TXN_ACEP_GRUPO_CADENA.SUBTOTALES) {
           await pageR.locator(this.checkSubtotales).getAttribute('value') === 'N' ?
@@ -870,9 +870,9 @@ export class PosBMRPage extends BasePage {
         await pageR.locator(this.txtFechaProceso).fill("")
         await pageR.locator(this.txtFechaProceso).fill(REPORTE_LTOT_TXN_RECH_GRUPO_CADENA.FECHA)
         await pageR.locator(this.selectPlataforma).click()
-        await pageR.selectOption(this.selectPlataforma, REPORTE_LTOT_TXN_RECH_GRUPO_CADENA.PLATAFORMA ?? DATOS_POR_DEFECTO_POSBMR.PLATAFORMA)
+        await pageR.selectOption(this.selectPlataforma, REPORTE_LTOT_TXN_RECH_GRUPO_CADENA.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA)
         await pageR.locator(this.txtAfiliacion).fill(REPORTE_LTOT_TXN_RECH_GRUPO_CADENA.AFILIACION ?? "")
-        await pageR.selectOption(this.selectVentana, REPORTE_LTOT_TXN_RECH_GRUPO_CADENA.VENTANA ?? DATOS_POR_DEFECTO_POSBMR.VENTANA)
+        await pageR.selectOption(this.selectVentana, REPORTE_LTOT_TXN_RECH_GRUPO_CADENA.VENTANA ?? DEFECTO_POSBMR.VENTANA)
         await pageR.locator(this.txtTarjeta).fill(REPORTE_LTOT_TXN_RECH_GRUPO_CADENA.TARJETA ?? "")
         await pageR.locator(this.txtGrupoCadena).fill(REPORTE_LTOT_TXN_RECH_GRUPO_CADENA.GRUPO_CADENA ?? "")
         if (REPORTE_LTOT_TXN_RECH_GRUPO_CADENA.SUBTOTALES) {
@@ -889,7 +889,7 @@ export class PosBMRPage extends BasePage {
         await pageR.locator(this.txtFechaProceso).fill("")
         await pageR.locator(this.txtFechaProceso).fill(REPORTE_MCONSOLIDADO_PROMOCIONES.FECHA)
         await pageR.locator(this.selectEmisor).click()
-        await pageR.selectOption(this.selectEmisor, REPORTE_MCONSOLIDADO_PROMOCIONES.PLATAFORMA3 ?? DATOS_POR_DEFECTO_POSBMR.PLATAFORMA3)
+        await pageR.selectOption(this.selectEmisor, REPORTE_MCONSOLIDADO_PROMOCIONES.PLATAFORMA3 ?? DEFECTO_POSBMR.PLATAFORMA3)
         //await pageR.locator(this.btnVistaPrevia).click()
         break;
       case 23: //N Sumario de Promociones Banamex
@@ -902,21 +902,21 @@ export class PosBMRPage extends BasePage {
           await pageR.locator(this.tipoTransaccion).click()
         }
         await pageR.locator(this.selectPlataforma).click()
-        await pageR.selectOption(this.selectPlataforma, REPORTE_NSUMARIO_PROMOCIONES_BANAMEX.PLATAFORMA4 ?? DATOS_POR_DEFECTO_POSBMR.PLATAFORMA4)
+        await pageR.selectOption(this.selectPlataforma, REPORTE_NSUMARIO_PROMOCIONES_BANAMEX.PLATAFORMA4 ?? DEFECTO_POSBMR.PLATAFORMA4)
         break;
       case 24: //P Reporte de Wal-Mart
         await pageR.locator(this.selectPlataforma).click()
-        await pageR.selectOption(this.selectPlataforma, REPORTE_PREPORTE_WALMART.PLATAFORMA5 ?? DATOS_POR_DEFECTO_POSBMR.PLATAFORMA5)
+        await pageR.selectOption(this.selectPlataforma, REPORTE_PREPORTE_WALMART.PLATAFORMA5 ?? DEFECTO_POSBMR.PLATAFORMA5)
         await pageR.locator(this.txtAfiliacion).fill(REPORTE_PREPORTE_WALMART.AFILIACION ?? "")
         await pageR.locator(this.selectVentana).click()
-        await pageR.selectOption(this.selectVentana, REPORTE_PREPORTE_WALMART.VENTANA ?? DATOS_POR_DEFECTO_POSBMR.VENTANA)
+        await pageR.selectOption(this.selectVentana, REPORTE_PREPORTE_WALMART.VENTANA ?? DEFECTO_POSBMR.VENTANA)
         await pageR.locator(this.txtTarjeta).fill(REPORTE_PREPORTE_WALMART.TARJETA)
         break;
       case 25: // Q Transacciones Cash
         await pageR.locator(this.txtFechaProceso).fill("")
         await pageR.locator(this.txtFechaProceso).fill(REPORTE_QTRANSACCIONES.FECHA)
         await pageR.locator(this.selectPlataforma).click()
-        await pageR.selectOption(this.selectPlataforma, REPORTE_QTRANSACCIONES.PLATAFORMA6 ?? DATOS_POR_DEFECTO_POSBMR.PLATAFORMA6)
+        await pageR.selectOption(this.selectPlataforma, REPORTE_QTRANSACCIONES.PLATAFORMA6 ?? DEFECTO_POSBMR.PLATAFORMA6)
         await pageR.locator(this.txtAfiliacion).fill(REPORTE_QTRANSACCIONES.AFILIACION ?? "")
         if (REPORTE_QTRANSACCIONES.SUBTOTALES) {
           await pageR.locator(this.checkSubtotales).getAttribute('value') === 'N' ?
@@ -932,7 +932,7 @@ export class PosBMRPage extends BasePage {
         await pageR.locator(this.txtFechaProceso).fill("")
         await pageR.locator(this.txtFechaProceso).fill(REPORTE_RREPORTE_PAGOS_CASH.FECHA)
         await pageR.locator(this.selectPlataforma).click()
-        await pageR.selectOption(this.selectPlataforma, REPORTE_RREPORTE_PAGOS_CASH.PLATAFORMA6 ?? DATOS_POR_DEFECTO_POSBMR.PLATAFORMA6)
+        await pageR.selectOption(this.selectPlataforma, REPORTE_RREPORTE_PAGOS_CASH.PLATAFORMA6 ?? DEFECTO_POSBMR.PLATAFORMA6)
         await pageR.locator(this.txtAfiliacion).fill(REPORTE_RREPORTE_PAGOS_CASH.AFILIACION ?? "")
         await pageR.locator(this.txtTarjeta).fill(REPORTE_RREPORTE_PAGOS_CASH.TARJETA ?? "")
         if (REPORTE_RREPORTE_PAGOS_CASH.SUBTOTALES) {

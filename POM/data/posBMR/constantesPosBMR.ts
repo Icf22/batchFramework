@@ -198,7 +198,6 @@ export const REPORTE_6CONSOLIDADOS_RECHAZADOS_X_FECHA = {
     
 }
 
-
 export const REPORTE_7TOTALES_EMISOR = {
     
     //DIA/MES/AÑO 
@@ -325,7 +324,6 @@ export const REPORTE_BRETENCION_RIESGO = {
     INTERNACIONAL: '0 Domestico',
 
 }
-
 
 export const REPORTE_CLIBERACION_RIESGO = {
     

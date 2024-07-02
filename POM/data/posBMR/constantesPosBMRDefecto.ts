@@ -1,4 +1,4 @@
-export const DATOS_POR_DEFECTO_POSBMR = {
+export const DEFECTO_POSBMR = {
     PLATAFORMA: 'Seleccione una Plataforma',
     PLATAFORMA2: 'Captura Abono',
     PLATAFORMA3: '06 Chedraui',
@@ -9,5 +9,13 @@ export const DATOS_POR_DEFECTO_POSBMR = {
     TRANSACCION: 'Todas las Aceptadas',
     EMISOR: '00 Todas',
     EMISOR2: '0 Master y Visa',
+    MONEDA: 'P',
+    FECHA: '09042020',
+    AFILIACION: '',
+    TARJETA: '',
+    SUBTOTALES: false,
+    INTERNACIONAL: '0 Domestico',
+    GRUPO_CADENA: '',
+    TIPO_REPORTE: '',
+    CODIGO_RECHAZO: '',
 }
-
