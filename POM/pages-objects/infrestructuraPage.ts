@@ -167,7 +167,7 @@ export class PosBMRPage extends BasePage {
   }
   async revisarReporte(reporteARevisar: number) {
     const pageReporte = await this.inicializarPage(URLS.INFRESTRUCTURA);
-    //let btnTipoReporte = this.op1TotalTranAcep;
+    let btnTipoReporte = this.btnReportesIntercarmbio;
     let esExcel = true;
     //DEFINIMOS EL OBJETO PARA LOS DIFERENTES APARTADOS DE CADA REPORTE
     const opcionesAEjecutar = {
@@ -276,7 +276,7 @@ export class PosBMRPage extends BasePage {
       btnTipoReporte = opcionesAEjecutar[reporteARevisar]
       await pageReporte.locator(btnTipoReporte).click();
       await this.ingresarDatosReporte(pageReporte, reporteARevisar, reporteData);
-      const boton = botonesAEjecutar[reporteARevisar];
+      const boton = opcionesAEjecutar[reporteARevisar];
       await this.validarDescargaPOSBMR(pageReporte, boton, btnTipoReporte, esExcel);
     }
   }
@@ -293,11 +293,6 @@ export class PosBMRPage extends BasePage {
         await this.llenarFechaProceso(pageR, fechaInicial, fechaFinal)
         break;
       case 5: // EVO PAYMENTS
-        await this.seleccionarMoneda(pageR, moneda);
-        await this.llenarFechaProceso(pageR, fecha);
-        await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA);
-        await this.seleccionarVentana(pageR, ventana);
-        break;
       case 6: // EMS PAYMENTS
       case 7: // BANCOMER
         await this.llenarFechaProceso(pageR, fechaInicial, fechaFinal)
@@ -310,25 +305,9 @@ export class PosBMRPage extends BasePage {
         await this.hoverOpcionB(pageR, this.selectFlujoTransaccional, this.opBancomer)
         break;
       case 11: // CITIBANK
-        await this.seleccionarMoneda(pageR, moneda);
-        await this.llenarFechaProceso(pageR, fecha);
-        await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA);
-        await this.llenarAfiliacion(pageR, afiliacion);
-        await this.seleccionarVentana(pageR, ventana);
-        await this.llenarTarjeta(pageR, tarjeta);
-        await this.seleccionarInternacional(pageR, internacional);
-        break;
       case 12: // INBURSA
-        await this.llenarFechaProceso(pageR, fecha);
-        await this.seleccionarEmisor(pageR, emisor);
-        await this.llenarAfiliacion(pageR, afiliacion);
-        break;
       case 13: // PAGATODO
       case 14: // BANORTE
-        await this.seleccionarMoneda(pageR, moneda);
-        await this.llenarFechaProceso(pageR, fecha);
-        await this.seleccionarEmisor2(pageR, emisor2);
-        break;
       case 15: // EGLOBAL
       case 16: // VOLUMEN TRANSACCIONAL
         await this.llenarFechaProceso(pageR, fechaInicial, fechaFinal)
