@@ -508,3 +508,5 @@ export class PosBMRPage extends BasePage {
     await page.selectOption(this.selectInternacional, internacional);
   }
 }
+
+

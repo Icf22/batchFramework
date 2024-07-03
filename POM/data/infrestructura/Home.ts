@@ -1,0 +1,25 @@
+export const REPORTES_INTERCAMBIO = {
+    //DIA/MES/AÑO 
+    FECHA_INICIO:'09042020',
+    FECHA_FIN: '07042020'   
+}
+
+export const REPORTES_WORKPLAY = {
+    //DIA/MES/AÑO 
+    FECHA_INICIO:'09042020',
+    FECHA_FIN: '07042020'   
+}
+
+export const INTERCAMBIO_BANORTE = {
+    //DIA/MES/AÑO 
+    FECHA_INICIO:'09042020',
+    FECHA_FIN: '07042020'   
+}
+
+export const INTERCAMBIO_CITIBANK = {
+    //DIA/MES/AÑO 
+    FECHA_INICIO:'09042020',
+    FECHA_FIN: '07042020'   
+}
+
+

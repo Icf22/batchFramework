@@ -1,0 +1,77 @@
+export const FACTURACION_BANCOMER = {
+    //DIA/MES/AÑO 
+    FECHA_INICIO:'09042020',
+    FECHA_FIN: '07042020',
+    TARIFA: '2500'    
+}
+
+export const FACTURACION_CITIBANK = {
+    //DIA/MES/AÑO 
+    FECHA_INICIO:'09042020',
+    FECHA_FIN: '07042020',
+    TARIFA: '2500'     
+}
+
+export const FACTURACION_INBURSA = {
+    //DIA/MES/AÑO 
+    FECHA_INICIO:'09042020',
+    FECHA_FIN: '07042020',
+    TARIFA: '2500'     
+}
+
+export const FACTURACION_BANAMEX = {
+    //DIA/MES/AÑO 
+    FECHA_INICIO:'09042020',
+    FECHA_FIN: '07042020',
+    TARIFA: '2500'     
+}
+
+export const FACTURACION_BANCOOPEL = {
+    //DIA/MES/AÑO 
+    FECHA_INICIO:'09042020',
+    FECHA_FIN: '07042020',
+    TARIFA: '2500'     
+}
+
+export const FACTURACION_MC_DOMESTICO = {
+    //DIA/MES/AÑO 
+    FECHA_INICIO:'09042020',
+    FECHA_FIN: '07042020',
+    TARIFA: '2500'    
+}  
+
+export const FACTURACION_EVERTEC = {
+    //DIA/MES/AÑO 
+    FECHA_INICIO:'09042020',
+    FECHA_FIN: '07042020',
+    TARIFA: '2500'     
+}
+
+export const FACTURACION_CI_BANCO = {
+    //DIA/MES/AÑO 
+    FECHA_INICIO:'09042020',
+    FECHA_FIN: '09082020',
+    TARIFA: '2500'  
+}  
+
+export const FACTURACION_AMERICAN_EXPRESS = {
+    //DIA/MES/AÑO 
+    FECHA_INICIO:'09042020',
+    FECHA_FIN: '07042020',
+    TARIFA: '2500'     
+}
+
+export const FACTURACION_CI_BANCO_2 = {
+    //DIA/MES/AÑO 
+    FECHA_INICIO:'09042020',
+    FECHA_FIN: '09122020',
+    TARIFA: '2500'  
+
+}  
+
+export const FACTURACION_PAGATODO = {
+    //DIA/MES/AÑO 
+    FECHA_INICIO:'09042020',
+    FECHA_FIN: '12092023',
+    TARIFA: '2500'  
+}  
