@@ -464,6 +464,4 @@ export class PosBMRPage extends BasePage {
     await page.locator(opcionB).hover()
   }
   
-
-
 }

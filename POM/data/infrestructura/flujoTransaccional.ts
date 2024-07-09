@@ -61,6 +61,7 @@ export const BANORTE = {
 export const EGLOBAL = {
     //DIA/MES/AÑO 
     FECHA_INICIO:'09042020',
+    FECHA_FIN:'09042020',
 }  
 
 export const VOLUMEN_TRANSACCIONAL = {
@@ -79,4 +80,5 @@ export const ATM_POS = {
 export const ADQUIRIENTES_WALMART = {
     //DIA/MES/AÑO 
     FECHA_INICIO:'09042020',
+    FECHA_FIN:'09042020',
 }  
