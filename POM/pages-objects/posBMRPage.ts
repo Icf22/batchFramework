@@ -1,6 +1,6 @@
 import { BrowserContext, Locator, Page } from "@playwright/test";
 import { BasePage } from "./basePage";
-import { URLS } from "../data/constates";
+import { URLS, XPATH } from "../data/constates";
 import { DEFECTO_POSBMR } from "../data/posBMR/constantesPosBMRDefecto";
 import {
   REPORTE_4DETALLE_TRANC_RECHAZADAS, 
@@ -90,12 +90,16 @@ export class PosBMRPage extends BasePage {
   readonly fechaInicio: string;
   readonly fechaFin: string;
   readonly checkSalidaExcel: string;
+  readonly btnDespliegaModal: string;
   //Tipo de Transaccion
   readonly tipoTransaccion: string;
   //Tipo de Reporte
   readonly radiobtnTipoReporte: string
   readonly radiobtnReporteOriginal: string;
   readonly radiobtnDesgloceComprasDevoluciones: string;
+  //Select del Modal
+  readonly selectSeccionModal: string;
+  readonly btnAceptarModal: string;
   //#endregion
   constructor(browserContext) {
     super(browserContext);
@@ -154,6 +158,10 @@ export class PosBMRPage extends BasePage {
     this.fechaInicio = "//input[@name='vFECHAINICIAL']"
     this.fechaFin = "//input[@name='vFECHAFINAL']"
     this.checkSalidaExcel = "//input[@name='vVL_EXCEL']"
+    this.selectSeccionModal = "//select[@name='vREPORTE']"
+    this.btnAceptarModal = "//input[@name='BUTTON1']"
+    this.btnDespliegaModal = "input[name='BUTTON2']"
+    this.btnGuardar = "//input[@name='BUTTON3']"
     //#endregion
     this.pageReporte = undefined;
   }
@@ -229,7 +237,7 @@ export class PosBMRPage extends BasePage {
       19:this.btnReporte,    
       20:this.btnReporte,    
       21:this.btnReporte,    
-      22:this.btnVistaPrevia,    
+      22:this.btnGuardar,    
       23:this.btnPreliminar,   
       24:this.btnPreliminar,    
       25:this.btnPreliminar,    
@@ -272,22 +280,26 @@ export class PosBMRPage extends BasePage {
     // SI EL REPORTE A REVISAR ES 0 (TODOS) ENTRA EN ESTE CASO
     if (reporteARevisar === 0) 
     {
-      for (let i = 1; i < Object.keys(opcionesAEjecutar).length; i++) {
+      for (let i = 20; i < Object.keys(opcionesAEjecutar).length; i++) {
         const opcion = opcionesAEjecutar[i];
         const boton = botonesAEjecutar[i];
         reporteData = dataReporte[i]
   
         // CUANDO I SEA IGUAL A UNO DE ESOS NUMEROS ENTRA AL IF Y CON EL CONTINUE TERMINA ESA ITERACION Y CONTINUA CON LA PROXIMA
-        if ([15, 20, 21, 22, 23, 27].includes(i)) {
+        if ([15, 23, 27].includes(i)) {
           continue;
         }
         if([28].includes(i)){
           esExcel = REPORTE_VAPUNTOS_BBVA.SALIDA_EXCEL;
         }
+        if([22].includes(i)){
+          esExcel = true;
+        }
         await Promise.all([
           pageReporte.locator(opcion).click(),
           pageReporte.waitForLoadState('networkidle')
         ]);
+        await pageReporte.locator(opcion).click(),
         await this.ingresarDatosReporte(pageReporte, i, reporteData);
         await this.validarDescargaPOSBMR(pageReporte, boton, opcion, esExcel);
       }
@@ -400,7 +412,16 @@ export class PosBMRPage extends BasePage {
         await this.manipularSubtotales(pageR, reporteData.SUBTOTALES);
         break;
       case 20: // K Tot. Txn. Acep.Grupo Cadena
-        // ESTE CODIGO ESTA COMENTADO EN EL ARCHIVO DE CODIGO DECREPADO.
+        await this.seleccionarMoneda(pageR, moneda);
+        await this.llenarFechaProceso(pageR, fecha);
+        await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA);
+        await this.llenarAfiliacion(pageR, afiliacion);
+        await this.seleccionarVentana(pageR, ventana);
+        await this.llenarTarjeta(pageR, tarjeta);
+        await this.seleccionarTipoTransaccion(pageR, transaccion)
+        await pageR.locator(this.txtGrupoCadena).fill(grupoCadena);
+        await this.manipularSubtotales(pageR, reporteData.SUBTOTALES);
+        //await this.manipularModal(pageR, reporteData.OPCIONMODAL);
         break;
       case 21: // L Tot. Txn. Rech.Grupo Cadena
         await this.seleccionarMoneda(pageR, moneda);
@@ -411,6 +432,7 @@ export class PosBMRPage extends BasePage {
         await this.llenarTarjeta(pageR, tarjeta);
         await pageR.locator(this.txtGrupoCadena).fill(grupoCadena);
         await this.manipularSubtotales(pageR, reporteData.SUBTOTALES);
+        //await this.manipularModal(pageR, reporteData.OPCIONMODAL);
         break;
       case 22: // M Consolidado de Promociones
         await this.llenarFechaProceso(pageR, fecha);
@@ -507,6 +529,30 @@ export class PosBMRPage extends BasePage {
     await page.locator(this.selectInternacional).click();
     await page.selectOption(this.selectInternacional, internacional);
   }
+  async manipularModal(page: Page, seccion: string) {
+    await page.waitForSelector(this.btnDespliegaModal);
+
+    // Hacer clic en el botón utilizando evaluate para ejecutar el código JavaScript asociado
+    await page.evaluate((btnSelector) => {
+      const btn = document.querySelector(btnSelector) as HTMLElement;
+      btn.click();
+    }, this.btnDespliegaModal);
+
+    // Acceder al iframe por su selector
+   const frame = await page.waitForSelector(XPATH.framID);
+   const frameContent = await frame.contentFrame();
+  if (!frame) {
+      throw new Error(`No se encontró el iframe con el selector '${XPATH.framID}'.`);
+  }
+
+  // Interactuar con el select dentro del iframe
+  const selectSelector = "//select[name='vREPORTE']"; // Ajustar según el selector del select en el iframe
+  const btnSelectOptions = await frameContent?.$(selectSelector);
+  await btnSelectOptions?.click();
+  await btnSelectOptions?.selectOption(seccion);
+  }
+
+  
 }
 
 

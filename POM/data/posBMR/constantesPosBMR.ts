@@ -1,7 +1,7 @@
 export const REPORTE_POSBMR = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -45,9 +45,9 @@ export const REPORTE_POSBMR = {
 
     CODIGO_RECHAZO: 'Ninguno',
 
-    FECHA_INICIO:'09042020' ,
+    FECHA_INICIO:'24012025' ,
 
-    FECHA_FIN: '09042020',
+    FECHA_FIN: '24012025',
 
     SALIDA_EXCEL : true
     
@@ -56,7 +56,7 @@ export const REPORTE_POSBMR = {
 export const REPORTE_1TOTAL_TRANC_ACEPTADAS = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -84,7 +84,7 @@ export const REPORTE_1TOTAL_TRANC_ACEPTADAS = {
 export const REPORTE_2DETALLE_TRANC_ACEPTADAS = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -112,7 +112,7 @@ export const REPORTE_2DETALLE_TRANC_ACEPTADAS = {
 export const REPORTE_3TOTAL_TRANC_RECHAZADAS = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -140,7 +140,7 @@ export const REPORTE_3TOTAL_TRANC_RECHAZADAS = {
 export const REPORTE_4DETALLE_TRANC_RECHAZADAS = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -168,7 +168,7 @@ export const REPORTE_4DETALLE_TRANC_RECHAZADAS = {
 export const REPORTE_5RECHAZAS_NO_PROCESADAS = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -185,7 +185,7 @@ export const REPORTE_5RECHAZAS_NO_PROCESADAS = {
 export const REPORTE_6CONSOLIDADOS_RECHAZADOS_X_FECHA = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -201,7 +201,7 @@ export const REPORTE_6CONSOLIDADOS_RECHAZADOS_X_FECHA = {
 export const REPORTE_7TOTALES_EMISOR = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -228,7 +228,7 @@ export const REPORTE_7TOTALES_EMISOR = {
 export const REPORTE_8DETALLE_EMISOR = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -255,7 +255,7 @@ export const REPORTE_8DETALLE_EMISOR = {
 export const REPORTE_9CONSOLIDADO_EMISOR = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -282,7 +282,7 @@ export const REPORTE_9CONSOLIDADO_EMISOR = {
 export const REPORTE_ACONSOLIDADO_PLATAFORMA = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -304,7 +304,7 @@ export const REPORTE_ACONSOLIDADO_PLATAFORMA = {
 export const REPORTE_BRETENCION_RIESGO = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -328,7 +328,7 @@ export const REPORTE_BRETENCION_RIESGO = {
 export const REPORTE_CLIBERACION_RIESGO = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
     
     //Escribir num afiliacion
     AFILIACION: '',
@@ -340,7 +340,7 @@ export const REPORTE_CLIBERACION_RIESGO = {
 export const REPORTE_DCONSOLIDADO_RIESGO_INT = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -351,7 +351,7 @@ export const REPORTE_DCONSOLIDADO_RIESGO_INT = {
 export const REPORTE_EDET_RIESGO_INT = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -361,7 +361,7 @@ export const REPORTE_EDET_RIESGO_INT = {
 
 export const REPORTE_FTXN_SIS_CAP = {
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -370,7 +370,7 @@ export const REPORTE_FTXN_SIS_CAP = {
 export const REPORTE_GRECH_LOTES_CAPTURA = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -395,7 +395,7 @@ export const REPORTE_GRECH_LOTES_CAPTURA = {
 export const REPORTE_HTOT_TXN_PROMOCIONES = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -420,7 +420,7 @@ export const REPORTE_HTOT_TXN_PROMOCIONES = {
 export const REPORTE_I_DET_TXN_PROMOCIONES = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -445,7 +445,7 @@ export const REPORTE_I_DET_TXN_PROMOCIONES = {
 export const REPORTE_JDET_TXN_RECH_PROMOCIONES = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -470,7 +470,7 @@ export const REPORTE_JDET_TXN_RECH_PROMOCIONES = {
 export const REPORTE_KTOT_TXN_ACEP_GRUPO_CADENA = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -494,12 +494,14 @@ export const REPORTE_KTOT_TXN_ACEP_GRUPO_CADENA = {
 
     //true=se activa el check | false = se desactiva el check
     SUBTOTALES: false,
+
+    OPCIONMODAL: "Totales 1",
 }
 
 export const REPORTE_LTOT_TXN_RECH_GRUPO_CADENA = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -520,13 +522,15 @@ export const REPORTE_LTOT_TXN_RECH_GRUPO_CADENA = {
 
     //true=se activa el check | false = se desactiva el check
     SUBTOTALES: false,
+
+    OPCIONMODAL: "Totales 1",
       
 }
 
 export const REPORTE_MCONSOLIDADO_PROMOCIONES = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Escribir tal cual viene en el select
     PLATAFORMA3: '06 Chedraui',
@@ -536,7 +540,7 @@ export const REPORTE_MCONSOLIDADO_PROMOCIONES = {
 export const REPORTE_NSUMARIO_PROMOCIONES_BANAMEX = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -555,7 +559,7 @@ export const REPORTE_NSUMARIO_PROMOCIONES_BANAMEX = {
 export const REPORTE_PREPORTE_WALMART = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -577,7 +581,7 @@ export const REPORTE_PREPORTE_WALMART = {
 export const REPORTE_QTRANSACCIONES = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
 
     //Pesos = P | Dolares= D, siempre en mayuscula
     MONEDA: 'P',
@@ -596,7 +600,7 @@ export const REPORTE_QTRANSACCIONES = {
 export const REPORTE_RREPORTE_PAGOS_CASH = {
     
     //DIA/MES/AÑO 
-    FECHA:'09042020',
+    FECHA:'24012025',
   
     //Escribir tal cual viene en el select
     PLATAFORMA6: 'Oxxo',
@@ -615,16 +619,16 @@ export const REPORTE_RREPORTE_PAGOS_CASH = {
 export const REPORTE_SREPORTE_RECHAZOS= {
     
     //DIA/MES/AÑO 
-    FECHA_INICIO:'09042020' ,
+    FECHA_INICIO:'24012025' ,
     CODIGO_RECHAZO: 'Ninguno',
 }
 
 
 export const REPORTE_VAPUNTOS_BBVA = {
     
-    FECHA_INICIO:'09042020' ,
+    FECHA_INICIO:'24012025' ,
 
-    FECHA_FIN: '09042020',
+    FECHA_FIN: '24012025',
 
     SALIDA_EXCEL : false
     
