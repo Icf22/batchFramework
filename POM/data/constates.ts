@@ -51,3 +51,6 @@ export const NOMBRE_REPORTES = {
     DSS_REPORT: 'Reporte_De_Intercambio'
 }
 
+export const XPATH = {
+    framID : "//iframe[contains(@id, 'gxp0_ifrm')]",
+}
