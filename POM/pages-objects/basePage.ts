@@ -199,13 +199,76 @@ export class BasePage {
     }
   }
 
+  async validarDescargaInfra(
+    pageExtension: Page | undefined,
+    btnDownload: string,
+    nameReport: string,
+    esExcel: boolean
+  ) {
+    let filePath;
+    if (pageExtension) {
+      // Crea una promesa que espera el evento download
+      const downloadPromise = pageExtension.waitForEvent("download");
+      // Clic sobre el botón que desencadenará el evento download
+      await pageExtension.waitForTimeout(2000);
+      const loc = await pageExtension.locator(btnDownload);
+      this.elementoVisible(loc);
+      await pageExtension.locator(btnDownload).click();
+      const download = await downloadPromise;
+
+      // Espera a que el proceso de descarga se complete y guarda el archivo descargado en algún lugar.
+      const reportName = await this.obtenerTexto(pageExtension, nameReport);
+
+      const path = require("path");
+      if (esExcel) {
+        await download.saveAs(
+          "./test-results/reportes-infra/" + reportName + ".xlsx"
+        );
+        filePath = path.resolve(
+          process.cwd(),
+          "./test-results/reportes-infra/",
+          `${reportName}.xlsx`
+        );
+      } else {
+        await download.saveAs(
+          "./test-results/reportes-infra/" + reportName + ".pdf"
+        );
+        filePath = path.resolve(
+          process.cwd(),
+          "./test-results/reportes-infra/",
+          `${reportName}.pdf`
+        );
+      }
+
+      // Validación de la existencia del archivo descargado
+      const archivoExiste = await fs
+        .access(filePath)
+        .then(() => true)
+        .catch(() => false);
+
+      //Assertion para validar que se realizo la descarga de manera correcta
+
+      await expect.soft(archivoExiste).toBeTruthy();
+      archivoExiste
+        ? console.log("El archivo PDF se descargó correctamente en:", filePath)
+        : console.error("El archivo PDF no se descargo en: " + filePath);
+    } else {
+      console.error(
+        "pageExtension is undefined. Unable to perform download validation."
+      );
+    }
+  }
+
+
   async obtenerTexto(pageExtension: Page, locator: string) {
     // Ubica el elemento usando un selector
     const element = await pageExtension.$(locator);
 
     if (element) {
       // Obtiene el texto del elemento
-      const texto = await element.innerText();
+      let texto = await element.innerText();
+      texto = await texto==null||texto=="" ? (await pageExtension.$eval(locator, element => (element as HTMLInputElement).value)).toString(): texto
+      await console.log("El texto del atributo es: "+texto)
       return texto;
     } else {
       console.error("No se encontró el elemento con el selector especificado.");

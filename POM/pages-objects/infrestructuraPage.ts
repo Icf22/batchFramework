@@ -47,7 +47,7 @@ import{
   REC_FALTANTES_PROSA_PAGATODO  
 } from "../data/infrestructura/rechazos"
 
-export class PosBMRPage extends BasePage {
+export class InfrestructuraPage extends BasePage {
   pageReporte?: Page;
   //#region HOME
   readonly txtFechaInicio: string;
@@ -107,7 +107,8 @@ export class PosBMRPage extends BasePage {
     this.txtFechaInicio = "//input[@name='vFCHINI_MPAGE']"
     this.txtFechaFin = "//input[@name='vFCHFIN_MPAGE']"
     this.btnReportesIntercarmbio = "//input[@name='BUTTON1_MPAGE']"
-    this.btnIntercambioBanorte = "//input[@name='BUTTONEVO2_MPAGE']"
+    this.btnIntercambioWorplay = "//input[@name='BUTTONEVO2_MPAGE']" 
+    this.btnIntercambioBanorte = "//input[@name='BUTTON2_MPAGE']"
     this.btnIntercambioCitibank = "//input[@name='BUTTON3_MPAGE']"
     //Flujo Transaccional
     this.selectFlujoTransaccional = "//a[text()='Flujo transaccional']"
@@ -168,7 +169,7 @@ export class PosBMRPage extends BasePage {
   async revisarReporte(reporteARevisar: number) {
     const pageReporte = await this.inicializarPage(URLS.INFRESTRUCTURA);
     let btnTipoReporte = this.btnReportesIntercarmbio;
-    let esExcel = true;
+    let esExcel = false;
     //DEFINIMOS EL OBJETO PARA LOS DIFERENTES APARTADOS DE CADA REPORTE
     const opcionesAEjecutar = {
       1:this.btnReportesIntercarmbio,
@@ -246,29 +247,35 @@ export class PosBMRPage extends BasePage {
       2: this.opExcel
     }
 
+    //Revisar fechas para 2, 9 y 10 y buscar las que arrojen reporte
+    const reportesAIgnorar = [6,7,16]
+    const reportesExcel = [1,2,3,4]
     let reporteData = dataReporte[reporteARevisar];
     // SI EL REPORTE A REVISAR ES 0 (TODOS) ENTRA EN ESTE CASO
     if (reporteARevisar === 0) 
     {
-      for (let i = 1; i < Object.keys(opcionesAEjecutar).length; i++) {
+      for (let i = 1; i <= 18 /*Object.keys(opcionesAEjecutar).length*/; i++) {
         const opcion = opcionesAEjecutar[i];
         let boton = opcion
         reporteData = dataReporte[i]
   
         // CUANDO I SEA IGUAL A UNO DE ESOS NUMEROS ENTRA AL IF Y CON EL CONTINUE TERMINA ESA ITERACION Y CONTINUA CON LA PROXIMA
-        if ([15, 20, 21, 22, 23, 27].includes(i)) {
+        if (reportesAIgnorar.includes(i)) {
           continue;
+        }
+        if(reportesExcel.includes(i)){
+          esExcel = true
         }
         if([17].includes(i)){
           esExcel = ATM_POS.ES_EXCEL;
           boton = esExcel? botonesSubmenu[2]:botonesSubmenu[1]
-        }
+        }        
         await Promise.all([
-          pageReporte.locator(opcion).click(),
+          //pageReporte.locator(opcion).click(),
           pageReporte.waitForLoadState('networkidle')
         ]);
         await this.ingresarDatosReporte(pageReporte, i, reporteData);
-        await this.validarDescargaPOSBMR(pageReporte, boton, opcion, esExcel);
+        await this.validarDescargaInfra(pageReporte, boton, opcion, esExcel);
       }
     } 
     else 
@@ -277,7 +284,7 @@ export class PosBMRPage extends BasePage {
       await pageReporte.locator(btnTipoReporte).click();
       await this.ingresarDatosReporte(pageReporte, reporteARevisar, reporteData);
       const boton = opcionesAEjecutar[reporteARevisar];
-      await this.validarDescargaPOSBMR(pageReporte, boton, btnTipoReporte, esExcel);
+      await this.validarDescargaInfra(pageReporte, boton, btnTipoReporte, esExcel);
     }
   }
   async ingresarDatosReporte(pageR: Page,numeroReporte: number,reporteData: any) {
@@ -286,42 +293,49 @@ export class PosBMRPage extends BasePage {
     const fechaFinal = reporteData.FECHA_FIN ?? DEFECTO_INFRESTRUCTURA.FECHA_FIN;
     const tarifa = reporteData.TARIFA ?? DEFECTO_INFRESTRUCTURA.TARIFA;  
     switch (numeroReporte) {
-      case 1: // REPORTES DE INTERCAMBIO
-      case 2: // INTERCAMBIO WORKPLAY
-      case 3: // INTERCAMBIO BANORTE
-      case 4: // INTERCAMBIO CITIBANK
+      case 1: // REPORTES DE INTERCAMBIO (Excel)
+      case 2: // INTERCAMBIO WORKPLAY (Excel)
+      case 3: // INTERCAMBIO BANORTE (Excel)
+      case 4: // INTERCAMBIO CITIBANK (Excel)
         await this.llenarFechaProceso(pageR, fechaInicial, fechaFinal)
         break;
-      case 5: // EVO PAYMENTS
-      case 6: // EMS PAYMENTS
-      case 7: // BANCOMER
+      case 5: // EVO PAYMENTS (PDF)
+      case 6: // EMS PAYMENTS (NO SE GENERO)
+      case 7: // BANCOMER (SE OMITE)
         await this.llenarFechaProceso(pageR, fechaInicial, fechaFinal)
         await this.hoverOpcionA(pageR, this.selectFlujoTransaccional)
         break; 
-      case 8: // ADQUIRIENTE BANCOMER
-      case 9: // ADQUIRIENTE WALMART
-      case 10: // WALMART CADENA EMISOR
+      case 8: // ADQUIRIENTE BANCOMER (PDF)
+        await pageR.waitForTimeout(5000)
         await this.llenarFechaProceso(pageR, fechaInicial, fechaFinal)
         await this.hoverOpcionB(pageR, this.selectFlujoTransaccional, this.opBancomer)
         break;
-      case 11: // CITIBANK
-      case 12: // INBURSA
-      case 13: // PAGATODO
-      case 14: // BANORTE
-      case 15: // EGLOBAL
-      case 16: // VOLUMEN TRANSACCIONAL
+      case 9: // ADQUIRIENTE WALMART (PDF) (SE OMITE)
+      case 10: // WALMART CADENA EMISOR (PDF) (SE OMITE)
+      await pageR.waitForTimeout(2000)
+        await this.llenarFechaProceso(pageR, fechaInicial, fechaFinal)
+        await this.hoverOpcionB(pageR, this.selectFlujoTransaccional, this.opBancomer)
+        break;
+      case 11: // CITIBANK (PDF)
+      case 12: // INBURSA (PDF)
+      case 13: // PAGATODO (PDF)
+      case 14: // BANORTE (PDF)
+      case 15: // EGLOBAL (PDF)
+      case 16: // VOLUMEN TRANSACCIONAL(SE OMITE)
+        await this.llenarFechaProceso(pageR, fechaInicial, fechaFinal)
+        await this.hoverOpcionA(pageR, this.selectFlujoTransaccional)
+        break;
+      case 17: // ATM/POS (PDF)(Excel)
         await this.llenarFechaProceso(pageR, fechaInicial, fechaFinal)
         await this.hoverOpcionC(pageR, this.selectFlujoTransaccional,this.opVolumenTransaccional,this.opAtmPos)
         break;
-      case 17: // ATM/POS
-        await this.llenarFechaProceso(pageR, fechaInicial, fechaFinal)
-        await this.hoverOpcionC(pageR, this.selectFlujoTransaccional,this.opVolumenTransaccional,this.opAtmPos)
-        break;
-      case 18: // ADQUIRIENTES WALMART
+      case 18: // ADQUIRIENTES WALMART (PDF)
         await this.llenarFechaProceso(pageR, fechaInicial, fechaFinal)
         await this.hoverOpcionB(pageR, this.selectFlujoTransaccional,this.opVolumenTransaccional)
         break;
-      case 19: // FACTURACION BANCOMER
+     
+     
+        case 19: // FACTURACION BANCOMER
         await this.llenarFechaProceso(pageR, fechaInicial, fechaFinal)
         await this.hoverOpcionA(pageR, this.selectFacturacion)
         await pageR.locator(this.opFactBancomer)

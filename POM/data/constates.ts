@@ -37,7 +37,8 @@ export const FUNCION = {
 export const NUMBERAPP = {
      POSBANCOMER:30, 
      PRPCONCILIA:34, 
-     DSSREPORT:14
+     DSSREPORT:14,
+     INFRESTRUCTURA:23,
 }
 
 
