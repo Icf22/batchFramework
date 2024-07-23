@@ -268,7 +268,6 @@ export class BasePage {
       // Obtiene el texto del elemento
       let texto = await element.innerText();
       texto = await texto==null||texto=="" ? (await pageExtension.$eval(locator, element => (element as HTMLInputElement).value)).toString(): texto
-      await console.log("El texto del atributo es: "+texto)
       return texto;
     } else {
       console.error("No se encontró el elemento con el selector especificado.");
