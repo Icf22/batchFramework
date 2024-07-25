@@ -61,39 +61,39 @@ export class PrpConcilia extends BasePage {
     this.btnTotales = "//input[@name='BTNTOTALES']";
     this.btnReportes = "//input[@name='BTNREPORTES']";
     this.btnArchivos = "//input[@name='BTNARCHIVOS']";
-    this.checkboxConsolidadas = "";
-    this.checkboxCredito = "";
-    this.checkboxDebito = "";
-    this.checkboxPantalaArchivo = "";
-    this.checkboxArchivoInercambio = "";
+    this.checkboxConsolidadas = "//input[@name='vCHKCONSOLIDADAS']";
+    this.checkboxCredito = "//input[@name='vCHKCREDITO']";
+    this.checkboxDebito = "//input[@name='vCHKDEBITO']";
+    this.checkboxPantalaArchivo = "//input[@name='vSCRFILE']";
+    this.checkboxArchivoInercambio = "//input[@name='vARCHTOTINTER']";
     //SEPARACION DEBITO /CREDITO
-    this.radiobtnPorTasaCuota = "";
-    this.radiobtnPorNatDelBin = "";
+    this.radiobtnPorTasaCuota = `//input[@name='vRBDEBCRE' and @value='${0}']`;
+    this.radiobtnPorNatDelBin = `//input[@name='vRBDEBCRE' and @value='${1}']`;
     //ARCHIVO CONSOLIDADO EGLOBAL
-    this.radiobtnCaratulaBatch = "";
+    this.radiobtnCaratulaBatch = `//input[@name='vRBATCH' and @value='${3}']`;
     this.btnGeneral = "//input[@name='BUTTON5']";
     //REPORTES
     this.btnEGRP011 = "//input[@name='BUTTON1']";
     this.btnEGRP012 = "//input[@name='BUTTON2']";
     this.btnEGRP015 = "//input[@name='BUTTON3']";
     this.btnEGRP016 = "//input[@name='BUTTON4']";
-    this.radiobtnEntrante = "";
-    this.radiobtnSaliente = "";
-    this.radiobtnAmbos = "";
-    this.checkboxExcel = "";
+    this.radiobtnEntrante = `//input[@name='vRBREPORTES' and @value='${0}']`;
+    this.radiobtnSaliente = `//input[@name='vRBREPORTES' and @value='${1}']`;
+    this.radiobtnAmbos = `//input[@name='vRBREPORTES' and @value='${2}']`;
+    this.checkboxExcel = "//input[@name='vCKEXCEL12']";
     //CONCILIACION
-    this.radiobtnPagos = "";
-    this.radiobtnVentas = "";
-    this.checkboxPendientes = "";
-    this.checkboxFaltantes = "";
-    this.checkboxBusqPorCuenta = "";
-    this.checkboxConciliadas = "";
-    this.checkboxSobrantes = "";
-    this.txtFiltro = "";
+    this.radiobtnPagos = `//input[@name='vRBCONCILTIPREP' and @value='${1}']`;
+    this.radiobtnVentas = `//input[@name='vRBCONCILTIPREP' and @value='${2}']`;
+    this.checkboxPendientes = "//input[@name='vCHKPENDIENTES']";
+    this.checkboxFaltantes = "//input[@name='vCHKFALTANTES']";
+    this.checkboxBusqPorCuenta = "//input[@name='vCHKBUSQCTA']";
+    this.checkboxConciliadas = "//input[@name='vCHKCONCILIADAS']";
+    this.checkboxSobrantes = "//input[@name='vCHKSOBRANTES']";
+    this.txtFiltro = "//input[@id='vFILTROCTA']";
     //PAGOS/VENTAS
     this.btnCifras = "//input[@name='BTNCIFRAS']";
     this.btnDetalle = "//input[@name='BTNDETALLE']";
-    this.selectTienda = "";
+    this.selectTienda = "//select[@name='vCBCONCILGPOS']";
     //EXTRAS
     this.pageReporte = undefined;
   }
@@ -126,6 +126,4 @@ export class PrpConcilia extends BasePage {
     await emiCheck.click()
     await this.validarDescarga(pageReporte,this.btnLiquidacion,NOMBRE_REPORTES.PRP_CONCILIA)
   }
-
-  
 }
