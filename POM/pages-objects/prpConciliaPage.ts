@@ -14,8 +14,13 @@ export class PrpConcilia extends BasePage {
   readonly btnTotales: string;
   readonly btnReportes:string
   readonly btnArchivos:string;
+  readonly checkboxConsolidadas:string;
+  readonly checkboxCredito:string;
+  readonly checkboxDebito:string;
+  readonly checkboxPantalaArchivo:string;
+  readonly checkboxArchivoInercambio:string;
   //Separacion debito/credito
-  readonly radiobtnPorTasaCuota:string;re
+  readonly radiobtnPorTasaCuota:string;
   readonly radiobtnPorNatDelBin:string;
   //Archivo Consolidados EGLOBAL
   readonly radiobtnCaratulaBatch:string;
@@ -27,6 +32,7 @@ export class PrpConcilia extends BasePage {
   readonly btnEGRP016: string;
   readonly radiobtnEntrante:string;
   readonly radiobtnSaliente:string;
+  readonly radiobtnAmbos:string;
   readonly checkboxExcel:string;
   //Conciliacion
   readonly radiobtnPagos:string;
@@ -45,9 +51,50 @@ export class PrpConcilia extends BasePage {
   
   constructor(browserContext) {
     super(browserContext);
-    this.fechaInicial = "//input[@id='vFECHAINI']"
-    this.fechaFinal = "//input[@id='vFECHAFIN']"
-    this.btnLiquidacion = "//input[@name='BTNLIQUIDACION']"
+    //FECHAS
+    this.fechaInicial = "//input[@id='vFECHAINI']";
+    this.fechaFinal = "//input[@id='vFECHAFIN']";
+    //CARATULAS
+    this.btnInicial = "//input[@name='BTNINICIAL']";
+    this.btnFinal = "//input[@name='BTNFINAL']";
+    this.btnLiquidacion = "//input[@name='BTNLIQUIDACION']";
+    this.btnTotales = "//input[@name='BTNTOTALES']";
+    this.btnReportes = "//input[@name='BTNREPORTES']";
+    this.btnArchivos = "//input[@name='BTNARCHIVOS']";
+    this.checkboxConsolidadas = "";
+    this.checkboxCredito = "";
+    this.checkboxDebito = "";
+    this.checkboxPantalaArchivo = "";
+    this.checkboxArchivoInercambio = "";
+    //SEPARACION DEBITO /CREDITO
+    this.radiobtnPorTasaCuota = "";
+    this.radiobtnPorNatDelBin = "";
+    //ARCHIVO CONSOLIDADO EGLOBAL
+    this.radiobtnCaratulaBatch = "";
+    this.btnGeneral = "//input[@name='BUTTON5']";
+    //REPORTES
+    this.btnEGRP011 = "//input[@name='BUTTON1']";
+    this.btnEGRP012 = "//input[@name='BUTTON2']";
+    this.btnEGRP015 = "//input[@name='BUTTON3']";
+    this.btnEGRP016 = "//input[@name='BUTTON4']";
+    this.radiobtnEntrante = "";
+    this.radiobtnSaliente = "";
+    this.radiobtnAmbos = "";
+    this.checkboxExcel = "";
+    //CONCILIACION
+    this.radiobtnPagos = "";
+    this.radiobtnVentas = "";
+    this.checkboxPendientes = "";
+    this.checkboxFaltantes = "";
+    this.checkboxBusqPorCuenta = "";
+    this.checkboxConciliadas = "";
+    this.checkboxSobrantes = "";
+    this.txtFiltro = "";
+    //PAGOS/VENTAS
+    this.btnCifras = "//input[@name='BTNCIFRAS']";
+    this.btnDetalle = "//input[@name='BTNDETALLE']";
+    this.selectTienda = "";
+    //EXTRAS
     this.pageReporte = undefined;
   }
 

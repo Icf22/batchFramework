@@ -280,13 +280,13 @@ export class PosBMRPage extends BasePage {
     // SI EL REPORTE A REVISAR ES 0 (TODOS) ENTRA EN ESTE CASO
     if (reporteARevisar === 0) 
     {
-      for (let i = 20; i < Object.keys(opcionesAEjecutar).length; i++) {
+      for (let i = 1; i <= Object.keys(opcionesAEjecutar).length; i++) {
         const opcion = opcionesAEjecutar[i];
         const boton = botonesAEjecutar[i];
         reporteData = dataReporte[i]
   
         // CUANDO I SEA IGUAL A UNO DE ESOS NUMEROS ENTRA AL IF Y CON EL CONTINUE TERMINA ESA ITERACION Y CONTINUA CON LA PROXIMA
-        if ([15, 23, 27].includes(i)) {
+        if ([23, 27].includes(i)) {
           continue;
         }
         if([28].includes(i)){
@@ -388,8 +388,9 @@ export class PosBMRPage extends BasePage {
         await this.llenarFechaProceso(pageR, fecha);
         await this.seleccionarEmisor2(pageR, emisor2);
         break;
-      case 15: // SISTEMA DE CAPTURA BOTON DESACTIVADO NO DEJA DESCARGAR
-        // ESTE CODIGO ESTA COMENTADO Y SE ENCUENTRA EN EL ARCHIVO DE CODIGO DECREPADO.
+      case 15: // SISTEMA DE CAPTURA
+        await this.seleccionarMoneda(pageR, moneda);
+        await this.llenarFechaProceso(pageR, fecha);
         break;
       case 16: // RECH LOTES A CAPTURA
         await this.seleccionarMoneda(pageR, moneda);
@@ -439,7 +440,7 @@ export class PosBMRPage extends BasePage {
         await this.seleccionarEmisor(pageR, reporteData.PLATAFORMA3 ?? DEFECTO_POSBMR.PLATAFORMA3);
         //await pageR.locator(this.btnVistaPrevia).click();
         break;
-      case 23: // N Sumario de Promociones Banamex
+      case 23: // N Sumario de Promociones Banamex TIENE BUGS EN TIPO DE TRANSACCION FRONTEND
         await this.llenarFechaProceso(pageR, fecha);
         //Reporte Original | Desgloce Compras / Devoluciones
         await pageR.locator(this.radiobtnDesgloceComprasDevoluciones).click();
@@ -468,7 +469,7 @@ export class PosBMRPage extends BasePage {
         await this.llenarTarjeta(pageR, tarjeta);
         await this.manipularSubtotales(pageR, subtotales);
         break;
-      case 27: // S Reporte Rechazos
+      case 27: // S Reporte Rechazos SIGUE ARROJANDO ETIQUETA DE NO DATOS
         // ESTE CODIGO ESTA COMENTADO EN EL ARCHIVO DE CODIGO DECREPADO.
         break;
       case 28: // S V Puntos BBVA
