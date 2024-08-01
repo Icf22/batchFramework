@@ -3,6 +3,7 @@ import { BasePage } from '../pages-objects/basePage';
 import { NUMBERAPP } from '../data/constates';
 import { PrpConcilia } from '../pages-objects/prpConciliaPage';
 
+
 //Comando para ejecutar el test: 
 //npm run test:Liquidacion
 test('Liquidacion', async ({ browser }) => {

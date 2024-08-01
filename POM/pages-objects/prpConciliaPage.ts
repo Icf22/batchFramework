@@ -1,6 +1,7 @@
 import { BrowserContext, Locator, Page } from "@playwright/test";
 import { BasePage } from "./basePage";
 import { NOMBRE_REPORTES, URLS } from "../data/constates";
+import { PRPCONCILIA } from '../data/prpConcilia/prpConciliaConstantes';
 
 export class PrpConcilia extends BasePage {
   pageReporte?: Page;
@@ -64,20 +65,20 @@ export class PrpConcilia extends BasePage {
     }
   }
 
-  async revisarReportePRPConciliaLiquidacion(fechaIni: string, fechaFin:string, adquriente:string, emisor:string) {
+  async revisarReportePRPConciliaLiquidacion(reporteARevisar: number) {
     const pageReporte = await this.inicializarPage(URLS.REPORTEPRPCONCILIA);
     await pageReporte.waitForLoadState('networkidle')
     await pageReporte.locator(this.fechaInicial).fill("")
-    await pageReporte.locator(this.fechaInicial).fill(fechaIni)
+    await pageReporte.locator(this.fechaInicial).fill(PRPCONCILIA.FECHA_INICIO)
     await pageReporte.locator(this.fechaFinal).fill("")
-    await pageReporte.locator(this.fechaFinal).fill(fechaFin)
-    const adqCheck = await pageReporte.locator(`//input[@name="CTLCHK_00${adquriente}"]`)
-    const emiCheck = await pageReporte.locator(`//input[@name="CTLCHK1_00${emisor}"]`)
+    await pageReporte.locator(this.fechaFinal).fill(PRPCONCILIA.FECHA_FIN)
+    const adqCheck = await pageReporte.locator(`//input[@name="CTLCHK_00${PRPCONCILIA.ADQUIRIENTE}"]`)
+    const emiCheck = await pageReporte.locator(`//input[@name="CTLCHK1_00${PRPCONCILIA.EMISOR}"]`)
     await adqCheck.scrollIntoViewIfNeeded()
     await adqCheck.click()
     await emiCheck.scrollIntoViewIfNeeded()
     await emiCheck.click()
-    await this.validarDescarga(pageReporte,this.btnLiquidacion,NOMBRE_REPORTES.PRP_CONCILIA)
+    await this.validarDescargaPRPCONCILIA(pageReporte,this.btnLiquidacion,this.btnLiquidacion, false)
   }
 
   
