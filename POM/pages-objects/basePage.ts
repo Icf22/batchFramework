@@ -263,7 +263,8 @@ export class BasePage {
     pageExtension: Page | undefined,
     btnDownload: string,
     nameReport: string,
-    esExcel: boolean
+    esExcel: boolean,
+    esZip: boolean
   ) {
     let filePath;
     if (pageExtension) {
@@ -289,7 +290,18 @@ export class BasePage {
           "./test-results/reportes-prpConcilia/",
           `${reportName}.xlsx`
         );
-      } else {
+      } 
+      else if (esZip) {
+        await download.saveAs(
+          "./test-results/reportes-prpConcilia/" + reportName + ".zip"
+        );
+        filePath = path.resolve(
+          process.cwd(),
+          "./test-results/reportes-prpConcilia/",
+          `${reportName}.zip`
+        );
+      }
+      else{
         await download.saveAs(
           "./test-results/reportes-prpConcilia/" + reportName + ".pdf"
         );
