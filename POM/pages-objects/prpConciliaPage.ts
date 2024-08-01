@@ -199,42 +199,43 @@ export class PrpConcilia extends BasePage {
   async seleccionarCheckBox(page: Page, dato: boolean, localizador: string){
     await page.locator(localizador).setChecked(dato);
   }
-
+  // SE MANDA A LLAMAR ASI await this.seleccionarRadioButton(page, 'Reportes', '0');
   async seleccionarRadioButton(page: Page, escenario: string, opcion) {
-    const selectoresEscenario1 = {
+    const SeparacionCredito = {
       '0': this.radiobtnPorTasaCuota,
       '1': this.radiobtnPorNatDelBin,
     };
-    const selectoresEscenario2 = {
+    const Reportes = {
       '0': this.radiobtnEntrante,
       '1': this.radiobtnSaliente,
       '2': this.radiobtnAmbos,
     };
     let selectores;
   
-    // Selecciona el mapa de selectores basado en el escenario
     switch (escenario) {
-      case 'escenario1':
-        selectores = selectoresEscenario1;
+      case 'Separacion débito/credito':
+        selectores = SeparacionCredito;
         break;
-      case 'escenario2':
-        selectores = selectoresEscenario2;
+      case 'Reportes':
+        selectores = Reportes;
         break;
       default:
-        throw new Error(`Escenario "${escenario}" no reconocido.`);
+        throw new Error(`"${escenario}" no reconocido.`);
     }
-  
-    // Obtén el selector basado en la opción
     const selector = selectores[opcion];
-  
     if (!selector) {
       throw new Error(`Selector para la opción "${opcion}" en el escenario "${escenario}" no encontrado.`);
     }
-  
-    // Interactúa con la página
+
     await page.waitForSelector(selector);
     await page.locator(selector).click();
   }
   
+  async elegirSelect(page: Page, opcion){
+
+  }
+  async llenarInputText(page: Page, dato: string){
+
+  }
 }
 
