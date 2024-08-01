@@ -113,22 +113,6 @@ export class PrpConcilia extends BasePage {
     }
   }
 
-  async revisarReportePRPConciliaLiquidacion1(reporteARevisar: number) {
-    const pageReporte = await this.inicializarPage(URLS.REPORTEPRPCONCILIA);
-    await pageReporte.waitForLoadState('networkidle')
-    await pageReporte.locator(this.fechaInicial).fill("")
-    await pageReporte.locator(this.fechaInicial).fill(PRPCONCILIA.FECHA_INICIO)
-    await pageReporte.locator(this.fechaFinal).fill("")
-    await pageReporte.locator(this.fechaFinal).fill(PRPCONCILIA.FECHA_FIN)
-    const adqCheck = await pageReporte.locator(`//input[@name="CTLCHK_00${PRPCONCILIA.ADQUIRIENTE}"]`)
-    const emiCheck = await pageReporte.locator(`//input[@name="CTLCHK1_00${PRPCONCILIA.EMISOR}"]`)
-    await adqCheck.scrollIntoViewIfNeeded()
-    await adqCheck.click()
-    await emiCheck.scrollIntoViewIfNeeded()
-    await emiCheck.click()
-    await this.validarDescargaPRPCONCILIA(pageReporte,this.btnLiquidacion,this.btnLiquidacion, false,false)
-  }
-
   async revisarReportePRPConciliaLiquidacion(reporteARevisar: number){
     const pageReporte = await this.inicializarPage(URLS.REPORTEPRPCONCILIA);
     let btnTipoReporte = this.btnLiquidacion;
@@ -170,10 +154,6 @@ export class PrpConcilia extends BasePage {
       }
     }
     else{
-      //SELECCIONAR QUE REPORTE SE VA A DESCARGAR, SI ES 1 ES LA VENTANA PRINCIPAL Y NO ES NECESARIO SELECCIONAR UNA OPCION
-      if(reporteARevisar != 1){
-        //AQUI GENERAR MÉTODO PARA IR A LOS DEMAS REPORTES, ES DECIR TARIFAS, BANCO AZTECA ETC
-      }
       await this.ingresarDatosReporte(pageReporte, reporteARevisar, reporteData);
       const boton = botonesAEjecutar[reporteARevisar];
       if(reportesExcel.includes(reporteARevisar)){
@@ -215,5 +195,46 @@ export class PrpConcilia extends BasePage {
     await emiCheck.scrollIntoViewIfNeeded()
     await emiCheck.click()
   }
+
+  async seleccionarCheckBox(page: Page, dato: boolean, localizador: string){
+    await page.locator(localizador).setChecked(dato);
+  }
+
+  async seleccionarRadioButton(page: Page, escenario: string, opcion) {
+    const selectoresEscenario1 = {
+      '0': this.radiobtnPorTasaCuota,
+      '1': this.radiobtnPorNatDelBin,
+    };
+    const selectoresEscenario2 = {
+      '0': this.radiobtnEntrante,
+      '1': this.radiobtnSaliente,
+      '2': this.radiobtnAmbos,
+    };
+    let selectores;
+  
+    // Selecciona el mapa de selectores basado en el escenario
+    switch (escenario) {
+      case 'escenario1':
+        selectores = selectoresEscenario1;
+        break;
+      case 'escenario2':
+        selectores = selectoresEscenario2;
+        break;
+      default:
+        throw new Error(`Escenario "${escenario}" no reconocido.`);
+    }
+  
+    // Obtén el selector basado en la opción
+    const selector = selectores[opcion];
+  
+    if (!selector) {
+      throw new Error(`Selector para la opción "${opcion}" en el escenario "${escenario}" no encontrado.`);
+    }
+  
+    // Interactúa con la página
+    await page.waitForSelector(selector);
+    await page.locator(selector).click();
+  }
+  
 }
 
