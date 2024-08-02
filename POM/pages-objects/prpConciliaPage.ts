@@ -49,7 +49,88 @@ export class PrpConcilia extends BasePage {
   readonly btnCifras:string;
   readonly btnDetalle:string;
   readonly selectTienda:string;
-
+  // MENUS
+  readonly reportesEspeciales: string;
+  readonly difTasas: string;
+  readonly BancoAzteca: string;
+  // SUBMENUS
+  readonly banorte: string;
+  readonly bancomer: string;
+  readonly reporteoPOS: string;
+  readonly reporteoATMs: string;
+  readonly catalogos: string;
+  readonly ebindPOS: string;
+  readonly ebindATMs: string;
+  readonly logEbind: string;
+  // BANORTE
+  readonly fechaIniBanorte: string;
+  readonly fechaFInBanorte: string;
+  readonly btnGenerarBanorte: string;
+  readonly btnRegresarBanorte: string;
+  // BANCOMER
+  readonly fechaBancomer: string;
+  readonly btnTasaMenor: string;
+  readonly btnTasaMayor: string;
+  readonly btnCuotaMenor: string;
+  readonly btnCuotaMayor: string;
+  readonly btnErrorTasa: string;
+  readonly btnErrorCuota: string;
+  readonly btnRegresarBancomer: string;
+  // REPORTEO POS
+    // Boton Miscelaneos
+  readonly btnMiscelaneos: string;
+  readonly fechaIniMiscelaneos: string;
+  readonly fechaFinMiscelaneos: string;
+  readonly selectReporteMiscelaneos: string;
+  readonly selectTipoMiscelaneos: string;
+  readonly checkExcelMiscelaneos: string;
+  readonly btnDesplegarMiscelaneos: string;
+    // Boton Caratulas Intercambio
+  readonly fechaIniCaratula: string;
+  readonly fechaFinCaratula: string;
+  readonly selectReporteCaratula: string;
+  readonly btnGenerarCaratula: string;
+    // Boton Prevalidador
+  readonly fechaIniValidador: string;
+  readonly fechaFinValidador: string;
+  readonly selectReporteValidador: string;
+  readonly checkExcelValidador: string;
+  readonly btnDesplegarValidador: string;
+    // Boton Infraestructura
+  readonly fechaIniInfra: string;
+  readonly fechaFinInfra: string;
+  readonly btnDesplegarInfra: string;
+    // Boton Poliza POS
+  readonly fechaIniPoliza: string;
+  readonly fechaFinPoliza: string;
+  readonly checkDetallePoliza: string;
+  readonly btnDesplegarPoliza: string;
+  readonly btnRegresarPOS: string;
+  // REPORTEO ATMS
+  readonly fechaIniATMS: string;
+  readonly fechaFInATMS: string;
+  readonly selectReporteATMS: string;
+  readonly selectTipoATMS: string;
+  readonly btnGenerarATMS: string;
+  readonly btnRegresarATMS: string;
+  // CATALOGOS
+  readonly selectTipoCatalogo: string;
+  readonly btnExcelCostos: string;
+  // EBIND POS
+  readonly fechaIniPOS: string;
+  readonly fechaFinPOS: string;
+  readonly btnSelectAllPOS: string;
+  readonly btnEnviarEbindPOS: string;
+  readonly btnRegresarEbindPOS: string;
+  // EBIND ATMS
+  readonly fechaIniATM: string;
+  readonly fechaFinATM: string;
+  readonly btnSelectAllATM: string;
+  readonly btnEnviarEbindATM: string;
+  readonly btnRegresarEbindATM: string;
+  // LOG EBIND
+  readonly fechaLogEbind: string;
+  readonly btnBuscarLosEbind: string;
   
   constructor(browserContext) {
     super(browserContext);
