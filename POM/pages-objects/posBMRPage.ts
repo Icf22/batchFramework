@@ -331,6 +331,8 @@ export class PosBMRPage extends BasePage {
   
     switch (numeroReporte) {
       case 1: // TRANSACCIONES ACEPTADAS
+        //await this.ObtenerOptionsPlataforma(pageR, this.selectPlataforma);
+      //break;
       case 2: // DETALLE DE TRANSACCIONES ACEPTADAS
       case 3: // TRANSACCIONES RECHAZADAS
       case 4: // DETALLE DE TRANSACCIONES RECHAZADAS
@@ -340,7 +342,7 @@ export class PosBMRPage extends BasePage {
         await this.llenarAfiliacion(pageR, afiliacion);
         await this.seleccionarVentana(pageR, ventana);
         await this.llenarTarjeta(pageR, tarjeta);
-        if (numeroReporte === 1 || numeroReporte === 2) {
+        if (numeroReporte === 3 || numeroReporte === 2) {
           await this.seleccionarTipoTransaccion(pageR, transaccion);
         }
         await this.manipularSubtotales(pageR, subtotales);
@@ -552,7 +554,41 @@ export class PosBMRPage extends BasePage {
   await btnSelectOptions?.click();
   await btnSelectOptions?.selectOption(seccion);
   }
+  async ObtenerOptionsPlataforma(pageR, locator){
+    // const options = await pageR.evaluate(() => {
+    //   const selectElement = document.querySelector("select[name='vPLATAFORMA']");
+    //   if (!selectElement) return [];
+      
+    //   const optionElements = selectElement.querySelectorAll('option');
+    //   return Array.from(optionElements).map(option => ({
+    //     value: option.value,
+    //     text: option.textContent?.trim()
+    //   }));
+    // });
 
+    const options = await pageR.evaluate(() => {
+      const xpath = "//select[@name='vPLATAFORMA']/option";
+      const result: { value: string | null, text: string | null }[] = [];
+      const iterator = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+  
+      let node = iterator.iterateNext() as HTMLElement | null;
+      while (node) {
+        result.push({
+          value: node.getAttribute('value'),
+          text: node.textContent?.trim() || ''
+        });
+        node = iterator.iterateNext() as HTMLElement | null;
+      }
+  
+      return result;
+    });
+
+  for (const option of options) {
+    await pageR.selectOption("//select[@name='vPLATAFORMA']", option.value);
+    await pageR.waitForTimeout(2000); 
+  }
+
+  }
   
 }
 
