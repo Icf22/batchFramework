@@ -1,4 +1,6 @@
 import { BrowserContext, Locator, Page } from "@playwright/test";
+import path from "path";
+import fs from 'fs/promises';
 import { BasePage } from "./basePage";
 import { URLS, XPATH } from "../data/constates";
 import { DEFECTO_POSBMR } from "../data/posBMR/constantesPosBMRDefecto";
@@ -300,7 +302,7 @@ export class PosBMRPage extends BasePage {
           pageReporte.waitForLoadState('networkidle')
         ]);
         await pageReporte.locator(opcion).click(),
-        await this.ingresarDatosReporte(pageReporte, i, reporteData);
+        await this.ingresarDatosReporte(pageReporte, i, reporteData, boton, opcion, esExcel);
         await this.validarDescargaPOSBMR(pageReporte, boton, opcion, esExcel);
       }
     } 
@@ -308,12 +310,14 @@ export class PosBMRPage extends BasePage {
     { 
       btnTipoReporte = opcionesAEjecutar[reporteARevisar]
       await pageReporte.locator(btnTipoReporte).click();
-      await this.ingresarDatosReporte(pageReporte, reporteARevisar, reporteData);
       const boton = botonesAEjecutar[reporteARevisar];
-      await this.validarDescargaPOSBMR(pageReporte, boton, btnTipoReporte, esExcel);
+      await this.ingresarDatosReporte(pageReporte, reporteARevisar, reporteData, boton, btnTipoReporte, esExcel);
+      if(reporteARevisar != 1){
+        await this.validarDescargaPOSBMR(pageReporte, boton, btnTipoReporte, esExcel);
+      }
     }
   }
-  async ingresarDatosReporte(pageR: Page,numeroReporte: number,reporteData: any) {
+  async ingresarDatosReporte(pageR: Page,numeroReporte: number,reporteData: any, boton, btnTipoReporte, esExcel) {
     await pageR.waitForTimeout(980);
     const moneda = reporteData.MONEDA ?? DEFECTO_POSBMR.MONEDA;
     const fecha = reporteData.FECHA ?? DEFECTO_POSBMR.FECHA;
@@ -331,7 +335,7 @@ export class PosBMRPage extends BasePage {
   
     switch (numeroReporte) {
       case 1: // TRANSACCIONES ACEPTADAS
-        await this.ObtenerOptionsPlataforma(pageR, this.selectPlataforma);
+        await this.ObtenerOptionsPlataforma(pageR, this.selectPlataforma, boton, btnTipoReporte, esExcel);
       break;
       case 2: // DETALLE DE TRANSACCIONES ACEPTADAS
       case 3: // TRANSACCIONES RECHAZADAS
@@ -554,28 +558,55 @@ export class PosBMRPage extends BasePage {
   await btnSelectOptions?.click();
   await btnSelectOptions?.selectOption(seccion);
   }
-  async ObtenerOptionsPlataforma(pageR, locator) {
+  async ObtenerOptionsPlataforma(pageR, locator, boton, btnTipoReporte, esExcel) {
     const loc = locator + "/option";
 
+    //EVALUAS TODA LA PAGINA CON EL EVALUATE
     const options = await pageR.evaluate((xpath) => {
+      //CREAMOS LA VARIABLE DONDE SE ALMACENARAN LOS DATOS DEL OPTION (ES UN OBJETO)
       const result: { value: string | null, text: string | null }[] = [];
+      //EVALUA EL SELECT PARA TRAER POSTERIOTMENTE LAS OPCIONES Y LOS DATOS NECESARIOS
       const iterator = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+      //VA ITERANDO Y ME TRAE LA PRIMER LINEA DESPUES LA SEGUNDA Y ASI SUCESIVAMENTE
       let node = iterator.iterateNext() as HTMLElement | null;
+      // ITERA HASTA QUE NO ENCUENTRA VARIABLE OPTION
       while (node) {
+        //INSERTA EL DATO EN LA VARIABLE DE OBJETOS QUE CREAMOS ANTES
         result.push({
           value: node.getAttribute('value'),
           text: node.textContent?.trim() || ''
         });
+        // ITERA SOBRE LA SIGUIENTE LINEA DEL OPTION, SI NO ENCUENTRA TERMINA
         node = iterator.iterateNext() as HTMLElement | null;
       }
+      //ME REGRESA LOS DATOS ES DECIR EL OBJETO QUE CONTENDRA EL VALUE Y EL TEXT
       return result;
     }, loc);
 
+    let baseDir = "";
+    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     for (const option of options) {
-      await pageR.selectOption(locator, option.value);
-      await pageR.waitForTimeout(9000);
+      const text = option.text.toLowerCase();
+      if (text !== 'todas' && text !== 'seleccione una plataforma'){
+        await pageR.selectOption(locator, option.value);
+        await pageR.waitForTimeout(1000);
+        baseDir = await this.validarDescargaPOSBMR2(pageR, boton, btnTipoReporte, esExcel, option.text) ?? baseDir;
+      }
     }
+    const totalDescargados = await this.contarArchivosDescargados(baseDir);
+    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    console.log(`El total de archivos descargados son para: ${totalDescargados}`);
+    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+  }
 
+  async contarArchivosDescargados(carpeta: string): Promise<number> {
+    try {
+      const archivos = await fs.readdir(carpeta); // Lee el contenido de la carpeta
+      return archivos.length; // Devuelve el número de archivos
+    } catch (error) {
+      console.error("Error leyendo la carpeta:", error);
+      return 0;
+    }
   }
   
 }

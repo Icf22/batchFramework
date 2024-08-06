@@ -348,4 +348,80 @@ export class BasePage {
   async elementoVisible(locator: Locator) {
     await expect(locator).toBeVisible();
   }
+
+  async validarDescargaPOSBMR2(
+    pageExtension: Page | undefined,
+    btnDownload: string,
+    nameReport: string,
+    esExcel: boolean,
+    nameSelected: string
+  ) {
+    nameSelected = "-" + nameSelected;
+
+    if (!pageExtension) {
+      console.error("pageExtension is undefined. Unable to perform download validation.");
+      return;
+    }
+  
+    // Obtener el nombre del reporte para usarlo como nombre de la carpeta
+    const reportName = await this.obtenerTexto(pageExtension, nameReport);
+    
+    if (!reportName) {
+      console.error("No fue posible obtener el nombre del reporte");
+      return;
+    }
+
+    // Definir la ruta base para la carpeta y archivo
+    const baseDir = path.resolve("./test-results/reportes-posBancomer", reportName);
+    
+    // Crear la carpeta con el nombre del reporte si no existe
+    try {
+      await fs.mkdir(baseDir, { recursive: true });
+    } catch (error) {
+      console.error("Error al crear la carpeta:", error);
+      return;
+    }
+  
+    // Crea una promesa que espera el evento download
+    const downloadPromise = pageExtension.waitForEvent("download");
+  
+    // Clic sobre el botón que desencadenará el evento download
+    await pageExtension.waitForTimeout(2000);
+    const loc = await pageExtension.locator(btnDownload);
+    await this.elementoVisible(loc);
+    await pageExtension.locator(btnDownload).click();
+  
+    const download = await downloadPromise;
+    
+    const fileExtension = esExcel ? ".xlsx" : ".pdf";
+  
+    // Ruta completa para guardar el archivo dentro de la carpeta recién creada
+    const filePath = path.resolve(baseDir, `${reportName}${nameSelected}${fileExtension}`);
+  
+    // Guardar el archivo descargado en la carpeta creada
+    try {
+      await download.saveAs(filePath);
+    } catch (error) {
+      console.error("Error al guardar el archivo: ", error);
+      return;
+    }
+  
+    // Validación de la existencia del archivo descargado
+    let archivoExiste;
+    try {
+      await fs.access(filePath);
+      archivoExiste = true;
+    } catch {
+      archivoExiste = false;
+    }
+  
+    // Assertion para validar que se realizó la descarga de manera correcta
+    await expect.soft(archivoExiste).toBeTruthy();
+    archivoExiste
+      ? console.log("El archivo se descargó correctamente en:", filePath)
+      : console.error("El archivo no se descargó en:", filePath);
+
+    return baseDir;
+  }
+
 }
