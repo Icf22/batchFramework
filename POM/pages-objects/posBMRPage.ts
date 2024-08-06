@@ -331,8 +331,8 @@ export class PosBMRPage extends BasePage {
   
     switch (numeroReporte) {
       case 1: // TRANSACCIONES ACEPTADAS
-        //await this.ObtenerOptionsPlataforma(pageR, this.selectPlataforma);
-      //break;
+        await this.ObtenerOptionsPlataforma(pageR, this.selectPlataforma);
+      break;
       case 2: // DETALLE DE TRANSACCIONES ACEPTADAS
       case 3: // TRANSACCIONES RECHAZADAS
       case 4: // DETALLE DE TRANSACCIONES RECHAZADAS
@@ -554,23 +554,12 @@ export class PosBMRPage extends BasePage {
   await btnSelectOptions?.click();
   await btnSelectOptions?.selectOption(seccion);
   }
-  async ObtenerOptionsPlataforma(pageR, locator){
-    // const options = await pageR.evaluate(() => {
-    //   const selectElement = document.querySelector("select[name='vPLATAFORMA']");
-    //   if (!selectElement) return [];
-      
-    //   const optionElements = selectElement.querySelectorAll('option');
-    //   return Array.from(optionElements).map(option => ({
-    //     value: option.value,
-    //     text: option.textContent?.trim()
-    //   }));
-    // });
+  async ObtenerOptionsPlataforma(pageR, locator) {
+    const loc = locator + "/option";
 
-    const options = await pageR.evaluate(() => {
-      const xpath = "//select[@name='vPLATAFORMA']/option";
+    const options = await pageR.evaluate((xpath) => {
       const result: { value: string | null, text: string | null }[] = [];
       const iterator = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
-  
       let node = iterator.iterateNext() as HTMLElement | null;
       while (node) {
         result.push({
@@ -579,14 +568,13 @@ export class PosBMRPage extends BasePage {
         });
         node = iterator.iterateNext() as HTMLElement | null;
       }
-  
       return result;
-    });
+    }, loc);
 
-  for (const option of options) {
-    await pageR.selectOption("//select[@name='vPLATAFORMA']", option.value);
-    await pageR.waitForTimeout(2000); 
-  }
+    for (const option of options) {
+      await pageR.selectOption(locator, option.value);
+      await pageR.waitForTimeout(9000);
+    }
 
   }
   
