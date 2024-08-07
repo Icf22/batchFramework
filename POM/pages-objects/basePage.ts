@@ -11,6 +11,7 @@ import { format } from 'date-fns-tz';
 import fs from "fs/promises";
 import { EXTENSION, URLS, FUNCION, ARCHIVOS } from "../data/constates";
 import { REPORTE_POSBMR } from "../data/posBMR/constantesPosBMR";
+import { Console } from "console";
 
 export class BasePage {
   browserContext: BrowserContext;
@@ -365,7 +366,7 @@ export class BasePage {
     }
   
     // Obtener el nombre del reporte para usarlo como nombre de la carpeta
-    const reportName = await this.obtenerTexto(pageExtension, nameReport);
+    let reportName = await this.obtenerTexto(pageExtension, nameReport);
     
     if (!reportName) {
       console.error("No fue posible obtener el nombre del reporte");
@@ -373,7 +374,7 @@ export class BasePage {
     }
     var fecha = await this.obtenerHoraActualEnMexico();
     // Definir la ruta base para la carpeta y archivo
-    const baseDir = path.resolve("./test-results/reportes-posBancomer", reportName);
+    const baseDir = path.resolve("./test-results/reportes-posBancomer", reportName +" " + fecha);
     
     // Crear la carpeta con el nombre del reporte si no existe
     try {
@@ -419,9 +420,10 @@ export class BasePage {
     // Assertion para validar que se realizó la descarga de manera correcta
     await expect.soft(archivoExiste).toBeTruthy();
     archivoExiste
-      ? console.log("El archivo se descargó correctamente en:", filePath)
-      : console.error("El archivo no se descargó en:", filePath);
+      ? console.log("Se DESCARGO CORRECTAMENTE el archivo:", reportName + nameSelected + fileExtension)
+      : console.error("El archivo NO SE DESCARGÓ en:", filePath);
 
+      console.log("-------------------------------------------------------------------------------------");
     return baseDir;
   }
 
@@ -430,7 +432,7 @@ export class BasePage {
     const now = new Date(); // Hora actual en UTC
   
     // Formatear la hora actual según la zona horaria
-    const horaActualEnMexico = format(now, 'dd-MM-yyyy HH;mm', { timeZone: timezone });
+    const horaActualEnMexico = format(now, 'dd-MM-yyyy', { timeZone: timezone });
   
     return horaActualEnMexico;
   }

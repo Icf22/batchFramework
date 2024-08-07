@@ -602,20 +602,20 @@ export class PosBMRPage extends BasePage {
     }, loc);
 
     let baseDir = "";
-    const reporteDescargado = await this.obtenerTexto(pageR, boton);
-    console.log(`*********************************** "${reporteDescargado}" *********************************************************`);
+    const reporteDescargado = await this.obtenerTexto(pageR, btnTipoReporte);
+    console.log(`******************* "${reporteDescargado}" *********************************************************`);
     for (const option of options) {
       const text = option.text.toLowerCase();
       if (text !== 'todas' && text !== 'seleccione una plataforma'){
         await pageR.selectOption(locator, option.value);
-        await pageR.waitForTimeout(1000);
+        //await pageR.waitForTimeout(1000);
         baseDir = await this.validarDescargaPOSBMR2(pageR, boton, btnTipoReporte, esExcel, option.text) ?? baseDir;
       }
     }
     const totalDescargados = await this.contarArchivosDescargados(baseDir);
-    console.log("********************************************************************************************************************");
+    console.log("**********************************************************************************************************");
     console.log(`El total de archivos descargados para "${reporteDescargado}" son: ${totalDescargados}`);
-    console.log("********************************************************************************************************************");
+    console.log("**************************************************************************************************************");
   }
   async contarArchivosDescargados(carpeta: string): Promise<number> {
     try {
