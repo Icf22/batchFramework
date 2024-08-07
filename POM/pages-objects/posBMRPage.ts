@@ -278,6 +278,11 @@ export class PosBMRPage extends BasePage {
       27: REPORTE_SREPORTE_RECHAZOS,
       28: REPORTE_VAPUNTOS_BBVA
     }
+
+    const reportesSinPlataforma = [12,13,14,15,22,27,28];
+    const reportesFallan = [23,27];
+    const reportesExcel = [22];
+    const salidaExcel = [28];
     let reporteData = dataReporte[reporteARevisar];
     // SI EL REPORTE A REVISAR ES 0 (TODOS) ENTRA EN ESTE CASO
     if (reporteARevisar === 0) 
@@ -288,13 +293,13 @@ export class PosBMRPage extends BasePage {
         reporteData = dataReporte[i]
   
         // CUANDO I SEA IGUAL A UNO DE ESOS NUMEROS ENTRA AL IF Y CON EL CONTINUE TERMINA ESA ITERACION Y CONTINUA CON LA PROXIMA
-        if ([23, 27].includes(i)) {
+        if (reportesFallan.includes(i)) {
           continue;
         }
-        if([28].includes(i)){
+        if(salidaExcel.includes(i)){
           esExcel = REPORTE_VAPUNTOS_BBVA.SALIDA_EXCEL;
         }
-        if([22].includes(i)){
+        if(reportesExcel.includes(i)){
           esExcel = true;
         }
         await Promise.all([
@@ -303,7 +308,9 @@ export class PosBMRPage extends BasePage {
         ]);
         await pageReporte.locator(opcion).click(),
         await this.ingresarDatosReporte(pageReporte, i, reporteData, boton, opcion, esExcel);
-        await this.validarDescargaPOSBMR(pageReporte, boton, opcion, esExcel);
+        if(reportesSinPlataforma.includes(i)){
+          await this.validarDescargaPOSBMR(pageReporte, boton, opcion, esExcel);
+        }
       }
     } 
     else 
@@ -312,7 +319,7 @@ export class PosBMRPage extends BasePage {
       await pageReporte.locator(btnTipoReporte).click();
       const boton = botonesAEjecutar[reporteARevisar];
       await this.ingresarDatosReporte(pageReporte, reporteARevisar, reporteData, boton, btnTipoReporte, esExcel);
-      if(reporteARevisar != 1){
+      if(reportesSinPlataforma.includes(reporteARevisar)){
         await this.validarDescargaPOSBMR(pageReporte, boton, btnTipoReporte, esExcel);
       }
     }
@@ -335,14 +342,12 @@ export class PosBMRPage extends BasePage {
   
     switch (numeroReporte) {
       case 1: // TRANSACCIONES ACEPTADAS
-        await this.ObtenerOptionsPlataforma(pageR, this.selectPlataforma, boton, btnTipoReporte, esExcel);
-      break;
       case 2: // DETALLE DE TRANSACCIONES ACEPTADAS
       case 3: // TRANSACCIONES RECHAZADAS
       case 4: // DETALLE DE TRANSACCIONES RECHAZADAS
         await this.seleccionarMoneda(pageR, moneda);
         await this.llenarFechaProceso(pageR, fecha);
-        await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA);
+        //await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA);
         await this.llenarAfiliacion(pageR, afiliacion);
         await this.seleccionarVentana(pageR, ventana);
         await this.llenarTarjeta(pageR, tarjeta);
@@ -350,18 +355,21 @@ export class PosBMRPage extends BasePage {
           await this.seleccionarTipoTransaccion(pageR, transaccion);
         }
         await this.manipularSubtotales(pageR, subtotales);
+        await this.ObtenerOptionsPlataforma(pageR, this.selectPlataforma, boton, btnTipoReporte, esExcel);
         break;
       case 5: // RECHAZADAS NO PROCESADAS
         await this.seleccionarMoneda(pageR, moneda);
         await this.llenarFechaProceso(pageR, fecha);
-        await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA);
+        //await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA);
         await this.seleccionarVentana(pageR, ventana);
+        await this.ObtenerOptionsPlataforma(pageR, this.selectPlataforma, boton, btnTipoReporte, esExcel);
         break;
       case 6: // CONSOLIDADO DE RECHAZADOS
       await this.seleccionarMoneda(pageR, moneda);
         await this.llenarFechaProceso(pageR, fecha);
-        await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA);
+        //await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA);
         await this.seleccionarVentana(pageR, ventana);
+        await this.ObtenerOptionsPlataforma(pageR, this.selectPlataforma, boton, btnTipoReporte, esExcel);
         break;
       case 7: // TOTALES EMISOR
       case 8: // DETALLE EMISOR
@@ -369,19 +377,21 @@ export class PosBMRPage extends BasePage {
       case 10: // CONSOLIDADO PLATAFORMA
         await this.seleccionarMoneda(pageR, moneda);
         await this.llenarFechaProceso(pageR, fecha);
-        await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA);
+        //await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA);
         await this.llenarAfiliacion(pageR, afiliacion);
         await this.seleccionarVentana(pageR, ventana);
         await this.llenarTarjeta(pageR, tarjeta);
+        await this.ObtenerOptionsPlataforma(pageR, this.selectPlataforma, boton, btnTipoReporte, esExcel);
         break;
       case 11: // RETENCIONES POR RIESGO
         await this.seleccionarMoneda(pageR, moneda);
         await this.llenarFechaProceso(pageR, fecha);
-        await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA);
+        //await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA);
         await this.llenarAfiliacion(pageR, afiliacion);
         await this.seleccionarVentana(pageR, ventana);
         await this.llenarTarjeta(pageR, tarjeta);
         await this.seleccionarInternacional(pageR, internacional);
+        await this.ObtenerOptionsPlataforma(pageR, this.selectPlataforma, boton, btnTipoReporte, esExcel);
         break;
       case 12: // LIBERACION RIESGO
         await this.llenarFechaProceso(pageR, fecha);
@@ -401,44 +411,48 @@ export class PosBMRPage extends BasePage {
       case 16: // RECH LOTES A CAPTURA
         await this.seleccionarMoneda(pageR, moneda);
         await this.llenarFechaProceso(pageR, fecha);
-        await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA2 ?? DEFECTO_POSBMR.PLATAFORMA2);
+        //await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA2 ?? DEFECTO_POSBMR.PLATAFORMA2);
         await this.llenarAfiliacion(pageR, afiliacion);
         await this.seleccionarVentana(pageR, ventana);
         await this.llenarTarjeta(pageR, tarjeta);
         await this.manipularSubtotales(pageR, reporteData.SUBTOTALES);
+        await this.ObtenerOptionsPlataforma(pageR, this.selectPlataforma, boton, btnTipoReporte, esExcel);
         break;
       case 17: // TOTAL TRANSACCIONES PROMOCIONES
       case 18: // DETALLE TRANSACCIONES PROMOCIONES
       case 19: // DETALLE TRANSACCIONES RECHAZADAS PROMOCIONES
         await this.seleccionarMoneda(pageR, moneda);
         await this.llenarFechaProceso(pageR, fecha);
-        await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA2 ?? DEFECTO_POSBMR.PLATAFORMA2);
+        //await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA2 ?? DEFECTO_POSBMR.PLATAFORMA2);
         await this.llenarAfiliacion(pageR, afiliacion);
         await this.seleccionarVentana(pageR, ventana);
         await this.llenarTarjeta(pageR, tarjeta);
         await this.manipularSubtotales(pageR, reporteData.SUBTOTALES);
+        await this.ObtenerOptionsPlataforma(pageR, this.selectPlataforma, boton, btnTipoReporte, esExcel);
         break;
       case 20: // K Tot. Txn. Acep.Grupo Cadena
         await this.seleccionarMoneda(pageR, moneda);
         await this.llenarFechaProceso(pageR, fecha);
-        await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA);
+        //await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA);
         await this.llenarAfiliacion(pageR, afiliacion);
         await this.seleccionarVentana(pageR, ventana);
         await this.llenarTarjeta(pageR, tarjeta);
         await this.seleccionarTipoTransaccion(pageR, transaccion)
         await pageR.locator(this.txtGrupoCadena).fill(grupoCadena);
         await this.manipularSubtotales(pageR, reporteData.SUBTOTALES);
+        await this.ObtenerOptionsPlataforma(pageR, this.selectPlataforma, boton, btnTipoReporte, esExcel);
         //await this.manipularModal(pageR, reporteData.OPCIONMODAL);
         break;
       case 21: // L Tot. Txn. Rech.Grupo Cadena
         await this.seleccionarMoneda(pageR, moneda);
         await this.llenarFechaProceso(pageR, fecha);
-        await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA);
+        //await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA);
         await this.llenarAfiliacion(pageR, afiliacion);
         await this.seleccionarVentana(pageR, ventana);
         await this.llenarTarjeta(pageR, tarjeta);
         await pageR.locator(this.txtGrupoCadena).fill(grupoCadena);
         await this.manipularSubtotales(pageR, reporteData.SUBTOTALES);
+        await this.ObtenerOptionsPlataforma(pageR, this.selectPlataforma, boton, btnTipoReporte, esExcel);
         //await this.manipularModal(pageR, reporteData.OPCIONMODAL);
         break;
       case 22: // M Consolidado de Promociones
@@ -454,26 +468,30 @@ export class PosBMRPage extends BasePage {
           //Todas | Compras | Devoluciones
           await pageR.locator(this.tipoTransaccion).click();
         }
-        await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA4 ?? DEFECTO_POSBMR.PLATAFORMA4);
+        //await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA4 ?? DEFECTO_POSBMR.PLATAFORMA4);
+        await this.ObtenerOptionsPlataforma(pageR, this.selectPlataforma, boton, btnTipoReporte, esExcel);
         break;
       case 24: // P Reporte de Wal-Mart
-        await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA5 ?? DEFECTO_POSBMR.PLATAFORMA5);
+        //await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA5 ?? DEFECTO_POSBMR.PLATAFORMA5);
         await this.llenarAfiliacion(pageR, afiliacion);
         await this.seleccionarVentana(pageR, ventana);
         await this.llenarTarjeta(pageR, tarjeta);
+        await this.ObtenerOptionsPlataforma(pageR, this.selectPlataforma, boton, btnTipoReporte, esExcel);
         break;
       case 25: // Q Transacciones Cash
         await this.llenarFechaProceso(pageR, fecha);
-        await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA6 ?? DEFECTO_POSBMR.PLATAFORMA6);
+        //await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA6 ?? DEFECTO_POSBMR.PLATAFORMA6);
         await this.llenarAfiliacion(pageR, afiliacion);
         await this.manipularSubtotales(pageR, reporteData.SUBTOTALES);
+        await this.ObtenerOptionsPlataforma(pageR, this.selectPlataforma, boton, btnTipoReporte, esExcel);
         break;
       case 26: // R Reporte Pagos y Cash
         await this.llenarFechaProceso(pageR, fecha);
-        await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA6 ?? DEFECTO_POSBMR.PLATAFORMA6);
+        //await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA6 ?? DEFECTO_POSBMR.PLATAFORMA6);
         await this.llenarAfiliacion(pageR, afiliacion);
         await this.llenarTarjeta(pageR, tarjeta);
         await this.manipularSubtotales(pageR, subtotales);
+        await this.ObtenerOptionsPlataforma(pageR, this.selectPlataforma, boton, btnTipoReporte, esExcel);
         break;
       case 27: // S Reporte Rechazos SIGUE ARROJANDO ETIQUETA DE NO DATOS
         // ESTE CODIGO ESTA COMENTADO EN EL ARCHIVO DE CODIGO DECREPADO.
@@ -584,7 +602,8 @@ export class PosBMRPage extends BasePage {
     }, loc);
 
     let baseDir = "";
-    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    const reporteDescargado = await this.obtenerTexto(pageR, boton);
+    console.log(`*********************************** "${reporteDescargado}" *********************************************************`);
     for (const option of options) {
       const text = option.text.toLowerCase();
       if (text !== 'todas' && text !== 'seleccione una plataforma'){
@@ -594,11 +613,10 @@ export class PosBMRPage extends BasePage {
       }
     }
     const totalDescargados = await this.contarArchivosDescargados(baseDir);
-    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    console.log(`El total de archivos descargados son para: ${totalDescargados}`);
-    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    console.log("********************************************************************************************************************");
+    console.log(`El total de archivos descargados para "${reporteDescargado}" son: ${totalDescargados}`);
+    console.log("********************************************************************************************************************");
   }
-
   async contarArchivosDescargados(carpeta: string): Promise<number> {
     try {
       const archivos = await fs.readdir(carpeta); // Lee el contenido de la carpeta

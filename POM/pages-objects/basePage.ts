@@ -7,6 +7,7 @@ import {
   Locator,
 } from "@playwright/test";
 import path from "path";
+import { format } from 'date-fns-tz';
 import fs from "fs/promises";
 import { EXTENSION, URLS, FUNCION, ARCHIVOS } from "../data/constates";
 import { REPORTE_POSBMR } from "../data/posBMR/constantesPosBMR";
@@ -370,7 +371,7 @@ export class BasePage {
       console.error("No fue posible obtener el nombre del reporte");
       return;
     }
-
+    var fecha = await this.obtenerHoraActualEnMexico();
     // Definir la ruta base para la carpeta y archivo
     const baseDir = path.resolve("./test-results/reportes-posBancomer", reportName);
     
@@ -424,4 +425,13 @@ export class BasePage {
     return baseDir;
   }
 
+  async obtenerHoraActualEnMexico(){
+    const timezone = 'America/Mexico_City'; // Zona horaria para la Ciudad de México
+    const now = new Date(); // Hora actual en UTC
+  
+    // Formatear la hora actual según la zona horaria
+    const horaActualEnMexico = format(now, 'dd-MM-yyyy HH;mm', { timeZone: timezone });
+  
+    return horaActualEnMexico;
+  }
 }

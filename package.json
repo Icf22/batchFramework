@@ -11,15 +11,16 @@
     "test:DetallTransRechazadas": "npx playwright test posBancomer.spec.ts -g 4DetallTranRech --headed",
     "test:Infrestructura": "npx playwright test infrestructura.spec.ts -g Infra --headed",
     "test:Liquidacion": "npx playwright test prpConcilia.spec.ts -g Liquidacion --headed",
-
     "test:ReportesIntercambio": "npx playwright test dSSReport.spec.ts -g Reporte de intercambio --headed"
-
-   },
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.43.0",
     "@types/node": "^20.12.7"
+  },
+  "dependencies": {
+    "date-fns-tz": "^3.1.3"
   }
 }
