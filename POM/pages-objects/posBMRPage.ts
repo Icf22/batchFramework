@@ -2,7 +2,7 @@ import { BrowserContext, Locator, Page } from "@playwright/test";
 import path from "path";
 import fs from 'fs/promises';
 import { BasePage } from "./basePage";
-import { URLS, XPATH } from "../data/constates";
+import { CONSOLA, URLS, XPATH } from "../data/constates";
 import { DEFECTO_POSBMR } from "../data/posBMR/constantesPosBMRDefecto";
 import {
   REPORTE_4DETALLE_TRANC_RECHAZADAS, 
@@ -312,13 +312,12 @@ export class PosBMRPage extends BasePage {
         if(reportesSinPlataforma.includes(i)){
           baseDir = "";
           const reporteDescargado = await this.obtenerTexto(pageReporte, opcion);
-          console.log(`******************* "${reporteDescargado}" *********************************************************`);
+          CONSOLA.EspacioConNombre(reporteDescargado ?? "");
           //await this.validarDescargaPOSBMR(pageReporte, boton, opcion, esExcel);
           baseDir = await this.validarDescargaPOSBMR2(pageReporte, boton, opcion, esExcel, "") ?? baseDir;
           const totalDescargados = await this.contarArchivosDescargados(baseDir);
-          console.log("-------------------------------------------------------------------------------------------------------------");
-          console.log(`El total de archivos descargados para "${reporteDescargado}" son: ${totalDescargados}`);
-          console.log("**************************************************************************************************************");
+          CONSOLA.EspacioNombreTotal(reporteDescargado ?? "", totalDescargados);
+          CONSOLA.CierreDeBloque();
         }
       }
     } 
@@ -332,12 +331,11 @@ export class PosBMRPage extends BasePage {
         
           baseDir = "";
           const reporteDescargado = await this.obtenerTexto(pageReporte, btnTipoReporte);
-          console.log(`******************* "${reporteDescargado}" *********************************************************`);
+          CONSOLA.EspacioConNombre(reporteDescargado ?? "");
           baseDir = await this.validarDescargaPOSBMR2(pageReporte, boton, btnTipoReporte, esExcel, "") ?? baseDir;
           const totalDescargados = await this.contarArchivosDescargados(baseDir);
-          console.log("-------------------------------------------------------------------------------------------------------------");
-          console.log(`El total de archivos descargados para "${reporteDescargado}" son: ${totalDescargados}`);
-          console.log("**************************************************************************************************************");
+          CONSOLA.EspacioNombreTotal(reporteDescargado ?? "", totalDescargados);
+          CONSOLA.CierreDeBloque();
       }
     }
   }
@@ -621,19 +619,17 @@ export class PosBMRPage extends BasePage {
 
     let baseDir = "";
     const reporteDescargado = await this.obtenerTexto(pageR, btnTipoReporte);
-    console.log(`******************* "${reporteDescargado}" *********************************************************`);
+    CONSOLA.EspacioConNombre(reporteDescargado ?? "");
     for (const option of options) {
       const text = option.text.toLowerCase();
       if (text === "7eleven" || text === "walmart" || text === "captura abono" || text === "oxxo" /*text !== 'todas' && text !== 'seleccione una plataforma'*/){
         await pageR.selectOption(locator, option.value);
-        //await pageR.waitForTimeout(1000);
         baseDir = await this.validarDescargaPOSBMR2(pageR, boton, btnTipoReporte, esExcel, option.text) ?? baseDir;
       }
     }
     const totalDescargados = await this.contarArchivosDescargados(baseDir);
-    //console.log("-------------------------------------------------------------------------------------------------------------");
-    console.log(`El total de archivos descargados para "${reporteDescargado}" son: ${totalDescargados}`);
-    console.log("**************************************************************************************************************");
+    CONSOLA.EspacioNombreTotal(reporteDescargado ?? "", totalDescargados);
+    CONSOLA.CierreDeBloque();
   }
   async contarArchivosDescargados(carpeta: string): Promise<number> {
     try {
