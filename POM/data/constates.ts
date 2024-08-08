@@ -55,3 +55,13 @@ export const NOMBRE_REPORTES = {
 export const XPATH = {
     framID : "//iframe[contains(@id, 'gxp0_ifrm')]",
 }
+
+export const CONSOLA = {
+    EspacioConNombre: (reporteDescargado: string) =>
+        console.log(`******************* "${reporteDescargado}" *********************************************************`),
+    EspacioNombreTotal: (reporteDescargado: string, totalDescargados: number) =>
+        console.log(`El total de archivos descargados para "${reporteDescargado}" son: ${totalDescargados}`),
+    CierreDeBloque: () =>
+        console.log("**************************************************************************************************************"),
+    
+}
