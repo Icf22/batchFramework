@@ -284,6 +284,7 @@ export class PosBMRPage extends BasePage {
     const reportesExcel = [22];
     const salidaExcel = [28];
     let reporteData = dataReporte[reporteARevisar];
+    let baseDir = "";
     // SI EL REPORTE A REVISAR ES 0 (TODOS) ENTRA EN ESTE CASO
     if (reporteARevisar === 0) 
     {
@@ -309,7 +310,15 @@ export class PosBMRPage extends BasePage {
         await pageReporte.locator(opcion).click(),
         await this.ingresarDatosReporte(pageReporte, i, reporteData, boton, opcion, esExcel);
         if(reportesSinPlataforma.includes(i)){
-          await this.validarDescargaPOSBMR(pageReporte, boton, opcion, esExcel);
+          baseDir = "";
+          const reporteDescargado = await this.obtenerTexto(pageReporte, opcion);
+          console.log(`******************* "${reporteDescargado}" *********************************************************`);
+          //await this.validarDescargaPOSBMR(pageReporte, boton, opcion, esExcel);
+          baseDir = await this.validarDescargaPOSBMR2(pageReporte, boton, opcion, esExcel, "") ?? baseDir;
+          const totalDescargados = await this.contarArchivosDescargados(baseDir);
+          console.log("-------------------------------------------------------------------------------------------------------------");
+          console.log(`El total de archivos descargados para "${reporteDescargado}" son: ${totalDescargados}`);
+          console.log("**************************************************************************************************************");
         }
       }
     } 
@@ -320,7 +329,15 @@ export class PosBMRPage extends BasePage {
       const boton = botonesAEjecutar[reporteARevisar];
       await this.ingresarDatosReporte(pageReporte, reporteARevisar, reporteData, boton, btnTipoReporte, esExcel);
       if(reportesSinPlataforma.includes(reporteARevisar)){
-        await this.validarDescargaPOSBMR(pageReporte, boton, btnTipoReporte, esExcel);
+        
+          baseDir = "";
+          const reporteDescargado = await this.obtenerTexto(pageReporte, btnTipoReporte);
+          console.log(`******************* "${reporteDescargado}" *********************************************************`);
+          baseDir = await this.validarDescargaPOSBMR2(pageReporte, boton, btnTipoReporte, esExcel, "") ?? baseDir;
+          const totalDescargados = await this.contarArchivosDescargados(baseDir);
+          console.log("-------------------------------------------------------------------------------------------------------------");
+          console.log(`El total de archivos descargados para "${reporteDescargado}" son: ${totalDescargados}`);
+          console.log("**************************************************************************************************************");
       }
     }
   }
@@ -351,7 +368,7 @@ export class PosBMRPage extends BasePage {
         await this.llenarAfiliacion(pageR, afiliacion);
         await this.seleccionarVentana(pageR, ventana);
         await this.llenarTarjeta(pageR, tarjeta);
-        if (numeroReporte === 3 || numeroReporte === 2) {
+        if (numeroReporte === 1 || numeroReporte === 2) {
           await this.seleccionarTipoTransaccion(pageR, transaccion);
         }
         await this.manipularSubtotales(pageR, subtotales);
@@ -365,7 +382,7 @@ export class PosBMRPage extends BasePage {
         await this.ObtenerOptionsPlataforma(pageR, this.selectPlataforma, boton, btnTipoReporte, esExcel);
         break;
       case 6: // CONSOLIDADO DE RECHAZADOS
-      await this.seleccionarMoneda(pageR, moneda);
+        await this.seleccionarMoneda(pageR, moneda);
         await this.llenarFechaProceso(pageR, fecha);
         //await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA ?? DEFECTO_POSBMR.PLATAFORMA);
         await this.seleccionarVentana(pageR, ventana);
@@ -473,6 +490,7 @@ export class PosBMRPage extends BasePage {
         break;
       case 24: // P Reporte de Wal-Mart
         //await this.seleccionarPlataforma(pageR, reporteData.PLATAFORMA5 ?? DEFECTO_POSBMR.PLATAFORMA5);
+        await this.llenarFechaProceso(pageR, fecha);
         await this.llenarAfiliacion(pageR, afiliacion);
         await this.seleccionarVentana(pageR, ventana);
         await this.llenarTarjeta(pageR, tarjeta);
@@ -606,14 +624,14 @@ export class PosBMRPage extends BasePage {
     console.log(`******************* "${reporteDescargado}" *********************************************************`);
     for (const option of options) {
       const text = option.text.toLowerCase();
-      if (text !== 'todas' && text !== 'seleccione una plataforma'){
+      if (text === "7eleven" || text === "walmart" || text === "captura abono" || text === "oxxo" /*text !== 'todas' && text !== 'seleccione una plataforma'*/){
         await pageR.selectOption(locator, option.value);
         //await pageR.waitForTimeout(1000);
         baseDir = await this.validarDescargaPOSBMR2(pageR, boton, btnTipoReporte, esExcel, option.text) ?? baseDir;
       }
     }
     const totalDescargados = await this.contarArchivosDescargados(baseDir);
-    console.log("**********************************************************************************************************");
+    //console.log("-------------------------------------------------------------------------------------------------------------");
     console.log(`El total de archivos descargados para "${reporteDescargado}" son: ${totalDescargados}`);
     console.log("**************************************************************************************************************");
   }

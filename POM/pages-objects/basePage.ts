@@ -358,7 +358,7 @@ export class BasePage {
     esExcel: boolean,
     nameSelected: string
   ) {
-    nameSelected = "-" + nameSelected;
+    nameSelected = ("-" + nameSelected) ?? "Reporte1";
 
     if (!pageExtension) {
       console.error("pageExtension is undefined. Unable to perform download validation.");

@@ -10,7 +10,7 @@ export const DEFECTO_POSBMR = {
     EMISOR: '00 Todas',
     EMISOR2: '0 Master y Visa',
     MONEDA: 'P',
-    FECHA: '09042020',
+    FECHA: '24012025',
     AFILIACION: '',
     TARJETA: '',
     SUBTOTALES: false,
