@@ -7,6 +7,7 @@ export const DEFECTO_POSBMR = {
     PLATAFORMA6: 'Oxxo',
     VENTANA:  '0',
     TRANSACCION: 'Todas las Aceptadas',
+    TIPO_TRANSACCION: 'T',
     EMISOR: '00 Todas',
     EMISOR2: '0 Master y Visa',
     MONEDA: 'P',
@@ -18,4 +19,5 @@ export const DEFECTO_POSBMR = {
     GRUPO_CADENA: '',
     TIPO_REPORTE: '',
     CODIGO_RECHAZO: '',
+    SALIDA_EXCEL : false
 }

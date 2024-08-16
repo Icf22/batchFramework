@@ -5,35 +5,7 @@ import { BasePage } from "./basePage";
 import { CONSOLA, URLS, XPATH } from "../data/constates";
 import { DEFECTO_POSBMR } from "../data/posBMR/constantesPosBMRDefecto";
 import {
-  REPORTE_4DETALLE_TRANC_RECHAZADAS, 
-  REPORTE_5RECHAZAS_NO_PROCESADAS,
-  REPORTE_6CONSOLIDADOS_RECHAZADOS_X_FECHA,
-  REPORTE_ACONSOLIDADO_PLATAFORMA,
-  REPORTE_BRETENCION_RIESGO,
-  REPORTE_CLIBERACION_RIESGO,
-  REPORTE_EDET_RIESGO_INT,
-  REPORTE_GRECH_LOTES_CAPTURA,
-  REPORTE_JDET_TXN_RECH_PROMOCIONES,
-  REPORTE_KTOT_TXN_ACEP_GRUPO_CADENA,
-  REPORTE_LTOT_TXN_RECH_GRUPO_CADENA,
-  REPORTE_MCONSOLIDADO_PROMOCIONES,
-  REPORTE_NSUMARIO_PROMOCIONES_BANAMEX,
-  REPORTE_PREPORTE_WALMART,
-  REPORTE_QTRANSACCIONES,
-  REPORTE_RREPORTE_PAGOS_CASH,
-  REPORTE_SREPORTE_RECHAZOS,
-  REPORTE_VAPUNTOS_BBVA,
-  REPORTE_POSBMR, 
-  REPORTE_1TOTAL_TRANC_ACEPTADAS,
-  REPORTE_2DETALLE_TRANC_ACEPTADAS,
-  REPORTE_3TOTAL_TRANC_RECHAZADAS,
-  REPORTE_7TOTALES_EMISOR,
-  REPORTE_8DETALLE_EMISOR,
-  REPORTE_9CONSOLIDADO_EMISOR,
-  REPORTE_DCONSOLIDADO_RIESGO_INT,
-  REPORTE_FTXN_SIS_CAP,
-  REPORTE_HTOT_TXN_PROMOCIONES,
-  REPORTE_I_DET_TXN_PROMOCIONES
+  POSBMR
 } from "../data/posBMR/constantesPosBMR";
 
 export class PosBMRPage extends BasePage {
@@ -153,9 +125,9 @@ export class PosBMRPage extends BasePage {
     this.btnExportar = "//input[@value='Exportar']";
     this.btnPreliminar = "//input[@value='Preliminar']"
     this.btnVistaPrevia = "//input[@value='Vista Previa']"
-    this.tipoTransaccion = `//input[@value='${REPORTE_POSBMR.TIPO_TRANSACCION}' and @name='vTPO_TXN']`;
-    this.radiobtnTipoReporte = `//input[@value='${REPORTE_POSBMR.TIPO_REPORTE}']`
-    this.radiobtnDesgloceComprasDevoluciones = `//input[@name='vT_REPORTE' and @value='${REPORTE_POSBMR.TIPO_REPORTE}']`
+    this.tipoTransaccion = `//input[@value='${DEFECTO_POSBMR.TIPO_TRANSACCION}' and @name='vTPO_TXN']`;
+    this.radiobtnTipoReporte = `//input[@value='${DEFECTO_POSBMR.TIPO_REPORTE}']`
+    this.radiobtnDesgloceComprasDevoluciones = `//input[@name='vT_REPORTE' and @value='${DEFECTO_POSBMR.TIPO_REPORTE}']`
     this.selectCodigoRechazo = "//select[@name='vTIPO_REPORTE']"
     this.fechaInicio = "//input[@name='vFECHAINICIAL']"
     this.fechaFin = "//input[@name='vFECHAFINAL']"
@@ -249,41 +221,14 @@ export class PosBMRPage extends BasePage {
     };
     
     const dataReporte = {
-      1: REPORTE_1TOTAL_TRANC_ACEPTADAS,
-      2: REPORTE_2DETALLE_TRANC_ACEPTADAS,
-      3: REPORTE_3TOTAL_TRANC_RECHAZADAS,
-      4: REPORTE_4DETALLE_TRANC_RECHAZADAS,
-      5: REPORTE_5RECHAZAS_NO_PROCESADAS,
-      6: REPORTE_6CONSOLIDADOS_RECHAZADOS_X_FECHA,
-      7: REPORTE_7TOTALES_EMISOR,
-      8: REPORTE_8DETALLE_EMISOR,
-      9: REPORTE_9CONSOLIDADO_EMISOR,
-      10: REPORTE_ACONSOLIDADO_PLATAFORMA,
-      11: REPORTE_BRETENCION_RIESGO,
-      12: REPORTE_CLIBERACION_RIESGO,
-      13: REPORTE_DCONSOLIDADO_RIESGO_INT,
-      14: REPORTE_EDET_RIESGO_INT,
-      15: REPORTE_FTXN_SIS_CAP,
-      16: REPORTE_GRECH_LOTES_CAPTURA,
-      17: REPORTE_HTOT_TXN_PROMOCIONES,
-      18: REPORTE_I_DET_TXN_PROMOCIONES,
-      19: REPORTE_JDET_TXN_RECH_PROMOCIONES,
-      20: REPORTE_KTOT_TXN_ACEP_GRUPO_CADENA,
-      21: REPORTE_LTOT_TXN_RECH_GRUPO_CADENA,
-      22: REPORTE_MCONSOLIDADO_PROMOCIONES,
-      23: REPORTE_NSUMARIO_PROMOCIONES_BANAMEX,
-      24: REPORTE_PREPORTE_WALMART,
-      25: REPORTE_QTRANSACCIONES,
-      26: REPORTE_RREPORTE_PAGOS_CASH,
-      27: REPORTE_SREPORTE_RECHAZOS,
-      28: REPORTE_VAPUNTOS_BBVA
+      1: POSBMR,
     }
 
     const reportesSinPlataforma = [12,13,14,15,22,27,28];
     const reportesFallan = [23,27];
     const reportesExcel = [22];
     const salidaExcel = [28];
-    let reporteData = dataReporte[reporteARevisar];
+    let reporteData = dataReporte[1];
     let baseDir = "";
     // SI EL REPORTE A REVISAR ES 0 (TODOS) ENTRA EN ESTE CASO
     if (reporteARevisar === 0) 
@@ -291,14 +236,13 @@ export class PosBMRPage extends BasePage {
       for (let i = 1; i <= Object.keys(opcionesAEjecutar).length; i++) {
         const opcion = opcionesAEjecutar[i];
         const boton = botonesAEjecutar[i];
-        reporteData = dataReporte[i]
   
         // CUANDO I SEA IGUAL A UNO DE ESOS NUMEROS ENTRA AL IF Y CON EL CONTINUE TERMINA ESA ITERACION Y CONTINUA CON LA PROXIMA
         if (reportesFallan.includes(i)) {
           continue;
         }
         if(salidaExcel.includes(i)){
-          esExcel = REPORTE_VAPUNTOS_BBVA.SALIDA_EXCEL;
+          esExcel = DEFECTO_POSBMR.SALIDA_EXCEL;
         }
         if(reportesExcel.includes(i)){
           esExcel = true;
@@ -316,6 +260,8 @@ export class PosBMRPage extends BasePage {
           //await this.validarDescargaPOSBMR(pageReporte, boton, opcion, esExcel);
           baseDir = await this.validarDescargaPOSBMR2(pageReporte, boton, opcion, esExcel, "") ?? baseDir;
           const totalDescargados = await this.contarArchivosDescargados(baseDir);
+          CONSOLA.AvisoSinPlataformas(reporteDescargado ?? "");
+          CONSOLA.DivisionInfo();
           CONSOLA.EspacioNombreTotal(reporteDescargado ?? "", totalDescargados);
           CONSOLA.CierreDeBloque();
         }
@@ -334,6 +280,8 @@ export class PosBMRPage extends BasePage {
           CONSOLA.EspacioConNombre(reporteDescargado ?? "");
           baseDir = await this.validarDescargaPOSBMR2(pageReporte, boton, btnTipoReporte, esExcel, "") ?? baseDir;
           const totalDescargados = await this.contarArchivosDescargados(baseDir);
+          CONSOLA.AvisoSinPlataformas(reporteDescargado ?? "");
+          CONSOLA.DivisionInfo();
           CONSOLA.EspacioNombreTotal(reporteDescargado ?? "", totalDescargados);
           CONSOLA.CierreDeBloque();
       }
@@ -628,6 +576,8 @@ export class PosBMRPage extends BasePage {
       }
     }
     const totalDescargados = await this.contarArchivosDescargados(baseDir);
+    CONSOLA.TotalPlataformas(reporteDescargado ?? "", options.length);
+    CONSOLA.DivisionInfo();
     CONSOLA.EspacioNombreTotal(reporteDescargado ?? "", totalDescargados);
     CONSOLA.CierreDeBloque();
   }

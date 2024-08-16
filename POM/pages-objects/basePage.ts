@@ -9,8 +9,8 @@ import {
 import path from "path";
 import { format } from 'date-fns-tz';
 import fs from "fs/promises";
-import { EXTENSION, URLS, FUNCION, ARCHIVOS } from "../data/constates";
-import { REPORTE_POSBMR } from "../data/posBMR/constantesPosBMR";
+import { EXTENSION, URLS, FUNCION, ARCHIVOS, CONSOLA } from "../data/constates";
+import { POSBMR } from "../data/posBMR/constantesPosBMR";
 import { Console } from "console";
 
 export class BasePage {
@@ -423,7 +423,7 @@ export class BasePage {
       ? console.log("Se DESCARGO CORRECTAMENTE el archivo:", reportName + nameSelected + fileExtension)
       : console.error("El archivo NO SE DESCARGÓ en:", filePath);
 
-      console.log("-------------------------------------------------------------------------------------");
+      CONSOLA.DivisionInfo();
     return baseDir;
   }
 

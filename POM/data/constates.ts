@@ -60,8 +60,13 @@ export const CONSOLA = {
     EspacioConNombre: (reporteDescargado: string) =>
         console.log(`******************* "${reporteDescargado}" *********************************************************`),
     EspacioNombreTotal: (reporteDescargado: string, totalDescargados: number) =>
-        console.log(`El total de archivos descargados para "${reporteDescargado}" son: ${totalDescargados}`),
+        console.log(`-- El total de archivos descargados para "${reporteDescargado}" son: ${totalDescargados}`),
     CierreDeBloque: () =>
         console.log("**************************************************************************************************************"),
-    
+    TotalPlataformas: (reporteDescargado: string, totalPlataformas: number) =>
+        console.log(`-- El total de plataformas existentes para "${reporteDescargado}" son: ${totalPlataformas}`),
+    DivisionInfo: () =>
+        console.log("-------------------------------------------------------------------------------------"),
+    AvisoSinPlataformas: (reporteDescargado: string) => 
+        console.log(`-- El reporte "${reporteDescargado}" no cuenta con plataformas existentes, se descargó el reporte con los valores por defecto y la fecha establecida por el usuario`),
 }

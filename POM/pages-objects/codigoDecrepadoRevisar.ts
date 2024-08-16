@@ -20,7 +20,7 @@ import { REPORTE_4DETALLE_TRANC_RECHAZADAS,
   REPORTE_RREPORTE_PAGOS_CASH,
   REPORTE_SREPORTE_RECHAZOS,
   REPORTE_VAPUNTOS_BBVA,
-  REPORTE_POSBMR } from "../data/posBMR/constantesPosBMR";
+  REPORTE_POSBMR } from "../data/posBMR/constantesPosBMR_Decrepado";
 
 export class PosBMRPage extends BasePage {
   pageReporte?: Page;
