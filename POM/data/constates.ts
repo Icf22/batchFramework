@@ -60,23 +60,23 @@ export const CONSOLA = {
     EspacioConNombre: (reporteDescargado: string) =>
         console.log(`******************* "${reporteDescargado}" *********************************************************`),
     EspacioNombreTotal: (reporteDescargado: string, totalDescargados: number) =>
-        console.log(`-- El total de archivos descargados para "${reporteDescargado}" son: ${totalDescargados}`),
+        console.log(`📋 -- El total de archivos descargados para "${reporteDescargado}" son: ${totalDescargados}`),
     CierreDeBloque: () =>
         console.log("**************************************************************************************************************"),
     TotalPlataformas: (reporteDescargado: string, totalPlataformas: number) =>
-        console.log(`-- El total de plataformas existentes para "${reporteDescargado}" son: ${totalPlataformas}`),
+        console.log(`📋 -- El total de plataformas existentes para "${reporteDescargado}" son: ${totalPlataformas}`),
     DivisionInfo: () =>
         console.log("-------------------------------------------------------------------------------------"),
     AvisoSinPlataformas: (reporteDescargado: string, totalDescargados = 0) => 
-        totalDescargados == 0 ? console.log(`-- El reporte "${reporteDescargado}" no cuenta con plataformas existentes`) : console.log(`-- El reporte "${reporteDescargado}" no cuenta con plataformas existentes, se descargó el reporte con los valores por defecto y la fecha establecida por el usuario`),
+        totalDescargados == 0 ? console.log(`📋 -- El reporte "${reporteDescargado}" no cuenta con plataformas existentes`) : console.log(`📋 -- El reporte "${reporteDescargado}" no cuenta con plataformas existentes, se descargó el reporte con los valores por defecto y la fecha establecida por el usuario`),
     AvisoDescargaCorrecta: (reporteDescargado: string ) =>
-        console.log(`-- Se DESCARGO CORRECTAMENTE el archivo: ${reporteDescargado}`),
+        console.log(`✅ -- Se DESCARGO CORRECTAMENTE el archivo: ${reporteDescargado}`),
     AvisoDescargaIncorrecta: (ruta) =>
-        console.log(`-- El archivo NO SE DESCARGÓ en: ${ruta}`),
+        console.log(`❌ -- El archivo NO SE DESCARGÓ en: ${ruta}`),
     NoExisteDescarga: () =>
-        console.log("-- No se descargó reporte. NO EXISTE"),
+        console.log("❌ -- No se descargó reporte. NO EXISTE"),
     ErrorAlGuardar: (error) =>
-        console.log("Error al guardar el archivo: ", error),
+        console.log("❌ Error al guardar el archivo: ", error),
     ErrorObtenerNombreReport: () =>
-        console.error("No fue posible obtener el nombre del reporte"),
+        console.error("❌ No fue posible obtener el nombre del reporte"),
 }

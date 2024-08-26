@@ -356,9 +356,16 @@ export class BasePage {
     btnDownload: string,
     nameReport: string,
     esExcel: boolean,
-    nameSelected: string
+    nameSelected: string 
   ) {
-    nameSelected = ("-" + nameSelected) ?? "Reporte1";
+
+    var name = "-" + nameSelected;
+    if (!nameSelected) {
+      nameSelected = name;
+    } else {
+      nameSelected = "Reporte 1";
+    }
+    //nameSelected = ("-" + nameSelected) ?? "Reporte1";
 
     if (!pageExtension) {
       console.error("undefinido");
@@ -401,9 +408,11 @@ export class BasePage {
     // Utiliza Promise.race para manejar el tiempo máximo de espera
     const downloadEvent = await Promise.race([downloadPromise, timeoutPromise])
       .catch(error => {
-        //console.error(error.message);
         return null;
       });
+    
+    //Esta expect sirve para evaluar que se activo el evento descarga 
+    //!await expect.soft(downloadEvent).not.toBeNull();
 
     if (!downloadEvent) {
       CONSOLA.NoExisteDescarga();
