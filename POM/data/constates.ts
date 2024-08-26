@@ -67,6 +67,16 @@ export const CONSOLA = {
         console.log(`-- El total de plataformas existentes para "${reporteDescargado}" son: ${totalPlataformas}`),
     DivisionInfo: () =>
         console.log("-------------------------------------------------------------------------------------"),
-    AvisoSinPlataformas: (reporteDescargado: string) => 
-        console.log(`-- El reporte "${reporteDescargado}" no cuenta con plataformas existentes, se descargó el reporte con los valores por defecto y la fecha establecida por el usuario`),
+    AvisoSinPlataformas: (reporteDescargado: string, totalDescargados = 0) => 
+        totalDescargados == 0 ? console.log(`-- El reporte "${reporteDescargado}" no cuenta con plataformas existentes`) : console.log(`-- El reporte "${reporteDescargado}" no cuenta con plataformas existentes, se descargó el reporte con los valores por defecto y la fecha establecida por el usuario`),
+    AvisoDescargaCorrecta: (reporteDescargado: string ) =>
+        console.log(`-- Se DESCARGO CORRECTAMENTE el archivo: ${reporteDescargado}`),
+    AvisoDescargaIncorrecta: (ruta) =>
+        console.log(`-- El archivo NO SE DESCARGÓ en: ${ruta}`),
+    NoExisteDescarga: () =>
+        console.log("-- No se descargó reporte. NO EXISTE"),
+    ErrorAlGuardar: (error) =>
+        console.log("Error al guardar el archivo: ", error),
+    ErrorObtenerNombreReport: () =>
+        console.error("No fue posible obtener el nombre del reporte"),
 }

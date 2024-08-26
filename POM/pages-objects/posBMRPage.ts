@@ -260,7 +260,7 @@ export class PosBMRPage extends BasePage {
           //await this.validarDescargaPOSBMR(pageReporte, boton, opcion, esExcel);
           baseDir = await this.validarDescargaPOSBMR2(pageReporte, boton, opcion, esExcel, "") ?? baseDir;
           const totalDescargados = await this.contarArchivosDescargados(baseDir);
-          CONSOLA.AvisoSinPlataformas(reporteDescargado ?? "");
+          CONSOLA.AvisoSinPlataformas(reporteDescargado ?? "", totalDescargados);
           CONSOLA.DivisionInfo();
           CONSOLA.EspacioNombreTotal(reporteDescargado ?? "", totalDescargados);
           CONSOLA.CierreDeBloque();
@@ -570,7 +570,7 @@ export class PosBMRPage extends BasePage {
     CONSOLA.EspacioConNombre(reporteDescargado ?? "");
     for (const option of options) {
       const text = option.text.toLowerCase();
-      if (text === "7eleven" || text === "walmart" || text === "captura abono" || text === "oxxo" /*text !== 'todas' && text !== 'seleccione una plataforma'*/){
+      if (text !== 'todas' && text !== 'seleccione una plataforma' /*text === "7eleven" || text === "walmart" || text === "captura abono" || text === "oxxo"*/){
         await pageR.selectOption(locator, option.value);
         baseDir = await this.validarDescargaPOSBMR2(pageR, boton, btnTipoReporte, esExcel, option.text) ?? baseDir;
       }
@@ -586,7 +586,6 @@ export class PosBMRPage extends BasePage {
       const archivos = await fs.readdir(carpeta); // Lee el contenido de la carpeta
       return archivos.length; // Devuelve el número de archivos
     } catch (error) {
-      console.error("Error leyendo la carpeta:", error);
       return 0;
     }
   }

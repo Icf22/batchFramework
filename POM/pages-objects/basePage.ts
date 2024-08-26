@@ -292,7 +292,7 @@ export class BasePage {
           "./test-results/reportes-prpConcilia/",
           `${reportName}.xlsx`
         );
-      } 
+      }
       else if (esZip) {
         await download.saveAs(
           "./test-results/reportes-prpConcilia/" + reportName + ".zip"
@@ -303,7 +303,7 @@ export class BasePage {
           `${reportName}.zip`
         );
       }
-      else{
+      else {
         await download.saveAs(
           "./test-results/reportes-prpConcilia/" + reportName + ".pdf"
         );
@@ -331,7 +331,7 @@ export class BasePage {
         "pageExtension is undefined. Unable to perform download validation."
       );
     }
-  } 
+  }
 
   async obtenerTexto(pageExtension: Page, locator: string) {
     // Ubica el elemento usando un selector
@@ -340,7 +340,7 @@ export class BasePage {
     if (element) {
       // Obtiene el texto del elemento
       let texto = await element.innerText();
-      texto = await texto==null||texto=="" ? (await pageExtension.$eval(locator, element => (element as HTMLInputElement).value)).toString(): texto
+      texto = await texto == null || texto == "" ? (await pageExtension.$eval(locator, element => (element as HTMLInputElement).value)).toString() : texto
       return texto;
     } else {
       console.error("No se encontró el elemento con el selector especificado.");
@@ -361,21 +361,21 @@ export class BasePage {
     nameSelected = ("-" + nameSelected) ?? "Reporte1";
 
     if (!pageExtension) {
-      console.error("pageExtension is undefined. Unable to perform download validation.");
+      console.error("undefinido");
       return;
     }
-  
+
     // Obtener el nombre del reporte para usarlo como nombre de la carpeta
     let reportName = await this.obtenerTexto(pageExtension, nameReport);
-    
+
     if (!reportName) {
-      console.error("No fue posible obtener el nombre del reporte");
+      CONSOLA.ErrorObtenerNombreReport();
       return;
     }
     var fecha = await this.obtenerHoraActualEnMexico();
     // Definir la ruta base para la carpeta y archivo
-    const baseDir = path.resolve("./test-results/reportes-posBancomer", reportName +" " + fecha);
-    
+    const baseDir = path.resolve("./test-results/reportes-posBancomer", reportName + " " + fecha);
+
     // Crear la carpeta con el nombre del reporte si no existe
     try {
       await fs.mkdir(baseDir, { recursive: true });
@@ -383,31 +383,48 @@ export class BasePage {
       console.error("Error al crear la carpeta:", error);
       return;
     }
-  
+
     // Crea una promesa que espera el evento download
     const downloadPromise = pageExtension.waitForEvent("download");
-  
+
+    // Establece un límite de tiempo para esperar el evento de descarga (por ejemplo, 30 segundos)
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("El evento de descarga no se activó en el tiempo esperado.")), 15000)
+    );
+
     // Clic sobre el botón que desencadenará el evento download
     await pageExtension.waitForTimeout(2000);
     const loc = await pageExtension.locator(btnDownload);
     await this.elementoVisible(loc);
     await pageExtension.locator(btnDownload).click();
-  
+
+    // Utiliza Promise.race para manejar el tiempo máximo de espera
+    const downloadEvent = await Promise.race([downloadPromise, timeoutPromise])
+      .catch(error => {
+        //console.error(error.message);
+        return null;
+      });
+
+    if (!downloadEvent) {
+      CONSOLA.NoExisteDescarga();
+      return "";
+    }
+
     const download = await downloadPromise;
-    
+
     const fileExtension = esExcel ? ".xlsx" : ".pdf";
-  
+
     // Ruta completa para guardar el archivo dentro de la carpeta recién creada
     const filePath = path.resolve(baseDir, `${reportName}${nameSelected}${fileExtension}`);
-  
+
     // Guardar el archivo descargado en la carpeta creada
     try {
       await download.saveAs(filePath);
     } catch (error) {
-      console.error("Error al guardar el archivo: ", error);
+      CONSOLA.ErrorAlGuardar(error);
       return;
     }
-  
+
     // Validación de la existencia del archivo descargado
     let archivoExiste;
     try {
@@ -416,24 +433,24 @@ export class BasePage {
     } catch {
       archivoExiste = false;
     }
-  
+
     // Assertion para validar que se realizó la descarga de manera correcta
     await expect.soft(archivoExiste).toBeTruthy();
     archivoExiste
-      ? console.log("Se DESCARGO CORRECTAMENTE el archivo:", reportName + nameSelected + fileExtension)
-      : console.error("El archivo NO SE DESCARGÓ en:", filePath);
+      ? CONSOLA.AvisoDescargaCorrecta(reportName + nameSelected + fileExtension)
+      : CONSOLA.AvisoDescargaIncorrecta(filePath);
 
-      CONSOLA.DivisionInfo();
+    CONSOLA.DivisionInfo();
     return baseDir;
   }
 
-  async obtenerHoraActualEnMexico(){
+  async obtenerHoraActualEnMexico() {
     const timezone = 'America/Mexico_City'; // Zona horaria para la Ciudad de México
     const now = new Date(); // Hora actual en UTC
-  
+
     // Formatear la hora actual según la zona horaria
     const horaActualEnMexico = format(now, 'dd-MM-yyyy', { timeZone: timezone });
-  
+
     return horaActualEnMexico;
   }
 }
