@@ -359,13 +359,7 @@ export class BasePage {
     nameSelected: string 
   ) {
 
-    var name = "-" + nameSelected;
-    if (!nameSelected) {
-      nameSelected = name;
-    } else {
-      nameSelected = "Reporte 1";
-    }
-    //nameSelected = ("-" + nameSelected) ?? "Reporte1";
+    nameSelected = " - " + (nameSelected == "" ? "Reporte 1" : nameSelected);
 
     if (!pageExtension) {
       console.error("undefinido");
