@@ -230,6 +230,7 @@ export class PosBMRPage extends BasePage {
     const salidaExcel = [28];
     let reporteData = dataReporte[1];
     let baseDir = "";
+
     // SI EL REPORTE A REVISAR ES 0 (TODOS) ENTRA EN ESTE CASO
     if (reporteARevisar === 0) 
     {
@@ -241,25 +242,32 @@ export class PosBMRPage extends BasePage {
         if (reportesFallan.includes(i)) {
           continue;
         }
+
         if(salidaExcel.includes(i)){
           esExcel = DEFECTO_POSBMR.SALIDA_EXCEL;
         }
+
         if(reportesExcel.includes(i)){
           esExcel = true;
         }
+
         await Promise.all([
           pageReporte.locator(opcion).click(),
           pageReporte.waitForLoadState('networkidle')
         ]);
+
         await pageReporte.locator(opcion).click(),
         await this.ingresarDatosReporte(pageReporte, i, reporteData, boton, opcion, esExcel);
+        
         if(reportesSinPlataforma.includes(i)){
           baseDir = "";
           const reporteDescargado = await this.obtenerTexto(pageReporte, opcion);
+          
           CONSOLA.EspacioConNombre(reporteDescargado ?? "");
-          //await this.validarDescargaPOSBMR(pageReporte, boton, opcion, esExcel);
-          baseDir = await this.validarDescargaPOSBMR2(pageReporte, boton, opcion, esExcel, "") ?? baseDir;
+
+          baseDir = await this.validarDescargaPOSBMR(pageReporte, boton, opcion, esExcel, "") ?? baseDir;
           const totalDescargados = await this.contarArchivosDescargados(baseDir);
+          
           CONSOLA.AvisoSinPlataformas(reporteDescargado ?? "", totalDescargados);
           CONSOLA.DivisionInfo();
           CONSOLA.EspacioNombreTotal(reporteDescargado ?? "", totalDescargados);
@@ -273,13 +281,16 @@ export class PosBMRPage extends BasePage {
       await pageReporte.locator(btnTipoReporte).click();
       const boton = botonesAEjecutar[reporteARevisar];
       await this.ingresarDatosReporte(pageReporte, reporteARevisar, reporteData, boton, btnTipoReporte, esExcel);
+      
       if(reportesSinPlataforma.includes(reporteARevisar)){
-        
           baseDir = "";
           const reporteDescargado = await this.obtenerTexto(pageReporte, btnTipoReporte);
+          
           CONSOLA.EspacioConNombre(reporteDescargado ?? "");
-          baseDir = await this.validarDescargaPOSBMR2(pageReporte, boton, btnTipoReporte, esExcel, "") ?? baseDir;
+          
+          baseDir = await this.validarDescargaPOSBMR(pageReporte, boton, btnTipoReporte, esExcel, "") ?? baseDir;
           const totalDescargados = await this.contarArchivosDescargados(baseDir);
+          
           CONSOLA.AvisoSinPlataformas(reporteDescargado ?? "");
           CONSOLA.DivisionInfo();
           CONSOLA.EspacioNombreTotal(reporteDescargado ?? "", totalDescargados);
@@ -302,6 +313,7 @@ export class PosBMRPage extends BasePage {
     const tipoReporte = reporteData.TIPO_REPORTE ?? DEFECTO_POSBMR.TIPO_REPORTE;
     const codigoRechazo = reporteData.CODIGO_RECHAZO ?? DEFECTO_POSBMR.CODIGO_RECHAZO;
     const subtotales = reporteData.SUBTOTALES ?? DEFECTO_POSBMR.SUBTOTALES;
+    const excel_salida = DEFECTO_POSBMR.SALIDA_EXCEL;
   
     switch (numeroReporte) {
       case 1: // TRANSACCIONES ACEPTADAS
@@ -461,9 +473,9 @@ export class PosBMRPage extends BasePage {
         // ESTE CODIGO ESTA COMENTADO EN EL ARCHIVO DE CODIGO DECREPADO.
         break;
       case 28: // S V Puntos BBVA
-        await pageR.locator(this.fechaInicio).fill(reporteData.FECHA_INICIO);
-        await pageR.locator(this.fechaInicio).fill(reporteData.FECHA_FIN);
-        if (reporteData.SALIDA_EXCEL) {
+        await this.llenarFechaProcesoINI(pageR, fecha);
+        await this.llenarFechaProcesoFIN(pageR, fecha);
+        if (excel_salida) {
           await pageR.locator(this.checkSalidaExcel).click();
         } else {
           break;
@@ -484,6 +496,16 @@ export class PosBMRPage extends BasePage {
     await page.waitForSelector(this.txtFechaProceso);
     await page.locator(this.txtFechaProceso).fill('');
     await page.locator(this.txtFechaProceso).fill(fecha);
+  }
+  async llenarFechaProcesoINI(page: Page, fecha: string) {
+    await page.waitForSelector(this.fechaInicio);
+    await page.locator(this.fechaInicio).fill('');
+    await page.locator(this.fechaInicio).fill(fecha);
+  }
+  async llenarFechaProcesoFIN(page: Page, fecha: string) {
+    await page.waitForSelector(this.fechaFin);
+    await page.locator(this.fechaFin).fill('');
+    await page.locator(this.fechaFin).fill(fecha);
   }
   async seleccionarPlataforma(page: Page, plataforma: string) {
     await page.locator(this.selectPlataforma).click();
@@ -559,6 +581,7 @@ export class PosBMRPage extends BasePage {
 
     let baseDir = "";
     const reporteDescargado = await this.obtenerTexto(pageR, btnTipoReporte);
+    
     CONSOLA.EspacioConNombre(reporteDescargado ?? "");
 
     //VARIABLE PARAALMACENAR LOS REGISTROS DESCARGADOS EN LA EJECUCION EN CURSO
@@ -568,7 +591,7 @@ export class PosBMRPage extends BasePage {
       const text = option.text.toLowerCase();
       if (text !== 'todas' && text !== 'seleccione una plataforma' /*&& text === "7eleven"*/){
         await pageR.selectOption(locator, option.value);
-        baseDir = await this.validarDescargaPOSBMR2(pageR, boton, btnTipoReporte, esExcel, option.text, archivosDescargados) ?? baseDir;
+        baseDir = await this.validarDescargaPOSBMR(pageR, boton, btnTipoReporte, esExcel, option.text, archivosDescargados) ?? baseDir;
       }
     }
 
@@ -582,6 +605,7 @@ export class PosBMRPage extends BasePage {
     }
 
     const totalDescargados = await this.contarArchivosDescargados(baseDir);
+    
     CONSOLA.TotalPlataformas(reporteDescargado ?? "", options.length);
     CONSOLA.DivisionInfo();
     CONSOLA.EspacioNombreTotal(reporteDescargado ?? "", totalDescargados);
@@ -589,13 +613,12 @@ export class PosBMRPage extends BasePage {
   }
   async contarArchivosDescargados(carpeta: string): Promise<number> {
     try {
-      const archivos = await fs.readdir(carpeta); // Lee el contenido de la carpeta
-      return archivos.length; // Devuelve el número de archivos
+      const archivos = await fs.readdir(carpeta);
+      return archivos.length;
     } catch (error) {
       return 0;
     }
   }
-  
 }
 
 

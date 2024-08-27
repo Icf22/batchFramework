@@ -46,6 +46,9 @@ export const ARCHIVOS = {
     CABECERA: 'archivoConfig/SimpleModifyHeader (24).conf'
 }
 
+export const VARIABLES = {
+    TIMEZONE: 'America/Mexico_City',
+}
 
 export const NOMBRE_REPORTES = {
     PRP_CONCILIA: 'liquidación',
@@ -79,4 +82,6 @@ export const CONSOLA = {
         console.log("❌ Error al guardar el archivo: ", error),
     ErrorObtenerNombreReport: () =>
         console.error("❌ No fue posible obtener el nombre del reporte"),
+    NoHayElemento: () =>
+        console.error("No se encontró el elemento con el selector especificado en basePage."),
 }
