@@ -225,7 +225,7 @@ export class PosBMRPage extends BasePage {
     }
 
     const reportesSinPlataforma = [12,13,14,15,22,27,28];
-    const reportesFallan = [23,27];
+    const reportesFallan = [23];
     const reportesExcel = [22];
     const salidaExcel = [28];
     let reporteData = dataReporte[1];
