@@ -356,7 +356,8 @@ export class BasePage {
     btnDownload: string,
     nameReport: string,
     esExcel: boolean,
-    nameSelected: string 
+    nameSelected: string,
+    archivosDescargados: string[] = []
   ) {
 
     nameSelected = " - " + (nameSelected == "" ? "Reporte 1" : nameSelected);
@@ -375,7 +376,7 @@ export class BasePage {
     }
     var fecha = await this.obtenerHoraActualEnMexico();
     // Definir la ruta base para la carpeta y archivo
-    const baseDir = path.resolve("./test-results/reportes-posBancomer", reportName + " " + fecha);
+    const baseDir = path.resolve("./Reportes/POSBMR", reportName + " " + fecha);
 
     // Crear la carpeta con el nombre del reporte si no existe
     try {
@@ -423,6 +424,7 @@ export class BasePage {
     // Guardar el archivo descargado en la carpeta creada
     try {
       await download.saveAs(filePath);
+      archivosDescargados.push(`${reportName}${nameSelected}${fileExtension}`)
     } catch (error) {
       CONSOLA.ErrorAlGuardar(error);
       return;

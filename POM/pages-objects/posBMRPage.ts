@@ -543,38 +543,44 @@ export class PosBMRPage extends BasePage {
   async ObtenerOptionsPlataforma(pageR, locator, boton, btnTipoReporte, esExcel) {
     const loc = locator + "/option";
 
-    //EVALUAS TODA LA PAGINA CON EL EVALUATE
     const options = await pageR.evaluate((xpath) => {
-      //CREAMOS LA VARIABLE DONDE SE ALMACENARAN LOS DATOS DEL OPTION (ES UN OBJETO)
       const result: { value: string | null, text: string | null }[] = [];
-      //EVALUA EL SELECT PARA TRAER POSTERIOTMENTE LAS OPCIONES Y LOS DATOS NECESARIOS
       const iterator = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
-      //VA ITERANDO Y ME TRAE LA PRIMER LINEA DESPUES LA SEGUNDA Y ASI SUCESIVAMENTE
       let node = iterator.iterateNext() as HTMLElement | null;
-      // ITERA HASTA QUE NO ENCUENTRA VARIABLE OPTION
       while (node) {
-        //INSERTA EL DATO EN LA VARIABLE DE OBJETOS QUE CREAMOS ANTES
         result.push({
           value: node.getAttribute('value'),
           text: node.textContent?.trim() || ''
         });
-        // ITERA SOBRE LA SIGUIENTE LINEA DEL OPTION, SI NO ENCUENTRA TERMINA
         node = iterator.iterateNext() as HTMLElement | null;
       }
-      //ME REGRESA LOS DATOS ES DECIR EL OBJETO QUE CONTENDRA EL VALUE Y EL TEXT
       return result;
     }, loc);
 
     let baseDir = "";
     const reporteDescargado = await this.obtenerTexto(pageR, btnTipoReporte);
     CONSOLA.EspacioConNombre(reporteDescargado ?? "");
+
+    //VARIABLE PARAALMACENAR LOS REGISTROS DESCARGADOS EN LA EJECUCION EN CURSO
+    const archivosDescargados: string[] = [];
+
     for (const option of options) {
       const text = option.text.toLowerCase();
-      if (text !== 'todas' && text !== 'seleccione una plataforma' /*text === "7eleven" || text === "walmart" || text === "captura abono" || text === "oxxo"*/){
+      if (text !== 'todas' && text !== 'seleccione una plataforma' /*&& text === "7eleven"*/){
         await pageR.selectOption(locator, option.value);
-        baseDir = await this.validarDescargaPOSBMR2(pageR, boton, btnTipoReporte, esExcel, option.text) ?? baseDir;
+        baseDir = await this.validarDescargaPOSBMR2(pageR, boton, btnTipoReporte, esExcel, option.text, archivosDescargados) ?? baseDir;
       }
     }
+
+    if(baseDir){
+      const archivosEnCarpeta = await fs.readdir(baseDir);
+      for(const archivo of archivosEnCarpeta){
+        if(!archivosDescargados.includes(archivo)){
+          await fs.unlink(path.join(baseDir,archivo));
+        }
+      }
+    }
+
     const totalDescargados = await this.contarArchivosDescargados(baseDir);
     CONSOLA.TotalPlataformas(reporteDescargado ?? "", options.length);
     CONSOLA.DivisionInfo();
