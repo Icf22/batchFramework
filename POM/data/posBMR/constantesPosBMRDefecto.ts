@@ -1,4 +1,4 @@
-export const DATOS_POR_DEFECTO_POSBMR = {
+export const DEFECTO_POSBMR = {
     PLATAFORMA: 'Seleccione una Plataforma',
     PLATAFORMA2: 'Captura Abono',
     PLATAFORMA3: '06 Chedraui',
@@ -7,6 +7,17 @@ export const DATOS_POR_DEFECTO_POSBMR = {
     PLATAFORMA6: 'Oxxo',
     VENTANA:  '0',
     TRANSACCION: 'Todas las Aceptadas',
+    TIPO_TRANSACCION: 'T',
     EMISOR: '00 Todas',
     EMISOR2: '0 Master y Visa',
+    MONEDA: 'P',
+    FECHA: '24012025',
+    AFILIACION: '',
+    TARJETA: '',
+    SUBTOTALES: false,
+    INTERNACIONAL: '0 Domestico',
+    GRUPO_CADENA: '',
+    TIPO_REPORTE: '',
+    CODIGO_RECHAZO: '',
+    SALIDA_EXCEL : false
 }

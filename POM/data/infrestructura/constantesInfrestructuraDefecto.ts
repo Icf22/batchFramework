@@ -1,0 +1,6 @@
+export const DEFECTO_INFRESTRUCTURA = {
+   //DIA/MES/AÑO 
+    FECHA_INICIO:'09042020',
+    FECHA_FIN: '07042020',
+    TARIFA: '2500'    
+}

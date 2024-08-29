@@ -4,22 +4,50 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:TodasTranscPosBanc": "npx playwright test posBancomer.spec.ts -g TodasLasTransaccionesPosBanc --headed",
-    "test:TransAceptadas": "npx playwright test posBancomer.spec.ts -g 1TotalTransaccionesAceptadas --headed",
-    "test:DetallTransAceptadas": "npx playwright test posBancomer.spec.ts -g 2DetaTranAcep --headed",
-    "test:TotalTransRechazadas": "npx playwright test posBancomer.spec.ts -g 3TotalTranRech --headed",
-    "test:DetallTransRechazadas": "npx playwright test posBancomer.spec.ts -g 4DetallTranRech --headed",
+    "posBmr:0": "npx playwright test posBancomer.spec.ts -g ALL --headed",
+    "posBmr:1": "npx playwright test posBancomer.spec.ts -g 1TTA --headed",
+    "posBmr:2": "npx playwright test posBancomer.spec.ts -g 2DTA --headed",
+    "posBmr:3": "npx playwright test posBancomer.spec.ts -g 3TTR --headed",
+    "posBmr:4": "npx playwright test posBancomer.spec.ts -g 4DTR --headed",
+    "posBmr:5": "npx playwright test posBancomer.spec.ts -g 5RNP --headed",
+    "posBmr:6": "npx playwright test posBancomer.spec.ts -g 6CRF --headed",
+    "posBmr:7": "npx playwright test posBancomer.spec.ts -g 7TEM --headed",
+    "posBmr:8": "npx playwright test posBancomer.spec.ts -g 8DEM --headed",
+    "posBmr:9": "npx playwright test posBancomer.spec.ts -g 9CEM --headed",
+    "posBmr:10": "npx playwright test posBancomer.spec.ts -g ACPL --headed",
+    "posBmr:11": "npx playwright test posBancomer.spec.ts -g BRRI --headed",
+    "posBmr:12": "npx playwright test posBancomer.spec.ts -g CLRI --headed",
+    "posBmr:13": "npx playwright test posBancomer.spec.ts -g DCRI --headed",
+    "posBmr:14": "npx playwright test posBancomer.spec.ts -g EDRI --headed",
+    "posBmr:15": "npx playwright test posBancomer.spec.ts -g FTSC --headed",
+    "posBmr:16": "npx playwright test posBancomer.spec.ts -g GRLC --headed",
+    "posBmr:17": "npx playwright test posBancomer.spec.ts -g HTTP --headed",
+    "posBmr:18": "npx playwright test posBancomer.spec.ts -g IDTP --headed",
+    "posBmr:19": "npx playwright test posBancomer.spec.ts -g JDRP --headed",
+    "posBmr:20": "npx playwright test posBancomer.spec.ts -g KAGC --headed",
+    "posBmr:21": "npx playwright test posBancomer.spec.ts -g LRGC --headed",
+    "posBmr:22": "npx playwright test posBancomer.spec.ts -g MCPR --headed",
+    "posBmr:23": "npx playwright test posBancomer.spec.ts -g NSPB --headed",
+    "posBmr:24": "npx playwright test posBancomer.spec.ts -g PRWM --headed",
+    "posBmr:25": "npx playwright test posBancomer.spec.ts -g QTCA --headed",
+    "posBmr:26": "npx playwright test posBancomer.spec.ts -g RRPC --headed",
+    "posBmr:27": "npx playwright test posBancomer.spec.ts -g SRRE --headed",
+    "posBmr:28": "npx playwright test posBancomer.spec.ts -g VPBB --headed",
 
-    "test:Liquidacion": "npx playwright test prpConcilia.spec.ts -g Liquidacion --headed",
+    "infra:0": "npx playwright test infrestructura.spec.ts -g Infra --headed",
 
-    "test:ReportesIntercambio": "npx playwright test dSSReport.spec.ts -g Reporte de intercambio --headed"
+    "prp:0": "npx playwright test prpConcilia.spec.ts -g Liquidacion --headed",
 
-   },
+    "dss:ReportesIntercambio": "npx playwright test dSSReport.spec.ts -g Reporte de intercambio --headed"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.43.0",
     "@types/node": "^20.12.7"
+  },
+  "dependencies": {
+    "date-fns-tz": "^3.1.3"
   }
 }
