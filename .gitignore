@@ -1,6 +1,8 @@
 node_modules/
 /test-results/
 Reportes/POSBMR/*
+!Reportes/
+!Reportes/POSBMR/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
