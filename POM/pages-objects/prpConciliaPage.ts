@@ -14,41 +14,41 @@ export class PrpConcilia extends BasePage {
   readonly btnFinal: string;
   readonly btnLiquidacion: string;
   readonly btnTotales: string;
-  readonly btnReportes:string
-  readonly btnArchivos:string;
-  readonly checkboxConsolidadas:string;
-  readonly checkboxCredito:string;
-  readonly checkboxDebito:string;
-  readonly checkboxPantalaArchivo:string;
-  readonly checkboxArchivoInercambio:string;
+  readonly btnReportes: string
+  readonly btnArchivos: string;
+  readonly checkboxConsolidadas: string;
+  readonly checkboxCredito: string;
+  readonly checkboxDebito: string;
+  readonly checkboxPantalaArchivo: string;
+  readonly checkboxArchivoInercambio: string;
   //Separacion debito/credito
-  readonly radiobtnPorTasaCuota:string;
-  readonly radiobtnPorNatDelBin:string;
+  readonly radiobtnPorTasaCuota: string;
+  readonly radiobtnPorNatDelBin: string;
   //Archivo Consolidados EGLOBAL
-  readonly radiobtnCaratulaBatch:string;
-  readonly btnGeneral:string;
+  readonly radiobtnCaratulaBatch: string;
+  readonly btnGeneral: string;
   //Reportes
   readonly btnEGRP011: string;
   readonly btnEGRP012: string;
   readonly btnEGRP015: string;
   readonly btnEGRP016: string;
-  readonly radiobtnEntrante:string;
-  readonly radiobtnSaliente:string;
-  readonly radiobtnAmbos:string;
-  readonly checkboxExcel:string;
+  readonly radiobtnEntrante: string;
+  readonly radiobtnSaliente: string;
+  readonly radiobtnAmbos: string;
+  readonly checkboxExcel: string;
   //Conciliacion
-  readonly radiobtnPagos:string;
-  readonly radiobtnVentas:string;
-  readonly checkboxPendientes:string;
-  readonly checkboxFaltantes:string;
-  readonly checkboxBusqPorCuenta:string;
-  readonly checkboxConciliadas:string;
-  readonly checkboxSobrantes:string;
-  readonly txtFiltro:string;
+  readonly radiobtnPagos: string;
+  readonly radiobtnVentas: string;
+  readonly checkboxPendientes: string;
+  readonly checkboxFaltantes: string;
+  readonly checkboxBusqPorCuenta: string;
+  readonly checkboxConciliadas: string;
+  readonly checkboxSobrantes: string;
+  readonly txtFiltro: string;
   //Pagos/Ventas
-  readonly btnCifras:string;
-  readonly btnDetalle:string;
-  readonly selectTienda:string;
+  readonly btnCifras: string;
+  readonly btnDetalle: string;
+  readonly selectTienda: string;
   // MENUS
   readonly reportesEspeciales: string;
   readonly difTasas: string;
@@ -77,7 +77,7 @@ export class PrpConcilia extends BasePage {
   readonly btnErrorCuota: string;
   readonly btnRegresarBancomer: string;
   // REPORTEO POS
-    // Boton Miscelaneos
+  // Boton Miscelaneos
   readonly btnMiscelaneos: string;
   readonly fechaIniMiscelaneos: string;
   readonly fechaFinMiscelaneos: string;
@@ -85,22 +85,22 @@ export class PrpConcilia extends BasePage {
   readonly selectTipoMiscelaneos: string;
   readonly checkExcelMiscelaneos: string;
   readonly btnDesplegarMiscelaneos: string;
-    // Boton Caratulas Intercambio
+  // Boton Caratulas Intercambio
   readonly fechaIniCaratula: string;
   readonly fechaFinCaratula: string;
   readonly selectReporteCaratula: string;
   readonly btnGenerarCaratula: string;
-    // Boton Prevalidador
+  // Boton Prevalidador
   readonly fechaIniValidador: string;
   readonly fechaFinValidador: string;
   readonly selectReporteValidador: string;
   readonly checkExcelValidador: string;
   readonly btnDesplegarValidador: string;
-    // Boton Infraestructura
+  // Boton Infraestructura
   readonly fechaIniInfra: string;
   readonly fechaFinInfra: string;
   readonly btnDesplegarInfra: string;
-    // Boton Poliza POS
+  // Boton Poliza POS
   readonly fechaIniPoliza: string;
   readonly fechaFinPoliza: string;
   readonly checkDetallePoliza: string;
@@ -131,7 +131,7 @@ export class PrpConcilia extends BasePage {
   // LOG EBIND
   readonly fechaLogEbind: string;
   readonly btnBuscarLosEbind: string;
-  
+
   constructor(browserContext) {
     super(browserContext);
     //FECHAS
@@ -185,22 +185,22 @@ export class PrpConcilia extends BasePage {
     this.pageReporte = await this.browserContext.newPage();
     await this.pageReporte.goto(url);
     await this.pageReporte.waitForTimeout(3000);
-    const accesoNoPermitido="//span[text()='Acceso no permitido.']"
-    if(await this.pageReporte.isVisible(accesoNoPermitido)){
+    const accesoNoPermitido = "//span[text()='Acceso no permitido.']"
+    if (await this.pageReporte.isVisible(accesoNoPermitido)) {
       await this.pageReporte.goto(url);
       return this.pageReporte;
-    }else{
+    } else {
       return this.pageReporte;
     }
   }
 
-  async revisarReportePRPConciliaLiquidacion(reporteARevisar: number){
+  async revisarReportePRPConciliaLiquidacion(reporteARevisar: number, liquidacion = true) {
     const pageReporte = await this.inicializarPage(URLS.REPORTEPRPCONCILIA);
     let btnTipoReporte = this.btnLiquidacion;
     let esExcel = false;
     let esZip = false;
     const opcionesAEjecutar = {
-      1 : this.btnLiquidacion,
+      1: this.btnLiquidacion,
     };
     const botonesAEjecutar = {
       1: this.btnLiquidacion,
@@ -212,54 +212,57 @@ export class PrpConcilia extends BasePage {
     const reportesExcel = [] as number[];
     const reportesZip = [] as number[];
     let reporteData = dataReporte[reporteARevisar];
-    if(reporteARevisar === 0){
-      for(let i = 1; i <= Object.keys(opcionesAEjecutar).length; i++){
+    if (reporteARevisar === 0) {
+      for (let i = 1; i <= Object.keys(opcionesAEjecutar).length; i++) {
         const opcion = opcionesAEjecutar[i];
         const boton = botonesAEjecutar[i];
         reporteData = dataReporte[i];
         if (reportesAIgnorar.includes(i)) {
           continue;
         }
-        if(reportesExcel.includes(i)){
+        if (reportesExcel.includes(i)) {
           esExcel = true
         }
-        if(reportesZip.includes(i)){
+        if (reportesZip.includes(i)) {
           esZip = true
         }
         await Promise.all([
           pageReporte.waitForLoadState('networkidle')
         ]);
-        
+
         await this.ingresarDatosReporte(pageReporte, i, reporteData);
-        await this.validarDescargaPRPCONCILIA(pageReporte, boton,boton,esExcel,esZip);
+        if (liquidacion != true) {
+          await this.validarDescargaPRPCONCILIA(pageReporte, boton, boton, esExcel, esZip);
+        }
       }
     }
-    else{
+    else {
       await this.ingresarDatosReporte(pageReporte, reporteARevisar, reporteData);
       const boton = botonesAEjecutar[reporteARevisar];
-      if(reportesExcel.includes(reporteARevisar)){
+      if (reportesExcel.includes(reporteARevisar)) {
         esExcel = true
       }
-      if(reportesZip.includes(reporteARevisar)){
+      if (reportesZip.includes(reporteARevisar)) {
         esZip = true
       }
-      await this.validarDescargaPRPCONCILIA(pageReporte,boton,boton,esExcel,esZip)
+      await this.validarDescargaPRPCONCILIA(pageReporte, boton, boton, esExcel, esZip)
     }
   }
 
-  async ingresarDatosReporte(pageR: Page, numeroReporte: number, reporteData: any){
+  async ingresarDatosReporte(pageR: Page, numeroReporte: number, reporteData: any) {
     await pageR.waitForTimeout(980);
     const fechaInicial = reporteData.FECHA_INICIO ?? DEFECTO_PRPCONCILIA.FECHA_INICIO;
     const fechaFinal = reporteData.FECHA_FIN ?? DEFECTO_PRPCONCILIA.FECHA_FIN;
-    switch(numeroReporte){
+    switch (numeroReporte) {
       case 1:
         await this.llenarFechas(pageR, fechaInicial, fechaFinal);
-        await this.seleccionarAdquirenteEmisor(pageR, reporteData.ADQUIRIENTE, reporteData.EMISOR);
-      break;
+        //await this.seleccionarAdquirenteEmisor(pageR, reporteData.ADQUIRIENTE, reporteData.EMISOR);
+        await this.seleccionarTodasLasCombinaciones(pageR);
+        break;
     }
   }
 
-  async llenarFechas(page : Page, fechaInicio: string, fechaFin: string){
+  async llenarFechas(page: Page, fechaInicio: string, fechaFin: string) {
     await page.waitForSelector(this.fechaInicial);
     await page.waitForSelector(this.fechaFinal);
     await page.locator(this.fechaInicial).fill('');
@@ -268,7 +271,7 @@ export class PrpConcilia extends BasePage {
     await page.locator(this.fechaFinal).fill(fechaFin);
   }
 
-  async seleccionarAdquirenteEmisor(page: Page, adquirente: string, emisor: string){
+  async seleccionarAdquirenteEmisor(page: Page, adquirente: string, emisor: string) {
     const adqCheck = await page.locator(`//input[@name="CTLCHK_00${adquirente}"]`)
     const emiCheck = await page.locator(`//input[@name="CTLCHK1_00${emisor}"]`)
     await adqCheck.scrollIntoViewIfNeeded()
@@ -277,7 +280,7 @@ export class PrpConcilia extends BasePage {
     await emiCheck.click()
   }
 
-  async seleccionarCheckBox(page: Page, dato: boolean, localizador: string){
+  async seleccionarCheckBox(page: Page, dato: boolean, localizador: string) {
     await page.locator(localizador).setChecked(dato);
   }
   // SE MANDA A LLAMAR ASI await this.seleccionarRadioButton(page, 'Reportes', '0');
@@ -292,7 +295,7 @@ export class PrpConcilia extends BasePage {
       '2': this.radiobtnAmbos,
     };
     let selectores;
-  
+
     switch (escenario) {
       case 'Separacion débito/credito':
         selectores = SeparacionCredito;
@@ -311,12 +314,46 @@ export class PrpConcilia extends BasePage {
     await page.waitForSelector(selector);
     await page.locator(selector).click();
   }
-  
-  async elegirSelect(page: Page, opcion){
+
+  async elegirSelect(page: Page, opcion) {
 
   }
-  async llenarInputText(page: Page, dato: string){
+  async llenarInputText(page: Page, dato: string) {
 
+  }
+  async seleccionarTodasLasCombinaciones(page: Page) {
+
+    const adquirentes = await page.locator('//input[contains(@name, "CTLCHK_00")]').elementHandles();
+    const emisores = await page.locator('//input[contains(@name, "CTLCHK1_00")]').elementHandles();
+    const archivosDescargados: string[] = [];
+
+    let total = adquirentes.length - 1;
+    for(var i = 0; i <= total ; i++ )
+    {
+      const adquirentesAct = await page.locator('//input[contains(@name, "CTLCHK_00")]').elementHandles();
+      const adqRow = await adquirentesAct[i].evaluate((el: HTMLElement) => el.closest('tr')?.id);
+      const adqText = await page.locator(`#span_CTLID_ADQ_${adqRow?.split('_')[1]}`).textContent();
+
+      await adquirentesAct[i].evaluate((el: HTMLElement) => el.scrollIntoView());
+      await adquirentesAct[i].click({ force: true });
+
+      const emisoresActualizados = await page.locator('//input[contains(@name, "CTLCHK1_00")]').elementHandles();
+      for (const emi of emisoresActualizados) {
+        const emiRow = await emi.evaluate((el: HTMLElement) => el.closest('tr')?.id);
+        const emiText = await page.locator(`#span_CTLID_EMI_${emiRow?.split('_')[1]}`).textContent();
+
+        await emi.evaluate((el: HTMLElement) => el.scrollIntoView());
+        await emi.click({ force: true });
+
+        const combinacion = `Combinación ${adqText?.trim()} - ${emiText?.trim()}`;
+        await this.validarDescargaPRPCONCILIA(page, this.btnLiquidacion, combinacion, false, false, archivosDescargados);
+
+        await emi.click(); 
+      }
+      let tot = i;
+      const adquirentesActual = await page.locator('//input[contains(@name, "CTLCHK_00")]').elementHandles();
+      await adquirentesActual[i].click({ force: true }); 
+    }
   }
 }
 

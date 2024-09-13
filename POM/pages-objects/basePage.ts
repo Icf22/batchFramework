@@ -201,7 +201,7 @@ export class BasePage {
     }
   }
 
-  async validarDescargaPRPCONCILIA(
+  async validarDescargaPRPCONCILIA2(
     pageExtension: Page | undefined,
     btnDownload: string,
     nameReport: string,
@@ -271,6 +271,103 @@ export class BasePage {
         "pageExtension is undefined. Unable to perform download validation."
       );
     }
+  }
+
+  async validarDescargaPRPCONCILIA(
+    pageExtension: Page | undefined,
+    btnDownload: string,
+    combinacion: string,
+    esExcel: boolean,
+    esZip: boolean,
+    archivosDescargados: string[] = []
+  ) {
+    combinacion = " - " + (combinacion == "" ? "Sin combinacion" : combinacion);
+
+    if (!pageExtension) {
+      console.error("Pagina no definida");
+      return;
+    }
+
+    // Obtener el nombre del reporte para usarlo como nombre de la carpeta
+    let reportName = await this.obtenerTexto(pageExtension, btnDownload);
+
+    if (!reportName) {
+      CONSOLA.ErrorObtenerNombreReport();
+      return;
+    }
+    var fecha = await this.obtenerHoraActualEnMexico();
+    // Definir la ruta base para la carpeta y archivo
+    const baseDir = path.resolve("./Reportes/PRPCON", reportName + " " + fecha);
+
+    // Crear la carpeta con el nombre del reporte si no existe
+    try {
+      await fs.mkdir(baseDir, { recursive: true });
+    } catch (error) {
+      console.error("Error al crear la carpeta:", error);
+      return;
+    }
+
+    // Crea una promesa que espera el evento download
+    const downloadPromise = pageExtension.waitForEvent("download");
+
+    // Establece un límite de tiempo para esperar el evento de descarga (por ejemplo, 30 segundos)
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("El evento de descarga no se activó en el tiempo esperado.")), 15000)
+    );
+
+    // Clic sobre el botón que desencadenará el evento download
+    await pageExtension.waitForTimeout(2000);
+    const loc = await pageExtension.locator(btnDownload);
+    await this.elementoVisible(loc);
+    await pageExtension.locator(btnDownload).click();
+
+    // Utiliza Promise.race para manejar el tiempo máximo de espera
+    const downloadEvent = await Promise.race([downloadPromise, timeoutPromise])
+      .catch(error => {
+        return null;
+      });
+
+    //Esta expect sirve para evaluar que se activo el evento descarga 
+    //!await expect.soft(downloadEvent).not.toBeNull();
+
+    if (!downloadEvent) {
+      CONSOLA.NoExisteDescarga();
+      return "";
+    }
+
+    const download = await downloadPromise;
+
+    const fileExtension = esExcel ? ".xlsx" : esZip ? ".zip" : ".pdf";
+
+    // Ruta completa para guardar el archivo dentro de la carpeta recién creada
+    const filePath = path.resolve(baseDir, `${reportName}${combinacion}${fileExtension}`);
+
+    // Guardar el archivo descargado en la carpeta creada
+    try {
+      await download.saveAs(filePath);
+      archivosDescargados.push(`${reportName}${combinacion}${fileExtension}`)
+    } catch (error) {
+      CONSOLA.ErrorAlGuardar(error);
+      return;
+    }
+
+    // Validación de la existencia del archivo descargado
+    let archivoExiste;
+    try {
+      await fs.access(filePath);
+      archivoExiste = true;
+    } catch {
+      archivoExiste = false;
+    }
+
+    // Assertion para validar que se realizó la descarga de manera correcta
+    await expect.soft(archivoExiste).toBeTruthy();
+    archivoExiste
+      ? CONSOLA.AvisoDescargaCorrecta(reportName + combinacion + fileExtension)
+      : CONSOLA.AvisoDescargaIncorrecta(filePath);
+
+    CONSOLA.DivisionInfo();
+    return baseDir;
   }
 
   async obtenerTexto(pageExtension: Page, locator: string) {
@@ -343,7 +440,7 @@ export class BasePage {
       .catch(error => {
         return null;
       });
-    
+
     //Esta expect sirve para evaluar que se activo el evento descarga 
     //!await expect.soft(downloadEvent).not.toBeNull();
 

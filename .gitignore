@@ -3,11 +3,14 @@ node_modules/
 
 # Ignorar todo el contenido dentro de POSBMR
 Reportes/POSBMR/**
+Reportes/PRPCON/**
 
 # No ignorar las carpetas de reportes, posbmr y el archivo identificador para que este presentes en git
 !Reportes/
 !Reportes/POSBMR/
+!Reportes/PRPCON/
 !Reportes/POSBMR/.gitkeep
+!Reportes/PRPCON/.gitkeep
 /playwright-report/
 /blob-report/
 /playwright/.cache/
