@@ -1,6 +1,7 @@
 import { BrowserContext, Locator, Page } from "@playwright/test";
+import fs from 'fs/promises';
 import { BasePage } from "./basePage";
-import { NOMBRE_REPORTES, URLS } from "../data/constates";
+import { CONSOLA, NOMBRE_REPORTES, URLS } from "../data/constates";
 import { PRPCONCILIA } from '../data/prpConcilia/prpConciliaConstantes';
 import { DEFECTO_PRPCONCILIA } from "../data/prpConcilia/prpConciliaConstantesDefectos";
 
@@ -201,22 +202,35 @@ export class PrpConcilia extends BasePage {
     let esZip = false;
     const opcionesAEjecutar = {
       1: this.btnLiquidacion,
+      2: this.btnInicial,
+      3: this.btnFinal,
+      4: this.btnTotales,
+      5: this.btnReportes,
+      6: this.btnArchivos,
     };
     const botonesAEjecutar = {
       1: this.btnLiquidacion,
+      2: this.btnInicial,
+      3: this.btnFinal,
+      4: this.btnTotales,
+      5: this.btnReportes,
+      6: this.btnArchivos,
     };
     const dataReporte = {
       1: PRPCONCILIA,
     };
     const reportesAIgnorar = [] as number[];
     const reportesExcel = [] as number[];
-    const reportesZip = [] as number[];
-    let reporteData = dataReporte[reporteARevisar];
+    const reportesZip = [6];
+    const noSeleccionaEmisor = [4, 5, 6];
+    let reporteData = dataReporte[1];
+    const archivosDescargados: string[] = [];
+    let baseDir = '';
     if (reporteARevisar === 0) {
       for (let i = 1; i <= Object.keys(opcionesAEjecutar).length; i++) {
         const opcion = opcionesAEjecutar[i];
         const boton = botonesAEjecutar[i];
-        reporteData = dataReporte[i];
+        reporteData = dataReporte[1];
         if (reportesAIgnorar.includes(i)) {
           continue;
         }
@@ -230,14 +244,27 @@ export class PrpConcilia extends BasePage {
           pageReporte.waitForLoadState('networkidle')
         ]);
 
-        await this.ingresarDatosReporte(pageReporte, i, reporteData);
-        if (liquidacion != true) {
-          await this.validarDescargaPRPCONCILIA(pageReporte, boton, boton, esExcel, esZip);
+        await this.ingresarDatosReporte(pageReporte, i, reporteData, boton, esExcel, esZip);
+        if (reportesExcel.includes(i)) {
+          esExcel = true
+        }
+        if (reportesZip.includes(i)) {
+          esZip = true
+        }
+        if (noSeleccionaEmisor.includes(i)) {
+          const reporteDescargado = await this.obtenerTexto(pageReporte, boton);
+          CONSOLA.EspacioConNombre(reporteDescargado ?? "");
+          baseDir = await this.validarDescargaPRPCONCILIA(pageReporte, boton, "", esExcel, esZip, archivosDescargados) ?? '';
+
+          const totalDescargados = await this.contarArchivosDescargados(baseDir);
+
+          CONSOLA.EspacioNombreTotal(reporteDescargado ?? "", totalDescargados);
+          CONSOLA.CierreDeBloque();
         }
       }
     }
     else {
-      await this.ingresarDatosReporte(pageReporte, reporteARevisar, reporteData);
+
       const boton = botonesAEjecutar[reporteARevisar];
       if (reportesExcel.includes(reporteARevisar)) {
         esExcel = true
@@ -245,19 +272,39 @@ export class PrpConcilia extends BasePage {
       if (reportesZip.includes(reporteARevisar)) {
         esZip = true
       }
-      await this.validarDescargaPRPCONCILIA(pageReporte, boton, boton, esExcel, esZip)
+      await this.ingresarDatosReporte(pageReporte, reporteARevisar, reporteData, boton, esExcel, esZip);
+      if (noSeleccionaEmisor.includes(reporteARevisar)) {
+
+        const reporteDescargado = await this.obtenerTexto(pageReporte, boton);
+        CONSOLA.EspacioConNombre(reporteDescargado ?? "");
+
+        baseDir = await this.validarDescargaPRPCONCILIA(pageReporte, boton, "", esExcel, esZip, archivosDescargados) ?? '';
+
+        const totalDescargados = await this.contarArchivosDescargados(baseDir);
+
+        CONSOLA.EspacioNombreTotal(reporteDescargado ?? "", totalDescargados);
+        CONSOLA.CierreDeBloque();
+
+      }
     }
   }
 
-  async ingresarDatosReporte(pageR: Page, numeroReporte: number, reporteData: any) {
+  async ingresarDatosReporte(pageR: Page, numeroReporte: number, reporteData: any, boton: string, esExcel = false, esZip = false) {
     await pageR.waitForTimeout(980);
     const fechaInicial = reporteData.FECHA_INICIO ?? DEFECTO_PRPCONCILIA.FECHA_INICIO;
     const fechaFinal = reporteData.FECHA_FIN ?? DEFECTO_PRPCONCILIA.FECHA_FIN;
     switch (numeroReporte) {
       case 1:
+      case 2:
+      case 3:
         await this.llenarFechas(pageR, fechaInicial, fechaFinal);
         //await this.seleccionarAdquirenteEmisor(pageR, reporteData.ADQUIRIENTE, reporteData.EMISOR);
-        await this.seleccionarTodasLasCombinaciones(pageR);
+        await this.seleccionarTodasLasCombinaciones(pageR, boton, esExcel, esZip);
+        break;
+      case 4:
+      case 5:
+      case 6:
+        await this.llenarFechas(pageR, fechaInicial, fechaFinal);
         break;
     }
   }
@@ -321,15 +368,14 @@ export class PrpConcilia extends BasePage {
   async llenarInputText(page: Page, dato: string) {
 
   }
-  async seleccionarTodasLasCombinaciones(page: Page) {
+  async seleccionarTodasLasCombinaciones(page: Page, boton: string, esExcel = false, esZip = false) {
 
     const adquirentes = await page.locator('//input[contains(@name, "CTLCHK_00")]').elementHandles();
     const emisores = await page.locator('//input[contains(@name, "CTLCHK1_00")]').elementHandles();
     const archivosDescargados: string[] = [];
 
     let total = adquirentes.length - 1;
-    for(var i = 0; i <= total ; i++ )
-    {
+    for (var i = 0; i <= total; i++) {
       const adquirentesAct = await page.locator('//input[contains(@name, "CTLCHK_00")]').elementHandles();
       const adqRow = await adquirentesAct[i].evaluate((el: HTMLElement) => el.closest('tr')?.id);
       const adqText = await page.locator(`#span_CTLID_ADQ_${adqRow?.split('_')[1]}`).textContent();
@@ -346,13 +392,21 @@ export class PrpConcilia extends BasePage {
         await emi.click({ force: true });
 
         const combinacion = `Combinación ${adqText?.trim()} - ${emiText?.trim()}`;
-        await this.validarDescargaPRPCONCILIA(page, this.btnLiquidacion, combinacion, false, false, archivosDescargados);
+        await this.validarDescargaPRPCONCILIA(page, boton, combinacion, esExcel, esZip, archivosDescargados);
 
-        await emi.click(); 
+        await emi.click();
       }
       let tot = i;
       const adquirentesActual = await page.locator('//input[contains(@name, "CTLCHK_00")]').elementHandles();
-      await adquirentesActual[i].click({ force: true }); 
+      await adquirentesActual[i].click({ force: true });
+    }
+  }
+  async contarArchivosDescargados(carpeta: string): Promise<number> {
+    try {
+      const archivos = await fs.readdir(carpeta);
+      return archivos.length;
+    } catch (error) {
+      return 0;
     }
   }
 }

@@ -37,6 +37,12 @@
     "infra:0": "npx playwright test infrestructura.spec.ts -g Infra --headed",
 
     "prp:0": "npx playwright test prpConcilia.spec.ts -g Liquidacion --headed",
+    "prp:1": "npx playwright test prpConcilia.spec.ts -g Liquidacion --headed",
+    "prp:2": "npx playwright test prpConcilia.spec.ts -g Inicial --headed",
+    "prp:3": "npx playwright test prpConcilia.spec.ts -g Final --headed",
+    "prp:4": "npx playwright test prpConcilia.spec.ts -g Totales --headed",
+    "prp:5": "npx playwright test prpConcilia.spec.ts -g Reportes --headed",
+    "prp:6": "npx playwright test prpConcilia.spec.ts -g Archivos --headed",
 
     "dss:ReportesIntercambio": "npx playwright test dSSReport.spec.ts -g Reporte de intercambio --headed"
   },

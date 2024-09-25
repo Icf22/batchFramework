@@ -201,78 +201,6 @@ export class BasePage {
     }
   }
 
-  async validarDescargaPRPCONCILIA2(
-    pageExtension: Page | undefined,
-    btnDownload: string,
-    nameReport: string,
-    esExcel: boolean,
-    esZip: boolean
-  ) {
-    let filePath;
-    if (pageExtension) {
-      // Crea una promesa que espera el evento download
-      const downloadPromise = pageExtension.waitForEvent("download");
-      // Clic sobre el botón que desencadenará el evento download
-      await pageExtension.waitForTimeout(2000);
-      const loc = await pageExtension.locator(btnDownload);
-      this.elementoVisible(loc);
-      await pageExtension.locator(btnDownload).click();
-      const download = await downloadPromise;
-
-      // Espera a que el proceso de descarga se complete y guarda el archivo descargado en algún lugar.
-      const reportName = await this.obtenerTexto(pageExtension, nameReport);
-
-      const path = require("path");
-      if (esExcel) {
-        await download.saveAs(
-          "./test-results/reportes-prpConcilia/" + reportName + ".xlsx"
-        );
-        filePath = path.resolve(
-          process.cwd(),
-          "./test-results/reportes-prpConcilia/",
-          `${reportName}.xlsx`
-        );
-      }
-      else if (esZip) {
-        await download.saveAs(
-          "./test-results/reportes-prpConcilia/" + reportName + ".zip"
-        );
-        filePath = path.resolve(
-          process.cwd(),
-          "./test-results/reportes-prpConcilia/",
-          `${reportName}.zip`
-        );
-      }
-      else {
-        await download.saveAs(
-          "./test-results/reportes-prpConcilia/" + reportName + ".pdf"
-        );
-        filePath = path.resolve(
-          process.cwd(),
-          "./test-results/reportes-prpConcilia/",
-          `${reportName}.pdf`
-        );
-      }
-
-      // Validación de la existencia del archivo descargado
-      const archivoExiste = await fs
-        .access(filePath)
-        .then(() => true)
-        .catch(() => false);
-
-      //Assertion para validar que se realizo la descarga de manera correcta
-
-      await expect.soft(archivoExiste).toBeTruthy();
-      archivoExiste
-        ? console.log("El archivo PDF se descargó correctamente en:", filePath)
-        : console.error("El archivo PDF no se descargo en: " + filePath);
-    } else {
-      console.error(
-        "pageExtension is undefined. Unable to perform download validation."
-      );
-    }
-  }
-
   async validarDescargaPRPCONCILIA(
     pageExtension: Page | undefined,
     btnDownload: string,
@@ -359,7 +287,7 @@ export class BasePage {
     } catch {
       archivoExiste = false;
     }
-
+    CONSOLA.DivisionInfo();
     // Assertion para validar que se realizó la descarga de manera correcta
     await expect.soft(archivoExiste).toBeTruthy();
     archivoExiste
